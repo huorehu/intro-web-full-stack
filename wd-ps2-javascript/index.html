@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Javascript (Basics)</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <fieldset>
+        <legend>Task-1</legend>
+        <div id="task1">
+          <h3>Sum of numbers from -1000 to 1000</h3>
+          <button type="button" name="task1" onclick="countSum()">Count sum</button>
+          <p id="sum-of-numbers"> <!-- Result sum of numbers from -1000 to 1000 --> </p>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Task-2</legend>
+        <div id="task2">
+          <h3>Sum of numbers from -1000 to 1000 which ending with 2, 3 or 7</h3>
+          <button type="button" name="task2" onclick="countSum237()">Count sum</button>
+          <p id="sum-of-numbers-2-3-7"> <!-- Result sum numbers with ending 2, 3 of 7 --> </p>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Task-3</legend>
+        <div id="task3">
+          <h3>Draw 50 lines with symbol *</h3>
+          <button id="draw-stars" type="button" name="task3" onclick="drawStars()">Draw stars</button>
+          <div id="block-stars"><!-- Result --></div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Task-4</legend>
+        <div id="task4">
+          <h3>Time in seconds to time hh-mm-ss</h3>
+          <input id="seconds" type="number" name="task4" value="">
+          <button type="button" name="task4" onclick="secondsToFormatTime()">Seconds to hh-mm-ss</button>
+          <p id="time-seconds"><!-- Result --></p>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Task-5</legend>
+        <div id="task5">
+          <h3>Format age</h3>
+          <input id="age" type="number" name="task5" value="">
+          <button type="button" name="task5" onclick="formatAge()">Format age</button>
+          <p id="formated-age"><!-- Result --></p>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Task-6</legend>
+        <h3>Date interval</h3>
+        <input id="startDate" type="datetime" name="startDate" value="" placeholder="October 13, 2014 11:13:00">
+        <input id="endDate" type="datetime" name="endDate" value="" placeholder="October 13, 2014 11:13:00">
+        <button type="button" name="date-interval" onclick="countInterval()">Count interval</button>
+        <p id="date-interval"><!-- Result --></p>
+      </fieldset>
+      <fieldset>
+        <legend>Task-7</legend>
+        <div id="task7">
+          <h3>Zodiac sign</h3>
+          <input id="zodiac" type="text" name="zodiac" value="" placeholder="2014-12-31">
+          <button type="button" name="zodiac" onclick="getZodiacSign()">Zodiac sign</button>
+          <div id="zodiac-result"><!-- Showing zodiac sign --></div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Task-8</legend>
+        <div id="task8">
+          <h3>Chessboard</h3>
+          <input id="chessboard" type="text" name="chessboard" value="" placeholder="8x8">
+          <button type="button" name="chessboard" onclick="drawBoard()">Draw board</button>
+          <button type="button" name="chessboard" onclick="clearChessboard()">Clear</button>
+          <div id="board-result"><!-- Drawing result --></div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Task-9</legend>
+        <div id="task9">
+          <h3>Search number of entrance and floor by appartment's number</h3>
+          <div class="inputs-block">
+            <div class="labels-for-house-data">
+              <label for="">Entrances: </label><br>
+              <label for="">Appartments per floor: </label><br>
+              <label for="">Amount floors: </label><br>
+              <label for="">Appartment number: </label>
+            </div>
+            <div class="house-data">
+              <input id="entrances" type="number" name="" value="" placeholder="Entrances"><br>
+              <input id="appartments-per-floor" type="number" name="" value="" placeholder="Appartments per floor"><br>
+              <input id="floors" type="number" name="" value="" placeholder="Amount floors"><br>
+              <input id="appartment-number" type="number" name="" value="" placeholder="Appartment number"><br>
+            </div>
+          </div>
+          <button type="button" name="" onclick="getAppartmentNumber()">Search appartment number</button>
+          <p id="appartment-result"><!-- Result of digits sum --></p>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Task-10</legend>
+        <div id="task10">
+          <h3>Sum digits of number</h3>
+          <input id="count-digits" type="number" name="digits-sum" value="" placeholder="Enter number">
+          <button type="button" name="digits-sum" onclick="countDigitsSum()">Count digits sum</button>
+          <p id="digits-sum"><!-- Result of digits sum --></p>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Task-11</legend>
+        <div id="task11">
+          <h3>Cleaning and sorting list of URLs</h3>
+          <textarea id="links" name="links" rows="10" cols="60" onfocusout="showSortedLinks()"></textarea><br>
+          <button type="button" name="links" onclick="clearTextArea()">Clear</button>
+          <div id="links-result">
+            <!-- Area for sorted links -->
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
