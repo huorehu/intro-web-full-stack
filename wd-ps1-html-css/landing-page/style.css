@@ -10,77 +10,86 @@ html, body, .wrapper, .start-page {
   min-width: 700px;
 }
 
-header {
+.header {
   height: 10%;
   display: flex;
   flex-direction: row;
 }
 
-.logo {
+.navigation__link, .navigation__register {
+  text-decoration: none;
+  color: #2c3e70;
+}
+
+.header__logo-left-part {
   margin-left: 10%;
   font-size: 350%;
   font-weight: bold;
+  text-decoration: none;
   color: #000;
   min-width: 40%;
 }
 
-.logo span {
+.header__logo-right-part {
   color: #1abc9c;
 }
 
-header nav {
+.navigation {
   display: flex;
   min-width: 50%;
   justify-content: space-around;
   align-items: center;
 }
 
-.start-page {
-  height: 100%;
-}
-
-div.product {
+.product {
   height: 90%;
   background-color: #1abc9c;
-}
-
-.product {
   display: flex;
   flex-direction: row;
 }
 
-.phone {
+.product__phone {
   min-width: 50%;
   display: flex;
   align-items: center;
 }
 
-.product img {
+.product__image {
   margin-left: 50%;
 }
 
-.product-description {
+.product__description {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   margin: 50px;
 }
 
-.product-description h1 {
+.product__name {
   font-size: 200%;
   color: #fff;
 }
 
-.product-description p {
+.product__text {
   font-size: 100%;
   color: #fff;
   margin: 0;
   line-height: 1.5;
 }
 
-a {
-  text-decoration: none;
-  color: #2c3e70;
+.product__button, .sender-form__button {
+  border-radius: 9px;
+  border: solid 2px #fff;
+  padding: 10px 20px;
+  width: 160px;
+  font-size: 170%;
+  background-color: #1abc9c;
+  color: #fff;
+}
+
+.product__button:hover, .sender-form__button:hover {
+  border-color: #ccc;
+  cursor: pointer;
 }
 
 p {
@@ -90,6 +99,10 @@ p {
   margin: 3%;
 }
 
+.web__icon, .mobile__icon, .hightload__icon {
+  color: #1abc9c;
+}
+
 .contact {
   background-color: #1abc9c;
   min-height: 100%;
@@ -97,15 +110,6 @@ p {
 
 footer p {
   margin: 0;
-}
-
-.btn {
-  border-radius: 9px;
-  border: solid 2px #fff;
-  padding: 10px 20px;
-  width: 115px;
-  font-size: 170%;
-  color: #fff;
 }
 
 .about {
@@ -119,67 +123,40 @@ footer p {
   align-items: center;
 }
 
-.web img, .mobile img, .highload img {
-  display: flex;
-  flex-direction: column;
-  background-color: #1abc9c;
-  color: #fff;
-  border-radius: 50%;
-  justify-content: space-around;
-}
-
-.web > div {
-  display: flex;
-  align-items: center;
-  width: 120px;
-  height: 100px;
-  background-color: #1abc9c;
-  color: #fff;
-  font-size: 500%;
-  border-radius: 50%;
-  justify-content: center;
-}
-
 .about h1 {
   font-size: 300%;
 }
 
-.icon {
-  margin-left: auto;
-  margin-right: auto;
+.about p {
+  text-align: center;
 }
 
-.contact h1 {
+.contact__caption {
   font-size: 250%;
   color: #fff;
 }
 
-.contact {
+.contact, .sender-form {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   text-align: center;
 }
 
-.input-fields {
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.input-fields input, .input-fields textarea {
-  margin: 5px;
+.sender-form__name, .sender-form__email, .sender-form__phone, .sender-form__message {
+  margin: 5px auto;
   padding: 5px;
+  width: 50%;
 }
 
-.contact .btn {
+.sender-form__button {
+  margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
   min-width: 200px;
 }
 
-footer {
+.footer {
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -187,12 +164,8 @@ footer {
   padding-top: 10px;
 }
 
-footer h1 {
+.footer__caption {
   margin-bottom: 0;
-}
-
-footer .btn {
-  min-width: 150%;
 }
 
 input[type="text"]::-webkit-input-placeholder,
@@ -211,15 +184,6 @@ textarea::-moz-placeholder {
   color: #ccc;
 }
 
-footer > .fields {
-  min-height: 50%;
-}
-
-footer > .buttons {
-  background-color: #1abc9c;
-  min-height: 50%;
-}
-
 .register-form {
   min-width: 60%;
   border: solid 3px #1abc9c;
@@ -231,18 +195,14 @@ footer > .buttons {
   background-color: #ccc;
 }
 
-.register {
+.navigation__register {
   font-weight: bold;
   color: #1abc9c;
 }
 
-.about p {
-  text-align: center;
-}
-
 .info {
   display: inline-block;
-  margin: 0 auto;
+  margin: 10px auto;
 }
 
 .info input {

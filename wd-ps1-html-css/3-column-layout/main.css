@@ -12,11 +12,15 @@ html, body {
   flex-direction: column;
 }
 
-h3 {
+.header__name,
+.navigation__name,
+.content__name,
+.sidebar__name,
+.footer__name {
   text-align: center;
 }
 
-header {
+.header {
   background-color: #00b894;
   height: 150px;
 }
@@ -27,20 +31,22 @@ header {
   flex-grow: 1;
 }
 
-nav {
+.navigation {
   background: linear-gradient(to right, #636e72, #b2bec3);
-  flex-basis: 60%;
+  flex-basis: 20%;
+  min-width: 20%;
   display: flex;
   flex-direction: column;
 }
 
 .sidebar {
   background: linear-gradient(to left, #636e72, #b2bec3);
-  flex-basis: 60%;
+  min-width: 20%;
 }
 
 .content {
   background-color: #b2bec3;
+  min-width: calc(60% - 40px);
   flex-grow: 1;
 }
 
@@ -49,19 +55,15 @@ footer {
   height: 50px;
 }
 
-header, .sidebar, .content, footer {
+.header, .sidebar, .content, footer {
   padding: 10px;
 }
 
-nav h3 {
-  margin: 10;
-}
-
-a {
+.navigation__link {
   text-align: center;
   color: #6c5ce7;
 }
 
-a:hover {
+.navigation__link:hover {
   color: #00b894;
 }

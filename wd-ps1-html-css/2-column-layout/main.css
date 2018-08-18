@@ -12,11 +12,13 @@ html, body {
   flex-direction: column;
 }
 
-h3 {
+.header__name,
+.sidebar__name,
+.content__name {
   text-align: center;
 }
 
-header {
+.header {
   background-color: #00b894;
   height: 150px;
 }
@@ -29,7 +31,8 @@ header {
 
 .sidebar {
   background-color: #636e72;
-  flex-basis: 60%;
+  min-width: 30%;
+  flex-basis: 30%;
 }
 
 .content {
