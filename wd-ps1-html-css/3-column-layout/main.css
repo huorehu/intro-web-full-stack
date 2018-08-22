@@ -50,7 +50,7 @@ html, body {
   flex-grow: 1;
 }
 
-footer {
+.footer {
   background-color: #636e72;
   height: 50px;
 }

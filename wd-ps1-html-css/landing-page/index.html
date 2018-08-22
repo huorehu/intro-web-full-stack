@@ -98,41 +98,72 @@
         <h1 class="footer__caption">Register form</h1>
         <form class="register-form">
           <div class="info">
+            <!-- Radio type -->
             <input type="radio" name="os" checked> iOS<br>
             <input type="radio" name="os"> Android<br>
             <input type="radio" name="os"> Windows RT<br>
+
+            <!-- Color type -->
             <label for="color">Gadget color</label>
             <input type="color" id="color" value="#abcdef"><br>
+
+            <!-- Checkbox type -->
             <label for="complectation">Advanced complectation</label>
             <input type="checkbox" id="complectation" value=""><br>
+
+            <!-- Date type -->
             <label for="register-date">Register date</label>
             <input type="date" id="register-date" value="" min="2018-06-01"><br>
+
+            <!-- Datetime-local type -->
             <label for="date-time-local">Date & time local</label>
             <input type="datetime-local" id="date-time-local" value=""><br>
+
+            <!-- File type -->
             <div class="file-upload">
               <label>
                 <input type="file" name="file">
                 <span>Upload file</span>
               </label>
             </div>
+
+            <!-- Hidden type -->
             <input type="hidden" name="model" value="x9">
+
+            <!-- Month type -->
             <label for="month">Month & year</label>
             <input type="month" id="month" value=""><br>
+
+            <!-- Search type -->
             <label for="search">Search</label>
             <input type="search" id="search" value=""><br>
+
+            <!-- Time type -->
             <label for="time">Time</label>
             <input type="time" id="time" value=""><br>
+
+            <!-- Week type -->
             <label for="week">Week & year</label>
             <input type="week" id="week" value=""><br>
+
+            <!-- Url type -->
             <label for="url">Url</label>
             <input type="url" id="url" value=""><br>
+
+            <!-- Range type -->
             <label for="range">Level of security</label>
             <input type="range" id="range" value=""><br>
+
+            <!-- Password type -->
             <label for="password">Enter password</label>
             <input type="password" id="password" value=""><br>
+
+            <!-- Reset type -->
             <input type="reset" id="reset" value="Reset all"><br>
+
+            <!-- Submit type -->
             <input type="submit" id="submit" value="Submit alternative"><br>
-            <input class="click-btn" type="image" src="img/click-here.png" name="click-btn" value="">
+            <button class="sender-form__button">Submit</button>
           </div>
         </form>
       </footer>
