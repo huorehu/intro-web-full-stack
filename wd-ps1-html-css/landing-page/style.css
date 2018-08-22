@@ -2,16 +2,27 @@
   font-family: sans-serif;
 }
 
-html, body, .wrapper, .start-page {
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
-  min-width: 700px;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.wrapper {
+  min-width: 900px;
+  max-width: 1400px;
+  max-height: 900px;
 }
 
 .header {
-  height: 10%;
+  min-height: 10%;
   display: flex;
   flex-direction: row;
 }
@@ -42,7 +53,7 @@ html, body, .wrapper, .start-page {
 }
 
 .product {
-  height: 90%;
+  min-height: 90%;
   background-color: #1abc9c;
   display: flex;
   flex-direction: row;
@@ -54,7 +65,7 @@ html, body, .wrapper, .start-page {
   align-items: center;
 }
 
-.product__image {
+.product__phone > img {
   margin-left: 50%;
 }
 
@@ -65,20 +76,20 @@ html, body, .wrapper, .start-page {
   margin: 50px;
 }
 
-.product__name {
+.product__description > h1 {
   font-size: 200%;
   color: #fff;
 }
 
-.product__text {
+.product__description > p {
   font-size: 100%;
   color: #fff;
   margin: 0;
   line-height: 1.5;
 }
 
-.product__button, .sender-form__button {
-  border-radius: 9px;
+button {
+  border-radius: 10px;
   border: solid 2px #fff;
   padding: 10px 20px;
   width: 160px;
@@ -87,7 +98,7 @@ html, body, .wrapper, .start-page {
   color: #fff;
 }
 
-.product__button:hover, .sender-form__button:hover {
+button:hover {
   border-color: #ccc;
   cursor: pointer;
 }
@@ -96,7 +107,7 @@ p {
   font-size: 160%;
   line-height: 210%;
   text-align: justify;
-  margin: 3%;
+  margin: 5%;
 }
 
 .web__icon, .mobile__icon, .hightload__icon {
@@ -114,7 +125,7 @@ footer p {
 
 .about {
   background-color: #fff;
-  height: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: row;
   font-size: 50%;
@@ -187,7 +198,7 @@ textarea::-moz-placeholder {
 .register-form {
   min-width: 60%;
   border: solid 3px #1abc9c;
-  border-radius: 18px;
+  border-radius: 20px;
   margin: 30px;
   flex: 1;
   display: flex;
@@ -216,8 +227,8 @@ textarea::-moz-placeholder {
   width: 25%;
   height: 20px;
   background: #1abc9c;
-  border-radius: 3px;
-  padding: 8px 4px;
+  border-radius: 5px;
+  padding: 10px 5px;
   color: #fff;
   text-align: center;
 }
@@ -241,9 +252,5 @@ textarea::-moz-placeholder {
 }
 
 .file-upload span {
-  line-height: 36px;
-}
-
-.click-btn:hover {
-  margin: 7px;
+  line-height: 40px;
 }
