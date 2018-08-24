@@ -151,11 +151,6 @@ function countInterval() {
   dateIntervalResult.style.color = "#000";
 }
 
-/* Adds method for replace characters in string */
-String.prototype.replaceAll = function(search, replace){
-  return this.split(search).join(replace);
-}
-
 /* Verifies the correct date */
 function isCorrectDate(date, dateStr) {
   if (isNaN(date.getTime())) {
@@ -168,31 +163,30 @@ function isCorrectDate(date, dateStr) {
   } else {
     monthDay = dateStr.substring(0, dateStr.indexOf(',')).trim();
   }
-  let day = monthDay.replaceAll(/\D/, "");
+  let day = monthDay.replace(/\D/g, "");
 
   return date.getDate() == day;
 }
 
+Date.prototype.getDaysCurrentMonth = function() {
+  return new Date(this.getFullYear(), this.getMonth() + 1, 0).getDate();
+}
+
 function getDateIntervalArray(startDate, endDate) {
   const TIME_UNITS = [12,
-                      new Date(endDate.getFullYear(), endDate.getMonth() + 1, 0).getDate(),
+                      new Date(endDate.getFullYear(), endDate.getMonth() - 1, 1).getDaysCurrentMonth(),
                       24,
                       60,
                       60];
 
   let dateInterval = [endDate.getFullYear() - startDate.getFullYear(),
                       endDate.getMonth() - startDate.getMonth(),
-                      endDate.getDate() - startDate.getDate(),
+                      TIME_UNITS[1] - startDate.getDate() + endDate.getDate(),
                       endDate.getHours() - startDate.getHours(),
                       endDate.getMinutes() - startDate.getMinutes(),
                       endDate.getSeconds() - startDate.getSeconds()];
 
-  for (let i = dateInterval.length - 1; i > 0; i--) {
-    if (dateInterval[i] < 0) {
-      dateInterval[i] += TIME_UNITS[i - 1];
-      dateInterval[i - 1]--;
-    }
-  }
+  correctDateInterval(dateInterval, TIME_UNITS);
 
   let dateIntervalArray = [`${dateInterval[0]} ${choiceFormatedCounterSuffix(dateInterval[0], yearForms)}`,
                            `${dateInterval[1]} ${choiceFormatedCounterSuffix(dateInterval[1], monthForms)}`,
@@ -202,6 +196,23 @@ function getDateIntervalArray(startDate, endDate) {
                            `${dateInterval[5]} ${choiceFormatedCounterSuffix(dateInterval[5], secondForms)}`];
 
   return dateIntervalArray;
+}
+
+function correctDateInterval(dateInterval, TIME_UNITS) {
+  if (dateInterval[2] > TIME_UNITS[1]) {
+    dateInterval[2] = dateInterval[2] - TIME_UNITS[1];
+  } else if (dateInterval[1] > 0) {
+    dateInterval[1]--;
+  } else {
+    dateInterval[2] = 0;
+  }
+
+  for (let i = dateInterval.length - 1; i > 0; i--) {
+    if (dateInterval[i] < 0) {
+      dateInterval[i] += TIME_UNITS[i - 1];
+      dateInterval[i - 1]--;
+    }
+  }
 }
 
 /* Task-7: знаки зодиака */
@@ -351,7 +362,7 @@ function countDigitsSum() {
     return;
   }
 
-  let result = number.replaceAll(/\D/, "")
+  let result = number.replace(/\D/g, "")
                  .split('')
                  .reduce((tmpResult, number) => tmpResult + parseInt(number), 0);
 
