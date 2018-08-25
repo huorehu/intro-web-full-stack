@@ -13,8 +13,8 @@ function countSum() {
 /* Task-2: посчитать сумму чисел от -1000 до 1000, суммируя только числа, которые заканчиваются на 2,3 и 7 */
 function countSum237() {
   let result = 0;
-  let from = -1000;
-  let to = 1000;
+  const from = -1000;
+  const to = 1000;
 
   for (let i = from; i <= to; i++) {
     let numberSuffix = Math.abs(i % 10);
@@ -30,22 +30,22 @@ function countSum237() {
                                                             **
                                                             *** */ //
 function drawStars() {
-  let amountStars = 50;
-  let symbol = "*";
+  const amountStars = 50;
+  const symbol = "*";
   let addedLine = "";
-  let blockStars = document.getElementById('block-stars');
-  let ulElem = document.createElement('ul');
+  const blockStars = document.getElementById('block-stars');
+  const ulElem = document.createElement('ul');
   ulElem.classList.add("row-of-list");
 
   for (let i = 0; i < amountStars; i++) {
     addedLine += symbol;
-    let liElem = document.createElement('li');
+    const liElem = document.createElement('li');
     liElem.innerHTML = addedLine;
     ulElem.appendChild(liElem);
   }
 
   blockStars.appendChild(ulElem);
-  let button = document.getElementById('draw-stars');
+  const button = document.getElementById('draw-stars');
   button.onclick = clearBlockStars;
   button.innerText = "Clear";
 }
@@ -53,7 +53,7 @@ function drawStars() {
 function clearBlockStars() {
   let blockStars = document.getElementById('block-stars');
   blockStars.removeChild(blockStars.getElementsByTagName('ul')[0]);
-  let button = document.getElementById('draw-stars');
+  const button = document.getElementById('draw-stars');
   button.onclick = drawStars;
   button.innerText = "Draw stars";
 }
@@ -62,8 +62,8 @@ function clearBlockStars() {
 function secondsToFormatTime() {
   const SECONDS_IN_HOUR = 3600;
   const SECONDS_IN_MINUTE = 60;
-  let resultBlock = document.getElementById('time-seconds');
-  let seconds = document.getElementById('seconds').value;
+  const resultBlock = document.getElementById('time-seconds');
+  const seconds = document.getElementById('seconds').value;
   resultBlock.innerText = "";
 
   if (isContainsNotNumberCharacters(seconds)) {
@@ -71,9 +71,9 @@ function secondsToFormatTime() {
     return;
   }
 
-  let hh = getIntegerTimeInterval(seconds, SECONDS_IN_HOUR) + "";
-  let mm = getIntegerTimeInterval(seconds - hh * SECONDS_IN_HOUR, SECONDS_IN_MINUTE) + "";
-  let ss = seconds - hh * SECONDS_IN_HOUR - mm * SECONDS_IN_MINUTE + "";
+  const hh = getIntegerTimeInterval(seconds, SECONDS_IN_HOUR) + "";
+  const mm = getIntegerTimeInterval(seconds - hh * SECONDS_IN_HOUR, SECONDS_IN_MINUTE) + "";
+  const ss = seconds - hh * SECONDS_IN_HOUR - mm * SECONDS_IN_MINUTE + "";
 
   resultBlock.innerText = `${hh.padStart(2, '0')}-${mm.padStart(2, '0')}-${ss.padStart(2, '0')}`;
   resultBlock.style.color = "#000";
@@ -85,7 +85,7 @@ function isContainsNotNumberCharacters(str) {
 
 /* Task-5: вывести фразу вида "22 года" */
 function formatAge() {
-  let ageResult = document.getElementById('formated-age');
+  const ageResult = document.getElementById('formated-age');
   let age = document.getElementById('age').value;
 
   if (isContainsNotNumberCharacters(age)) {
@@ -107,8 +107,8 @@ const minuteForms = ["минута", "минуты", "минут"];
 const secondForms = ["секунда", "секунды", "секунд"];
 
 function choiceFormatedCounterSuffix(number, counterForms) {
-  let numberSuffix = number % 10;
-  let numberSuffixDiv100 = number % 100;
+  const numberSuffix = number % 10;
+  const numberSuffixDiv100 = number % 100;
 
   if (numberSuffixDiv100 > 10 && numberSuffixDiv100 < 15 || numberSuffix > 4 || numberSuffix == 0) {
     return counterForms[2];
@@ -127,9 +127,9 @@ function getIntegerTimeInterval(seconds, maxTimeUnitSize) {
 
 /* Task-6: вычислить промежуток времени */
 function countInterval() {
-  let dateIntervalResult = document.getElementById('date-interval');
-  let startDateStr = document.getElementById('startDate').value;
-  let endDateStr = document.getElementById('endDate').value;
+  const dateIntervalResult = document.getElementById('date-interval');
+  const startDateStr = document.getElementById('startDate').value;
+  const endDateStr = document.getElementById('endDate').value;
   let startDate = new Date(startDateStr);
   let endDate = new Date(endDateStr);
 
@@ -145,7 +145,7 @@ function countInterval() {
     endDate = tmpDate;
   }
 
-  let dateIntervalArray = getDateIntervalArray(startDate, endDate);
+  const dateIntervalArray = getDateIntervalArray(startDate, endDate);
   dateIntervalResult.innerText = "";
   dateIntervalResult.innerText = `Между датами прошло ${dateIntervalArray.join(", ")}`;
   dateIntervalResult.style.color = "#000";
@@ -163,7 +163,7 @@ function isCorrectDate(date, dateStr) {
   } else {
     monthDay = dateStr.substring(0, dateStr.indexOf(',')).trim();
   }
-  let day = monthDay.replace(/\D/g, "");
+  const day = monthDay.replace(/\D/g, "");
 
   return date.getDate() == day;
 }
@@ -179,7 +179,7 @@ function getDateIntervalArray(startDate, endDate) {
                       60,
                       60];
 
-  let dateInterval = [endDate.getFullYear() - startDate.getFullYear(),
+  const dateInterval = [endDate.getFullYear() - startDate.getFullYear(),
                       endDate.getMonth() - startDate.getMonth(),
                       TIME_UNITS[1] - startDate.getDate() + endDate.getDate(),
                       endDate.getHours() - startDate.getHours(),
@@ -188,7 +188,7 @@ function getDateIntervalArray(startDate, endDate) {
 
   correctDateInterval(dateInterval, TIME_UNITS);
 
-  let dateIntervalArray = [`${dateInterval[0]} ${choiceFormatedCounterSuffix(dateInterval[0], yearForms)}`,
+  const dateIntervalArray = [`${dateInterval[0]} ${choiceFormatedCounterSuffix(dateInterval[0], yearForms)}`,
                            `${dateInterval[1]} ${choiceFormatedCounterSuffix(dateInterval[1], monthForms)}`,
                            `${dateInterval[2]} ${choiceFormatedCounterSuffix(dateInterval[2], dayForms)}`,
                            `${dateInterval[3]} ${choiceFormatedCounterSuffix(dateInterval[3], hourForms)}`,
@@ -217,9 +217,9 @@ function correctDateInterval(dateInterval, TIME_UNITS) {
 
 /* Task-7: знаки зодиака */
 function getZodiacSign() {
-  let resultBlock = document.getElementById('zodiac-result');
-  let birthdayStr = document.getElementById('zodiac').value;
-  let birthday = new Date(birthdayStr);
+  const resultBlock = document.getElementById('zodiac-result');
+  const birthdayStr = document.getElementById('zodiac').value;
+  const birthday = new Date(birthdayStr);
   resultBlock.innerHTML = "";
   resultBlock.style.color = "#000"
 
@@ -228,8 +228,8 @@ function getZodiacSign() {
     return;
   }
 
-  let month = birthday.getMonth() + 1;
-  let day = birthday.getDate();
+  const month = birthday.getMonth() + 1;
+  const day = birthday.getDate();
   let result;
 
   if (month == 1 && day >= 20 || month == 2 && day <= 18) {
@@ -263,10 +263,10 @@ function getZodiacSign() {
 
 /* Task-8: шахматная доска */
 function drawBoard() {
-  let resultBlock = document.getElementById('board-result');
-  let boardSize = document.getElementById('chessboard').value;
-  let boardWidth = parseInt(boardSize);
-  let boardHeight = getBoardHeight(boardSize) * 1;
+  const resultBlock = document.getElementById('board-result');
+  const boardSize = document.getElementById('chessboard').value;
+  const boardWidth = parseInt(boardSize);
+  const boardHeight = getBoardHeight(boardSize) * 1;
   resultBlock.innerHTML = "";
 
   if (boardWidth <= 0 || boardHeight <= 0 || (boardHeight + "") === "NaN") {
@@ -283,14 +283,14 @@ function clearChessboard() {
 }
 
 function drawChessboard(boardWidth, boardHeight, resultBlock) {
-  let table = document.createElement('table');
+  const table = document.createElement('table');
   table.classList.add("chessboard");
   resultBlock.appendChild(table);
 
   for (let i = 0; i < boardHeight; i++) {
-    let tr = document.createElement('tr');
+    const tr = document.createElement('tr');
     for (let j = 0; j < boardWidth; j++) {
-      let td = document.createElement('td');
+      const td = document.createElement('td');
       td.classList.add("chessboard__cell");
       if ((i + j) % 2 == 0) {
         td.style.background = "#fff";
@@ -320,21 +320,21 @@ function getBoardHeight(boardSize) {
 
 /* Task-9: определить номер подъезда и этаж по номеру квартиры */
 function getAppartmentNumber() {
-  let entrances = document.getElementById('entrances').value;
-  let appartmentsPerFloor = document.getElementById('appartments-per-floor').value;
-  let floors = document.getElementById('floors').value;
-  let appartmentNumber = document.getElementById('appartment-number').value;
-  let result = document.getElementById('appartment-result');
+  const entrances = document.getElementById('entrances').value;
+  const appartmentsPerFloor = document.getElementById('appartments-per-floor').value;
+  const floors = document.getElementById('floors').value;
+  const appartmentNumber = document.getElementById('appartment-number').value;
+  const result = document.getElementById('appartment-result');
 
   if (!isValidAppartmentParameters(entrances, appartmentsPerFloor, floors, appartmentNumber)) {
     showErrorMessage(result);
     return;
   }
 
-  let amountHouseAppartments = entrances * appartmentsPerFloor * floors;
-  let appartmentsPerEntrance = appartmentsPerFloor * floors;
-  let entrance = intDivUpAround(appartmentNumber, appartmentsPerEntrance);
-  let floor = intDivUpAround((appartmentNumber - appartmentsPerEntrance * (entrance - 1)), appartmentsPerFloor);
+  const amountHouseAppartments = entrances * appartmentsPerFloor * floors;
+  const appartmentsPerEntrance = appartmentsPerFloor * floors;
+  const entrance = intDivUpAround(appartmentNumber, appartmentsPerEntrance);
+  const floor = intDivUpAround((appartmentNumber - appartmentsPerEntrance * (entrance - 1)), appartmentsPerFloor);
   result.innerText = `Entrance number: ${entrance}\nFloor number: ${floor}`;
   result.style.color = "#000";
 }
@@ -354,15 +354,15 @@ function intDivision(num, div) {
 
 /* Task-10: найти сумму цифр введённого числа */
 function countDigitsSum() {
-  let blockResult = document.getElementById('digits-sum');
-  let number = document.getElementById('count-digits').value;
+  const blockResult = document.getElementById('digits-sum');
+  const number = document.getElementById('count-digits').value;
 
   if (number === "") {
     showErrorMessage(blockResult);
     return;
   }
 
-  let result = number.replace(/\D/g, "")
+  const result = number.replace(/\D/g, "")
                  .split('')
                  .reduce((tmpResult, number) => tmpResult + parseInt(number), 0);
 
@@ -373,7 +373,7 @@ function countDigitsSum() {
 /* Task-11: textarea, в который пользователь вводит ссылки */
 function showSortedLinks() {
   const MIN_LINK_BLOCK_LENGTH = 32;
-  let sortedLinks = document.getElementById('links')
+  const sortedLinks = document.getElementById('links')
                             .value
                             .split(',')
                             .map(link => link.trim())
@@ -382,22 +382,22 @@ function showSortedLinks() {
                             .map(link => `<li><a href="http://${link}">${link}</a></li>`)
                             .join('');
 
-  let outputArea = document.getElementById('links-result');
+  const outputArea = document.getElementById('links-result');
   outputArea.innerHTML = "";
 
   if (sortedLinks.length < MIN_LINK_BLOCK_LENGTH) {
     return;
   }
 
-  let result = document.createElement('ul');
+  const result = document.createElement('ul');
   result.innerHTML = sortedLinks;
   result.classList.add("row-of-list");
   outputArea.appendChild(result);
 }
 
 function clearTextArea() {
-  let clearedBlock = document.getElementById('task11');
-  let removedChild = clearedBlock.getElementsByTagName('ul')[0];
+  const clearedBlock = document.getElementById('task11');
+  const removedChild = clearedBlock.getElementsByTagName('ul')[0];
   clearedBlock.getElementsByTagName('textarea')[0].value = "";
 
   if (removedChild) {
