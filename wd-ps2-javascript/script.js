@@ -17,8 +17,8 @@ function countSum237() {
   const to = 1000;
 
   for (let i = from; i <= to; i++) {
-    let numberSuffix = Math.abs(i % 10);
-    if (numberSuffix == 2 || numberSuffix == 3 || numberSuffix == 7) {
+    const numberSuffix = Math.abs(i % 10);
+    if (numberSuffix === 2 || numberSuffix === 3 || numberSuffix === 7) {
       result += i;
     }
   }
@@ -110,9 +110,9 @@ function choiceFormatedCounterSuffix(number, counterForms) {
   const numberSuffix = number % 10;
   const numberSuffixDiv100 = number % 100;
 
-  if (numberSuffixDiv100 > 10 && numberSuffixDiv100 < 15 || numberSuffix > 4 || numberSuffix == 0) {
+  if (numberSuffixDiv100 > 10 && numberSuffixDiv100 < 15 || numberSuffix > 4 || numberSuffix === 0) {
     return counterForms[2];
-  } else if (numberSuffix == 1) {
+  } else if (numberSuffix === 1) {
     return counterForms[0];
   } else if (numberSuffix > 1) {
     return counterForms[1];
@@ -232,29 +232,29 @@ function getZodiacSign() {
   const day = birthday.getDate();
   let result;
 
-  if (month == 1 && day >= 20 || month == 2 && day <= 18) {
+  if (month === 1 && day >= 20 || month === 2 && day <= 18) {
     result = "<img src='img/water-bearer.png' alt=zodiac><p>Aquarius</p>";
-  } else if (month == 2 && day >= 19 || month == 3 && day <= 20) {
+  } else if (month === 2 && day >= 19 || month === 3 && day <= 20) {
     result = "<img src='img/fish.png' alt=zodiac><p>Pisces</p>";
-  } else if (month == 3 && day >= 21 || month == 4 && day <= 19) {
+  } else if (month === 3 && day >= 21 || month === 4 && day <= 19) {
     result = "<img src='img/ram.png' alt=zodiac><p>Aries</p>";
-  } else if (month == 4 && day >= 20 || month == 5 && day <= 20) {
+  } else if (month === 4 && day >= 20 || month === 5 && day <= 20) {
     result = "<img src='img/bull.png' alt=zodiac><p>Taurus</p>";
-  } else if (month == 5 && day >= 21 || month == 6 && day <= 20) {
+  } else if (month === 5 && day >= 21 || month === 6 && day <= 20) {
     result = "<img src='img/twins.png' alt=zodiac><p>Gemini</p>";
-  } else if (month == 6 && day >= 21 || month == 7 && day <= 22) {
+  } else if (month === 6 && day >= 21 || month === 7 && day <= 22) {
     result = "<img src='img/crab.png' alt=zodiac><p>Cancer</p>";
-  } else if (month == 7 && day >= 23 || month == 8 && day <= 22) {
+  } else if (month === 7 && day >= 23 || month === 8 && day <= 22) {
     result = "<img src='img/lion.png' alt=zodiac><p>Leo</p>";
-  } else if (month == 8 && day >= 23 || month == 9 && day <= 22) {
+  } else if (month === 8 && day >= 23 || month === 9 && day <= 22) {
     result = "<img src='img/maiden.png' alt=zodiac><p>Virgo</p>";
-  } else if (month == 9 && day >= 23 || month == 10 && day <= 22) {
+  } else if (month === 9 && day >= 23 || month === 10 && day <= 22) {
     result = "<img src='img/scales.png' alt=zodiac><p>Libra</p>";
-  } else if (month == 10 && day >= 23 || month == 11 && day <= 21) {
+  } else if (month === 10 && day >= 23 || month === 11 && day <= 21) {
     result = "<img src='img/scorpion.png' alt=zodiac><p>Scorpio</p>";
-  } else if (month == 11 && day >= 22 || month == 12 && day <= 21) {
+  } else if (month === 11 && day >= 22 || month === 12 && day <= 21) {
     result = "<img src='img/archer.png' alt=zodiac><p>Sagittarius</p>";
-  } else if (month == 12 && day >= 22 || month == 1 && day <= 19) {
+  } else if (month === 12 && day >= 22 || month === 1 && day <= 19) {
     result = "<img src='img/goat.png' alt=zodiac><p>Capricorn</p>";
   }
 
@@ -292,7 +292,7 @@ function drawChessboard(boardWidth, boardHeight, resultBlock) {
     for (let j = 0; j < boardWidth; j++) {
       const td = document.createElement('td');
       td.classList.add("chessboard__cell");
-      if ((i + j) % 2 == 0) {
+      if ((i + j) % 2 === 0) {
         td.style.background = "#fff";
       } else {
         td.style.background = "#000";
