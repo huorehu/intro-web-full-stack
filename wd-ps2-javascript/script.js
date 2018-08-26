@@ -186,7 +186,7 @@ function getDateIntervalArray(startDate, endDate) {
                       endDate.getMinutes() - startDate.getMinutes(),
                       endDate.getSeconds() - startDate.getSeconds()];
 
-  correctDateInterval(dateInterval, TIME_UNITS);
+  correctDateInterval(dateInterval, TIME_UNITS, (startDate.getMonth() - endDate.getMonth()) > 0);
 
   const dateIntervalArray = [`${dateInterval[0]} ${choiceFormatedCounterSuffix(dateInterval[0], yearForms)}`,
                            `${dateInterval[1]} ${choiceFormatedCounterSuffix(dateInterval[1], monthForms)}`,
@@ -198,13 +198,14 @@ function getDateIntervalArray(startDate, endDate) {
   return dateIntervalArray;
 }
 
-function correctDateInterval(dateInterval, TIME_UNITS) {
-  if (dateInterval[2] > TIME_UNITS[1]) {
+function correctDateInterval(dateInterval, TIME_UNITS, isReverseMonths) {
+  if (dateInterval[2] >= TIME_UNITS[1]) {
     dateInterval[2] = dateInterval[2] - TIME_UNITS[1];
-  } else if (dateInterval[1] > 0) {
+    dateInterval[1]++;
+  }
+
+  if (isReverseMonths || dateInterval[1] > 0) {
     dateInterval[1]--;
-  } else {
-    dateInterval[2] = 0;
   }
 
   for (let i = dateInterval.length - 1; i > 0; i--) {
