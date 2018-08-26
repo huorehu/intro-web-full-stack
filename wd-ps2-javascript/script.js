@@ -65,6 +65,7 @@ function secondsToFormatTime() {
   const resultBlock = document.getElementById('time-seconds');
   const seconds = document.getElementById('seconds').value;
   resultBlock.innerText = "";
+  resultBlock.classList = "";
 
   if (isContainsNotNumberCharacters(seconds)) {
     showErrorMessage(resultBlock);
@@ -76,7 +77,6 @@ function secondsToFormatTime() {
   const ss = seconds - hh * SECONDS_IN_HOUR - mm * SECONDS_IN_MINUTE + "";
 
   resultBlock.innerText = `${hh.padStart(2, '0')}-${mm.padStart(2, '0')}-${ss.padStart(2, '0')}`;
-  resultBlock.style.color = "#000";
 }
 
 function isContainsNotNumberCharacters(str) {
@@ -95,8 +95,8 @@ function formatAge() {
 
   age *= 1;
   ageResult.innerText = "";
+  ageResult.classList = "";
   ageResult.innerText = `${age} ${choiceFormatedCounterSuffix(age, yearForms)}`;
-  ageResult.style.color = "#000";
 }
 
 const yearForms = ["год", "года", "лет"];
@@ -147,8 +147,8 @@ function countInterval() {
 
   const dateIntervalArray = getDateIntervalArray(startDate, endDate);
   dateIntervalResult.innerText = "";
+  dateIntervalResult.classList = "";
   dateIntervalResult.innerText = `Между датами прошло ${dateIntervalArray.join(", ")}`;
-  dateIntervalResult.style.color = "#000";
 }
 
 /* Verifies the correct date */
@@ -221,7 +221,7 @@ function getZodiacSign() {
   const birthdayStr = document.getElementById('zodiac').value;
   const birthday = new Date(birthdayStr);
   resultBlock.innerHTML = "";
-  resultBlock.style.color = "#000"
+  resultBlock.classList = "";
 
   if (!isCorrectDate(birthday, birthdayStr)) {
     showErrorMessage(resultBlock);
@@ -264,7 +264,7 @@ function getZodiacSign() {
 /* Task-8: шахматная доска */
 function drawBoard() {
   const resultBlock = document.getElementById('board-result');
-  const boardSize = document.getElementById('chessboard').value;
+  const boardSize = document.getElementById('chessboard-size').value;
   const boardWidth = parseInt(boardSize);
   const boardHeight = getBoardHeight(boardSize) * 1;
   resultBlock.innerHTML = "";
@@ -293,9 +293,9 @@ function drawChessboard(boardWidth, boardHeight, resultBlock) {
       const td = document.createElement('td');
       td.classList.add("chessboard__cell");
       if ((i + j) % 2 === 0) {
-        td.style.background = "#fff";
+        td.classList.add("chessboard__cell_white");
       } else {
-        td.style.background = "#000";
+        td.classList.add("chessboard__cell_black");
       }
       tr.appendChild(td);
     }
@@ -336,7 +336,7 @@ function getAppartmentNumber() {
   const entrance = intDivUpAround(appartmentNumber, appartmentsPerEntrance);
   const floor = intDivUpAround((appartmentNumber - appartmentsPerEntrance * (entrance - 1)), appartmentsPerFloor);
   result.innerText = `Entrance number: ${entrance}\nFloor number: ${floor}`;
-  result.style.color = "#000";
+  result.classList = "";
 }
 
 function isValidAppartmentParameters(entrances, appartmentsPerFloor, floors, appartmentNumber) {
@@ -367,7 +367,7 @@ function countDigitsSum() {
                  .reduce((tmpResult, number) => tmpResult + parseInt(number), 0);
 
   blockResult.innerText = `Result = ${result}`;
-  blockResult.style.color = "#000";
+  blockResult.classList = "";
 }
 
 /* Task-11: textarea, в который пользователь вводит ссылки */
@@ -407,5 +407,5 @@ function clearTextArea() {
 
 function showErrorMessage(blockForError) {
   blockForError.innerText = "Wrong input data";
-  blockForError.style.color = "red";
+  blockForError.classList.add("error-text");
 }
