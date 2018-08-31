@@ -3,12 +3,16 @@
 }
 
 .task {
-  border-radius: 9px;
+  padding: 10px;
+  margin: 10px;
+  border: solid #FFA07A 1px;
+  border-radius: 15px;
   background-color: #ccc;
 }
 
-.task__name {
-  color: #27ae60;
+h2 {
+  font-family: 'Exo 2', sans-serif;
+  color: #FF7F50		;
   font-size: 150%;
 }
 

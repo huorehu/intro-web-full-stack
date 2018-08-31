@@ -60,27 +60,31 @@ function clearBlockStars() {
 
 /* Task-4: вывести в формате: hh:mm:ss */
 function secondsToFormatTime() {
-  const SECONDS_IN_HOUR = 3600;
-  const SECONDS_IN_MINUTE = 60;
+  const secondsInHour = 3600;
+  const secondsInMinute = 60;
   const resultBlock = document.getElementById('time-seconds');
   const seconds = document.getElementById('seconds').value;
   resultBlock.innerText = "";
-  resultBlock.classList = "";
+  resultBlock.classList.remove("error-text");
 
-  if (isContainsNotNumberCharacters(seconds)) {
+  if (isContainsNotNumberCharacters(seconds) || !isInteger(seconds * 1)) {
     showErrorMessage(resultBlock);
     return;
   }
 
-  const hh = getIntegerTimeInterval(seconds, SECONDS_IN_HOUR) + "";
-  const mm = getIntegerTimeInterval(seconds - hh * SECONDS_IN_HOUR, SECONDS_IN_MINUTE) + "";
-  const ss = seconds - hh * SECONDS_IN_HOUR - mm * SECONDS_IN_MINUTE + "";
+  const hh = getIntegerTimeInterval(seconds, secondsInHour) + "";
+  const mm = getIntegerTimeInterval(seconds - hh * secondsInHour, secondsInMinute) + "";
+  const ss = seconds - hh * secondsInHour - mm * secondsInMinute + "";
 
   resultBlock.innerText = `${hh.padStart(2, '0')}-${mm.padStart(2, '0')}-${ss.padStart(2, '0')}`;
 }
 
 function isContainsNotNumberCharacters(str) {
   return str.indexOf('-') >= 0 || str === "";
+}
+
+function isInteger(num) {
+  return (num ^ 0) === num;
 }
 
 /* Task-5: вывести фразу вида "22 года" */
@@ -95,7 +99,7 @@ function formatAge() {
 
   age *= 1;
   ageResult.innerText = "";
-  ageResult.classList = "";
+  ageResult.classList.remove("error-text");
   ageResult.innerText = `${age} ${choiceFormatedCounterSuffix(age, yearForms)}`;
 }
 
@@ -140,14 +144,12 @@ function countInterval() {
 
   /* Swaps dates */
   if (startDate > endDate) {
-    let tmpDate = startDate;
-    startDate = endDate;
-    endDate = tmpDate;
+    [startDate, endDate] = [endDate, startDate];
   }
 
   const dateIntervalArray = getDateIntervalArray(startDate, endDate);
   dateIntervalResult.innerText = "";
-  dateIntervalResult.classList = "";
+  dateIntervalResult.classList.remove("error-text");
   dateIntervalResult.innerText = `Между датами прошло ${dateIntervalArray.join(", ")}`;
 }
 
@@ -173,7 +175,8 @@ Date.prototype.getDaysCurrentMonth = function() {
 }
 
 function getDateIntervalArray(startDate, endDate) {
-  const TIME_UNITS = [12,
+  const timeUnits = [12,
+                      /* Amount of days a month before the month of the end date */
                       new Date(endDate.getFullYear(), endDate.getMonth() - 1, 1).getDaysCurrentMonth(),
                       24,
                       60,
@@ -181,12 +184,12 @@ function getDateIntervalArray(startDate, endDate) {
 
   const dateInterval = [endDate.getFullYear() - startDate.getFullYear(),
                       endDate.getMonth() - startDate.getMonth(),
-                      TIME_UNITS[1] - startDate.getDate() + endDate.getDate(),
+                      endDate.getDate() - startDate.getDate(),
                       endDate.getHours() - startDate.getHours(),
                       endDate.getMinutes() - startDate.getMinutes(),
                       endDate.getSeconds() - startDate.getSeconds()];
 
-  correctDateInterval(dateInterval, TIME_UNITS, (startDate.getMonth() - endDate.getMonth()) > 0);
+  correctDateInterval(dateInterval, timeUnits);
 
   const dateIntervalArray = [`${dateInterval[0]} ${choiceFormatedCounterSuffix(dateInterval[0], yearForms)}`,
                            `${dateInterval[1]} ${choiceFormatedCounterSuffix(dateInterval[1], monthForms)}`,
@@ -198,19 +201,10 @@ function getDateIntervalArray(startDate, endDate) {
   return dateIntervalArray;
 }
 
-function correctDateInterval(dateInterval, TIME_UNITS, isReverseMonths) {
-  if (dateInterval[2] >= TIME_UNITS[1]) {
-    dateInterval[2] = dateInterval[2] - TIME_UNITS[1];
-    dateInterval[1]++;
-  }
-
-  if (isReverseMonths || dateInterval[1] > 0) {
-    dateInterval[1]--;
-  }
-
+function correctDateInterval(dateInterval, timeUnits) {
   for (let i = dateInterval.length - 1; i > 0; i--) {
     if (dateInterval[i] < 0) {
-      dateInterval[i] += TIME_UNITS[i - 1];
+      dateInterval[i] += timeUnits[i - 1];
       dateInterval[i - 1]--;
     }
   }
@@ -222,7 +216,7 @@ function getZodiacSign() {
   const birthdayStr = document.getElementById('zodiac').value;
   const birthday = new Date(birthdayStr);
   resultBlock.innerHTML = "";
-  resultBlock.classList = "";
+  resultBlock.classList.remove("error-text");
 
   if (!isCorrectDate(birthday, birthdayStr)) {
     showErrorMessage(resultBlock);
@@ -266,15 +260,17 @@ function getZodiacSign() {
 function drawBoard() {
   const resultBlock = document.getElementById('board-result');
   const boardSize = document.getElementById('chessboard-size').value;
-  const boardWidth = parseInt(boardSize);
-  const boardHeight = getBoardHeight(boardSize) * 1;
   resultBlock.innerHTML = "";
 
-  if (boardWidth <= 0 || boardHeight <= 0 || (boardHeight + "") === "NaN") {
+  if (!boardSize.match(/^[1-9]\d*[xXхХ][1-9]\d*$/)) {
     resultBlock.appendChild(document.createElement('p'));
     showErrorMessage(resultBlock.firstChild);
     return;
   }
+
+  const boardSizeArr = boardSize.split(/[xXхХ]/); // en & ru
+  const boardWidth = parseInt(boardSizeArr[0]);
+  const boardHeight = parseInt(boardSizeArr[1]);
 
   drawChessboard(boardWidth, boardHeight, resultBlock);
 }
@@ -305,52 +301,30 @@ function drawChessboard(boardWidth, boardHeight, resultBlock) {
   }
 }
 
-function getBoardHeight(boardSize) {
-  let indexOfHeightValue;
-
-  if (boardSize) {
-    boardSize += "";
-    indexOfHeightValue = boardSize.indexOf('x'); // For english 'x'
-    indexOfHeightValue = indexOfHeightValue > 0 ? ++indexOfHeightValue : boardSize.indexOf('х') + 1; // For russian 'x'
-    if (indexOfHeightValue > 1 && indexOfHeightValue < boardSize.length) {
-      return boardSize.substring(indexOfHeightValue);
-    }
-  }
-  return -1;
-}
-
 /* Task-9: определить номер подъезда и этаж по номеру квартиры */
-function getAppartmentNumber() {
+function getApartmentNumber() {
   const entrances = document.getElementById('entrances').value;
-  const appartmentsPerFloor = document.getElementById('appartments-per-floor').value;
+  const apartmentsPerFloor = document.getElementById('apartments-per-floor').value;
   const floors = document.getElementById('floors').value;
-  const appartmentNumber = document.getElementById('appartment-number').value;
-  const result = document.getElementById('appartment-result');
+  const apartmentNumber = document.getElementById('apartment-number').value;
+  const result = document.getElementById('apartment-result');
 
-  if (!isValidAppartmentParameters(entrances, appartmentsPerFloor, floors, appartmentNumber)) {
+  if (!isValidApartmentParameters(entrances, apartmentsPerFloor, floors, apartmentNumber) ||
+      (entrances + apartmentsPerFloor + floors + apartmentNumber).match(/[.e-]/)) {
     showErrorMessage(result);
     return;
   }
 
-  const amountHouseAppartments = entrances * appartmentsPerFloor * floors;
-  const appartmentsPerEntrance = appartmentsPerFloor * floors;
-  const entrance = intDivUpAround(appartmentNumber, appartmentsPerEntrance);
-  const floor = intDivUpAround((appartmentNumber - appartmentsPerEntrance * (entrance - 1)), appartmentsPerFloor);
+  const apartmentsPerEntrance = apartmentsPerFloor * floors;
+  const entrance = Math.ceil(apartmentNumber / apartmentsPerEntrance);
+  const floor = Math.ceil((apartmentNumber - apartmentsPerEntrance * (entrance - 1)) / apartmentsPerFloor);
   result.innerText = `Entrance number: ${entrance}\nFloor number: ${floor}`;
-  result.classList = "";
+  result.classList.remove("error-text");
 }
 
-function isValidAppartmentParameters(entrances, appartmentsPerFloor, floors, appartmentNumber) {
-  return entrances * 1 > 0 && appartmentsPerFloor * 1 > 0 && floors * 1 > 0 && appartmentNumber * 1 > 0 &&
-         (entrances * appartmentsPerFloor * floors) >= appartmentNumber;
-}
-
-function intDivUpAround(num, div) {
-  return intDivision(num, div) - (intDivision((div - (num % div)), div) - 1);
-}
-
-function intDivision(num, div) {
-  return (num - num % div) / div;
+function isValidApartmentParameters(entrances, apartmentsPerFloor, floors, apartmentNumber) {
+  return entrances > 0 && apartmentsPerFloor > 0 && floors > 0 && apartmentNumber > 0 &&
+         entrances * apartmentsPerFloor * floors >= apartmentNumber;
 }
 
 /* Task-10: найти сумму цифр введённого числа */
@@ -368,17 +342,17 @@ function countDigitsSum() {
                  .reduce((tmpResult, number) => tmpResult + parseInt(number), 0);
 
   blockResult.innerText = `Result = ${result}`;
-  blockResult.classList = "";
+  blockResult.classList.remove("error-text");
 }
 
 /* Task-11: textarea, в который пользователь вводит ссылки */
 function showSortedLinks() {
-  const MIN_LINK_BLOCK_LENGTH = 32;
+  const minLinkBlockLength = 32;
   const sortedLinks = document.getElementById('links')
                             .value
                             .split(',')
                             .map(link => link.trim())
-                            .map(link => link.replace(/^https?:\/\//i, ""))
+                            .replace(/^https?:\/\//i, "")
                             .sort()
                             .map(link => `<li><a href="http://${link}">${link}</a></li>`)
                             .join('');
@@ -386,7 +360,7 @@ function showSortedLinks() {
   const outputArea = document.getElementById('links-result');
   outputArea.innerHTML = "";
 
-  if (sortedLinks.length < MIN_LINK_BLOCK_LENGTH) {
+  if (sortedLinks.length < minLinkBlockLength) {
     return;
   }
 
