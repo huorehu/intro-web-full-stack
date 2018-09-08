@@ -34,7 +34,7 @@ function drawStars() {
   let addedLine = "";
   const blockStars = document.getElementById('block-stars');
   const ulElem = document.createElement('ul');
-  ulElem.classList.add("row-of-list");
+  ulElem.classList.add('row-of-list');
 
   for (let i = 0; i < amountStars; i++) {
     addedLine += symbol;
@@ -44,17 +44,10 @@ function drawStars() {
   }
 
   blockStars.appendChild(ulElem);
-  const button = document.getElementById('draw-stars');
-  button.onclick = clearBlockStars;
-  button.innerText = "Clear";
 }
 
 function clearBlockStars() {
-  let blockStars = document.getElementById('block-stars');
-  blockStars.removeChild(blockStars.getElementsByTagName('ul')[0]);
-  const button = document.getElementById('draw-stars');
-  button.onclick = drawStars;
-  button.innerText = "Draw stars";
+  document.getElementById('block-stars').innerText = "";
 }
 
 /* Task-4: вывести в формате: hh:mm:ss */
