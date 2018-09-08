@@ -13,7 +13,9 @@
         <h2>Task-1</h2>
         <div id="task1">
           <h3>Sum of numbers from -1000 to 1000</h3>
-          <button type="button" name="task1" onclick="countSum()">Count sum</button>
+          <form>
+            <button type="button" name="task1" onclick="countSum()">Count sum</button>
+          </form>
           <p id="sum-of-numbers"> <!-- Result sum of numbers from -1000 to 1000 --> </p>
         </div>
       </div>
@@ -22,7 +24,9 @@
         <h2>Task-2</h2>
         <div id="task2">
           <h3>Sum of numbers from -1000 to 1000 which ending with 2, 3 or 7</h3>
-          <button type="button" name="task2" onclick="countSum237()">Count sum</button>
+          <form>
+            <button type="button" name="task2" onclick="countSum237()">Count sum</button>
+          </form>
           <p id="sum-of-numbers-2-3-7"> <!-- Result sum numbers with ending 2, 3 of 7 --> </p>
         </div>
       </div>
@@ -31,7 +35,9 @@
         <h2>Task-3</h2>
         <div id="task3">
           <h3>Draw 50 lines with symbol *</h3>
-          <button id="draw-stars" type="button" name="task3" onclick="drawStars()">Draw stars</button>
+          <form>
+            <button id="draw-stars" type="button" name="task3" onclick="drawStars()">Draw stars</button>
+          </form>
           <div id="block-stars" onclick="clearBlockStars()"><!-- Result --></div>
         </div>
       </div>
@@ -40,8 +46,10 @@
         <h2>Task-4</h2>
         <div id="task4">
           <h3>Time in seconds to time hh-mm-ss</h3>
-          <input id="seconds" type="number" name="task4">
-          <button type="button" name="task4" onclick="secondsToFormatTime()">Seconds to hh-mm-ss</button>
+          <form>
+            <input id="seconds" type="number" name="task4">
+            <button type="button" name="task4" onclick="secondsToFormatTime()">Seconds to hh-mm-ss</button>
+          </form>
           <p id="time-seconds"><!-- Result --></p>
         </div>
       </div>
@@ -50,8 +58,10 @@
         <h2>Task-5</h2>
         <div id="task5">
           <h3>Format age</h3>
-          <input id="age" type="number" name="task5">
-          <button type="button" name="task5" onclick="formatAge()">Format age</button>
+          <form>
+            <input id="age" type="number" name="task5">
+            <button type="button" name="task5" onclick="formatAge()">Format age</button>
+          </form>
           <p id="formated-age"><!-- Result --></p>
         </div>
       </div>
@@ -59,9 +69,11 @@
       <div class="task">
         <h2>Task-6</h2>
         <h3>Date interval</h3>
-        <input id="startDate" type="text" name="startDate" placeholder="October 13, 2014 11:13:00">
-        <input id="endDate" type="text" name="endDate" placeholder="October 13, 2014 11:13:00">
-        <button type="button" name="date-interval" onclick="countInterval()">Count interval</button>
+        <form>
+          <input id="startDate" type="text" name="startDate" placeholder="October 13, 2014 11:13:00">
+          <input id="endDate" type="text" name="endDate" placeholder="October 13, 2014 11:13:00">
+          <button type="button" name="date-interval" onclick="countInterval()">Count interval</button>
+        </form>
         <p id="date-interval"><!-- Result --></p>
       </div>
       <!-- Task-7 -->
@@ -69,8 +81,10 @@
         <h2>Task-7</h2>
         <div id="task7">
           <h3>Zodiac sign</h3>
-          <input id="zodiac" type="text" name="zodiac" placeholder="2014-12-31">
-          <button type="button" name="zodiac" onclick="getZodiacSign()">Zodiac sign</button>
+          <form>
+            <input id="zodiac" type="text" name="zodiac" placeholder="2014-12-31">
+            <button type="button" name="zodiac" onclick="getZodiacSign()">Zodiac sign</button>
+          </form>
           <div id="zodiac-result"><!-- Showing zodiac sign --></div>
         </div>
       </div>
@@ -79,9 +93,11 @@
         <h2>Task-8</h2>
         <div id="task8">
           <h3>Chessboard</h3>
-          <input id="chessboard-size" type="text" name="chessboard" placeholder="8x8">
-          <button type="button" name="chessboard" onclick="drawBoard()">Draw board</button>
-          <button type="button" name="chessboard" onclick="clearChessboard()">Clear</button>
+          <form>
+            <input id="chessboard-size" type="text" name="chessboard" placeholder="8x8">
+            <button type="button" name="chessboard" onclick="drawBoard()">Draw board</button>
+            <button type="button" name="chessboard" onclick="clearChessboard()">Clear</button>
+          </form>
           <div id="board-result"><!-- Drawing result --></div>
         </div>
       </div>
@@ -90,21 +106,23 @@
         <h2>Task-9</h2>
         <div id="task9">
           <h3>Search number of entrance and floor by apartment's number</h3>
-          <div class="inputs-block">
-            <div class="labels-for-house-data">
-              <label for="entrances">Entrances: </label>
-              <label for="apartments-per-floor">Apartments per floor: </label>
-              <label for="floors">Amount floors: </label>
-              <label for="apartment-number">Apartment number: </label>
+          <form>
+            <div class="inputs-block">
+              <div class="labels-for-house-data">
+                <label for="entrances">Entrances: </label>
+                <label for="apartments-per-floor">Apartments per floor: </label>
+                <label for="floors">Amount floors: </label>
+                <label for="apartment-number">Apartment number: </label>
+              </div>
+              <div class="house-data">
+                <input id="entrances" type="number" name="" placeholder="Entrances">
+                <input id="apartments-per-floor" type="number" name="" placeholder="Apartments per floor">
+                <input id="floors" type="number" name="" placeholder="Amount floors">
+                <input id="apartment-number" type="number" name="" placeholder="Apartment number">
+              </div>
             </div>
-            <div class="house-data">
-              <input id="entrances" type="number" name="" placeholder="Entrances">
-              <input id="apartments-per-floor" type="number" name="" placeholder="Apartments per floor">
-              <input id="floors" type="number" name="" placeholder="Amount floors">
-              <input id="apartment-number" type="number" name="" placeholder="Apartment number">
-            </div>
-          </div>
-          <button type="button" name="" onclick="getApartmentNumber()">Search apartment number</button>
+            <button type="button" name="" onclick="getApartmentNumber()">Search apartment number</button>
+          </form>
           <p id="apartment-result"><!-- Result of digits sum --></p>
         </div>
       </div>
@@ -113,8 +131,10 @@
         <h2>Task-10</h2>
         <div id="task10">
           <h3>Sum digits of number</h3>
-          <input id="count-digits" type="number" name="digits-sum" placeholder="Enter number">
-          <button type="button" name="digits-sum" onclick="countDigitsSum()">Count digits sum</button>
+          <form>
+            <input id="count-digits" type="number" name="digits-sum" placeholder="Enter number">
+            <button type="button" name="digits-sum" onclick="countDigitsSum()">Count digits sum</button>
+          </form>
           <p id="digits-sum"><!-- Result of digits sum --></p>
         </div>
       </div>
@@ -123,8 +143,10 @@
         <h2>Task-11</h2>
         <div id="task11">
           <h3>Cleaning and sorting list of URLs</h3>
-          <textarea id="links" name="links" rows="10" cols="60" onfocusout="showSortedLinks()"></textarea>
-          <button type="button" name="links" onclick="clearTextArea()">Clear</button>
+          <form>
+            <textarea id="links" name="links" rows="10" cols="60" onfocusout="showSortedLinks()"></textarea>
+            <button type="button" name="links" onclick="clearTextArea()">Clear</button>
+          </form>
           <div id="links-result">
             <!-- Area for sorted links -->
           </div>

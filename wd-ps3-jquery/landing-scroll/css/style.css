@@ -1,0 +1,279 @@
+* {
+  font-family: sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.wrapper {
+  min-width: 900px;
+  max-width: 1400px;
+  max-height: 900px;
+}
+
+.header {
+  min-height: 10%;
+  display: flex;
+  flex-direction: row;
+}
+
+.navigation__link, .navigation__register {
+  text-decoration: none;
+  color: #2c3e70;
+}
+
+.header__logo-left-part {
+  margin-left: 10%;
+  font-size: 350%;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+  min-width: 40%;
+}
+
+.header__logo-right-part {
+  color: #1abc9c;
+}
+
+.navigation {
+  display: flex;
+  min-width: 50%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.product {
+  min-height: 90%;
+  background-color: #1abc9c;
+  display: flex;
+  flex-direction: row;
+}
+
+.product__phone {
+  min-width: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.product__phone > img {
+  margin-left: 50%;
+}
+
+.product__description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 50px;
+}
+
+.product__description > h1 {
+  font-size: 200%;
+  color: #fff;
+}
+
+.product__description > p {
+  font-size: 100%;
+  color: #fff;
+  margin: 0;
+  line-height: 1.5;
+}
+
+button {
+  border-radius: 10px;
+  border: solid 2px #fff;
+  padding: 10px 20px;
+  width: 160px;
+  font-size: 170%;
+  background-color: #1abc9c;
+  color: #fff;
+}
+
+button:hover {
+  border-color: #ccc;
+  cursor: pointer;
+}
+
+p {
+  font-size: 160%;
+  line-height: 210%;
+  text-align: justify;
+  margin: 5%;
+}
+
+.web__icon, .mobile__icon, .hightload__icon {
+  color: #1abc9c;
+}
+
+.contact {
+  background-color: #1abc9c;
+  min-height: 100%;
+}
+
+footer p {
+  margin: 0;
+}
+
+.about {
+  background-color: #fff;
+  min-height: 100%;
+  display: flex;
+  flex-direction: row;
+  font-size: 50%;
+  line-height: 1.5;
+  text-align: center;
+  align-items: center;
+}
+
+.about h1 {
+  font-size: 300%;
+}
+
+.about p {
+  text-align: center;
+}
+
+.contact__caption {
+  font-size: 250%;
+  color: #fff;
+}
+
+.contact, .sender-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.sender-form__name, .sender-form__email, .sender-form__phone, .sender-form__message {
+  margin: 5px auto;
+  padding: 5px;
+  width: 50%;
+}
+
+.sender-form__button {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 200px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.footer__caption {
+  margin-bottom: 0;
+}
+
+input[type="text"]::-webkit-input-placeholder,
+input[type="email"]::-webkit-input-placeholder,
+input[type="tel"]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  font-size: 130%;
+  color: #ccc;
+}
+
+input[type="text"]::-moz-placeholder,
+input[type="email"]::-moz-placeholder,
+input[type="tel"]::-moz-placeholder,
+textarea::-moz-placeholder {
+  font-size: 130%;
+  color: #ccc;
+}
+
+.register-form {
+  min-width: 60%;
+  border: solid 3px #1abc9c;
+  border-radius: 20px;
+  margin: 30px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  background-color: #ccc;
+}
+
+.navigation__register {
+  font-weight: bold;
+  color: #1abc9c;
+}
+
+.info {
+  display: inline-block;
+  margin: 20px auto;
+}
+
+.info input {
+  margin: 5px;
+}
+
+/* Button 'Upload file' */
+.file-upload {
+  position: relative;
+  overflow: hidden;
+  width: 25%;
+  height: 20px;
+  background: #1abc9c;
+  border-radius: 5px;
+  padding: 10px 5px;
+  color: #fff;
+  text-align: center;
+}
+
+.file-upload:hover {
+  background: #ccc;
+}
+
+.file-upload input[type="file"] {
+  display: none;
+}
+
+.file-upload label {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.file-upload span {
+  line-height: 40px;
+}
+
+/* Scroll up button */
+#scroll-up-btn {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgb(0, 193, 158, 0.7);
+  display: flex;
+  font-size: 40px;
+}
+
+#scroll-up-btn:hover {
+  cursor: pointer;
+  background: #00b392;
+}
+
+.fa-arrow-up {
+  color: #fff;
+  margin: auto;
+}

@@ -44,10 +44,10 @@ function drawStars() {
   }
 
   blockStars.appendChild(ulElem);
-}
 
-function clearBlockStars() {
-  document.getElementById('block-stars').innerText = "";
+  blockStars.onclick = function () {
+    blockStars.innerText = "";
+  }
 }
 
 /* Task-4: вывести в формате: hh:mm:ss */
