@@ -59,8 +59,8 @@
       <div class="task">
         <h2>Task-6</h2>
         <h3>Date interval</h3>
-        <input id="startDate" type="datetime" name="startDate" placeholder="October 13, 2014 11:13:00">
-        <input id="endDate" type="datetime" name="endDate" placeholder="October 13, 2014 11:13:00">
+        <input id="startDate" type="text" name="startDate" placeholder="October 13, 2014 11:13:00">
+        <input id="endDate" type="text" name="endDate" placeholder="October 13, 2014 11:13:00">
         <button type="button" name="date-interval" onclick="countInterval()">Count interval</button>
         <p id="date-interval"><!-- Result --></p>
       </div>
@@ -92,16 +92,16 @@
           <h3>Search number of entrance and floor by apartment's number</h3>
           <div class="inputs-block">
             <div class="labels-for-house-data">
-              <label for="entrances">Entrances: </label><br>
-              <label for="apartments-per-floor">Apartments per floor: </label><br>
-              <label for="floors">Amount floors: </label><br>
+              <label for="entrances">Entrances: </label>
+              <label for="apartments-per-floor">Apartments per floor: </label>
+              <label for="floors">Amount floors: </label>
               <label for="apartment-number">Apartment number: </label>
             </div>
             <div class="house-data">
-              <input id="entrances" type="number" name="" placeholder="Entrances"><br>
-              <input id="apartments-per-floor" type="number" name="" placeholder="Apartments per floor"><br>
-              <input id="floors" type="number" name="" placeholder="Amount floors"><br>
-              <input id="apartment-number" type="number" name="" placeholder="Apartment number"><br>
+              <input id="entrances" type="number" name="" placeholder="Entrances">
+              <input id="apartments-per-floor" type="number" name="" placeholder="Apartments per floor">
+              <input id="floors" type="number" name="" placeholder="Amount floors">
+              <input id="apartment-number" type="number" name="" placeholder="Apartment number">
             </div>
           </div>
           <button type="button" name="" onclick="getApartmentNumber()">Search apartment number</button>
@@ -123,7 +123,7 @@
         <h2>Task-11</h2>
         <div id="task11">
           <h3>Cleaning and sorting list of URLs</h3>
-          <textarea id="links" name="links" rows="10" cols="60" onfocusout="showSortedLinks()"></textarea><br>
+          <textarea id="links" name="links" rows="10" cols="60" onfocusout="showSortedLinks()"></textarea>
           <button type="button" name="links" onclick="clearTextArea()">Clear</button>
           <div id="links-result">
             <!-- Area for sorted links -->

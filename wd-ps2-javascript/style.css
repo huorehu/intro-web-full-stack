@@ -1,18 +1,19 @@
 .wrapper {
   font-family: sans-serif;
+  min-width: 550px;
 }
 
 .task {
   padding: 10px;
   margin: 10px;
-  border: solid #FFA07A 1px;
+  border: solid #ffa07a 1px;
   border-radius: 15px;
   background-color: #ccc;
 }
 
 h2 {
   font-family: 'Exo 2', sans-serif;
-  color: #FF7F50		;
+  color: #ff7f50		;
   font-size: 150%;
 }
 
@@ -26,6 +27,10 @@ h2 {
   flex-direction: row;
   margin-bottom: 10px;
   line-height: 1.5;
+}
+
+.house-data, .labels-for-house-data {
+  width: 150px;
 }
 
 .chessboard {
@@ -73,4 +78,8 @@ button {
 
 .error-text {
   color: red;
+}
+
+#task11 {
+  max-width: 500px;
 }

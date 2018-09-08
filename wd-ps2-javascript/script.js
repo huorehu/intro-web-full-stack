@@ -1,4 +1,3 @@
-
 /* Task-1: посчитать сумму чисел от -1000 до 1000 */
 function countSum() {
   let result = 0;
@@ -118,11 +117,9 @@ function choiceFormatedCounterSuffix(number, counterForms) {
     return counterForms[2];
   } else if (numberSuffix === 1) {
     return counterForms[0];
-  } else if (numberSuffix > 1) {
+  } else {
     return counterForms[1];
   }
-
-  return "error";
 }
 
 function getIntegerTimeInterval(seconds, maxTimeUnitSize) {
@@ -351,8 +348,7 @@ function showSortedLinks() {
   const sortedLinks = document.getElementById('links')
                             .value
                             .split(',')
-                            .map(link => link.trim())
-                            .replace(/^https?:\/\//i, "")
+                            .map(link => link.trim().replace(/^https?:\/\//i, ""))
                             .sort()
                             .map(link => `<li><a href="http://${link}">${link}</a></li>`)
                             .join('');
