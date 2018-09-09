@@ -80,6 +80,10 @@ button {
   color: red;
 }
 
+.error-border {
+  border: 1px solid red;
+}
+
 #task11 {
   max-width: 500px;
 }

@@ -1,3 +1,10 @@
+const NUMERAL_WORD_FORMS = [["год", "года", "лет"],
+                            ["месяц", "месяца", "месяцев"],
+                            ["день", "дня", "дней"],
+                            ["час", "часа", "часов"],
+                            ["минута", "минуты", "минут"],
+                            ["секунда", "секунды", "секунд"]];
+
 /* Task-1: посчитать сумму чисел от -1000 до 1000 */
 function countSum() {
   let result = 0;
@@ -56,27 +63,22 @@ function secondsToFormatTime() {
   const secondsInMinute = 60;
   const resultBlock = document.getElementById('time-seconds');
   const seconds = document.getElementById('seconds').value;
-  resultBlock.innerText = "";
-  resultBlock.classList.remove("error-text");
+  printResultMessage(resultBlock, "");
 
-  if (isContainsNotNumberCharacters(seconds) || !isInteger(seconds * 1)) {
+  if (!isPositiveIntValue(seconds)) {
     showErrorMessage(resultBlock);
     return;
   }
 
-  const hh = getIntegerTimeInterval(seconds, secondsInHour) + "";
-  const mm = getIntegerTimeInterval(seconds - hh * secondsInHour, secondsInMinute) + "";
+  const hh = Math.floor(seconds / secondsInHour) + "";
+  const mm = Math.floor((seconds - hh * secondsInHour) / secondsInMinute) + "";
   const ss = seconds - hh * secondsInHour - mm * secondsInMinute + "";
 
   resultBlock.innerText = `${hh.padStart(2, '0')}-${mm.padStart(2, '0')}-${ss.padStart(2, '0')}`;
 }
 
-function isContainsNotNumberCharacters(str) {
-  return str.indexOf('-') >= 0 || str === "";
-}
-
-function isInteger(num) {
-  return (num ^ 0) === num;
+function isPositiveIntValue(str) {
+  return str != "" && Number.isInteger(str * 1) && str >= 0;
 }
 
 /* Task-5: вывести фразу вида "22 года" */
@@ -84,23 +86,14 @@ function formatAge() {
   const ageResult = document.getElementById('formated-age');
   let age = document.getElementById('age').value;
 
-  if (isContainsNotNumberCharacters(age)) {
+  if (!isPositiveIntValue(age)) {
     showErrorMessage(ageResult);
     return;
   }
 
   age *= 1;
-  ageResult.innerText = "";
-  ageResult.classList.remove("error-text");
-  ageResult.innerText = `${age} ${choiceFormatedCounterSuffix(age, yearForms)}`;
+  printResultMessage(ageResult, `${age} ${choiceFormatedCounterSuffix(age, NUMERAL_WORD_FORMS[0])}`);
 }
-
-const yearForms = ["год", "года", "лет"];
-const monthForms = ["месяц", "месяца", "месяцев"];
-const dayForms = ["день", "дня", "дней"];
-const hourForms = ["час", "часа", "часов"];
-const minuteForms = ["минута", "минуты", "минут"];
-const secondForms = ["секунда", "секунды", "секунд"];
 
 function choiceFormatedCounterSuffix(number, counterForms) {
   const numberSuffix = number % 10;
@@ -113,10 +106,6 @@ function choiceFormatedCounterSuffix(number, counterForms) {
   } else {
     return counterForms[1];
   }
-}
-
-function getIntegerTimeInterval(seconds, maxTimeUnitSize) {
-  return Math.floor(seconds / maxTimeUnitSize);
 }
 
 /* Task-6: вычислить промежуток времени */
@@ -137,10 +126,8 @@ function countInterval() {
     [startDate, endDate] = [endDate, startDate];
   }
 
-  const dateIntervalArray = getDateIntervalArray(startDate, endDate);
-  dateIntervalResult.innerText = "";
-  dateIntervalResult.classList.remove("error-text");
-  dateIntervalResult.innerText = `Между датами прошло ${dateIntervalArray.join(", ")}`;
+  printResultMessage(dateIntervalResult,
+                     `Между датами прошло ${getDateIntervalArray(startDate, endDate).join(", ")}`);
 }
 
 /* Verifies the correct date */
@@ -149,15 +136,9 @@ function isCorrectDate(date, dateStr) {
     return false;
   }
 
-  let monthDay;
-  if (dateStr.match(/^\d./)) {
-    monthDay = dateStr.substring(dateStr.lastIndexOf('-') + 1).trim();
-  } else {
-    monthDay = dateStr.substring(0, dateStr.indexOf(',')).trim();
-  }
-  const day = monthDay.replace(/\D/g, "");
-
-  return date.getDate() == day;
+  return (/^\d./.test(dateStr) ? dateStr.split('-')[2] :
+                                 dateStr.substring(0, dateStr.indexOf(',')))
+        .replace(/\D/g, "") == date.getDate();
 }
 
 Date.prototype.getDaysCurrentMonth = function() {
@@ -166,29 +147,23 @@ Date.prototype.getDaysCurrentMonth = function() {
 
 function getDateIntervalArray(startDate, endDate) {
   const timeUnits = [12,
-                      /* Amount of days a month before the month of the end date */
-                      new Date(endDate.getFullYear(), endDate.getMonth() - 1, 1).getDaysCurrentMonth(),
-                      24,
-                      60,
-                      60];
+                     /* Amount of days a month before the month of the end date */
+                     new Date(endDate.getFullYear(), endDate.getMonth() - 1, 1).getDaysCurrentMonth(),
+                     24,
+                     60,
+                     60];
 
   const dateInterval = [endDate.getFullYear() - startDate.getFullYear(),
-                      endDate.getMonth() - startDate.getMonth(),
-                      endDate.getDate() - startDate.getDate(),
-                      endDate.getHours() - startDate.getHours(),
-                      endDate.getMinutes() - startDate.getMinutes(),
-                      endDate.getSeconds() - startDate.getSeconds()];
+                        endDate.getMonth() - startDate.getMonth(),
+                        endDate.getDate() - startDate.getDate(),
+                        endDate.getHours() - startDate.getHours(),
+                        endDate.getMinutes() - startDate.getMinutes(),
+                        endDate.getSeconds() - startDate.getSeconds()];
 
   correctDateInterval(dateInterval, timeUnits);
 
-  const dateIntervalArray = [`${dateInterval[0]} ${choiceFormatedCounterSuffix(dateInterval[0], yearForms)}`,
-                           `${dateInterval[1]} ${choiceFormatedCounterSuffix(dateInterval[1], monthForms)}`,
-                           `${dateInterval[2]} ${choiceFormatedCounterSuffix(dateInterval[2], dayForms)}`,
-                           `${dateInterval[3]} ${choiceFormatedCounterSuffix(dateInterval[3], hourForms)}`,
-                           `${dateInterval[4]} ${choiceFormatedCounterSuffix(dateInterval[4], minuteForms)}`,
-                           `${dateInterval[5]} ${choiceFormatedCounterSuffix(dateInterval[5], secondForms)}`];
-
-  return dateIntervalArray;
+  return dateInterval.map((item, index) =>
+         `${item} ${choiceFormatedCounterSuffix(item, NUMERAL_WORD_FORMS[index])}`);
 }
 
 function correctDateInterval(dateInterval, timeUnits) {
@@ -203,10 +178,8 @@ function correctDateInterval(dateInterval, timeUnits) {
 /* Task-7: знаки зодиака */
 function getZodiacSign() {
   const resultBlock = document.getElementById('zodiac-result');
-  const birthdayStr = document.getElementById('zodiac').value;
+  const birthdayStr = document.getElementById('zodiac').value.replace(/ /g, "");
   const birthday = new Date(birthdayStr);
-  resultBlock.innerHTML = "";
-  resultBlock.classList.remove("error-text");
 
   if (!isCorrectDate(birthday, birthdayStr)) {
     showErrorMessage(resultBlock);
@@ -216,6 +189,7 @@ function getZodiacSign() {
   const month = birthday.getMonth() + 1;
   const day = birthday.getDate();
   let result;
+  printResultMessage(resultBlock, "");
 
   if (month === 1 && day >= 20 || month === 2 && day <= 18) {
     result = "<img src='img/water-bearer.png' alt=zodiac><p>Aquarius</p>";
@@ -252,7 +226,7 @@ function drawBoard() {
   const boardSize = document.getElementById('chessboard-size').value;
   resultBlock.innerHTML = "";
 
-  if (!boardSize.match(/^[1-9]\d*[xXхХ][1-9]\d*$/)) {
+  if (!/^[1-9]\d*[xXхХ][1-9]\d*$/.test(boardSize)) {
     resultBlock.appendChild(document.createElement('p'));
     showErrorMessage(resultBlock.firstChild);
     return;
@@ -279,11 +253,7 @@ function drawChessboard(boardWidth, boardHeight, resultBlock) {
     for (let j = 0; j < boardWidth; j++) {
       const td = document.createElement('td');
       td.classList.add("chessboard__cell");
-      if ((i + j) % 2 === 0) {
-        td.classList.add("chessboard__cell_white");
-      } else {
-        td.classList.add("chessboard__cell_black");
-      }
+      td.classList.add((i + j) % 2 === 0 ? "chessboard__cell_white" : "chessboard__cell_black");
       tr.appendChild(td);
     }
 
@@ -293,28 +263,44 @@ function drawChessboard(boardWidth, boardHeight, resultBlock) {
 
 /* Task-9: определить номер подъезда и этаж по номеру квартиры */
 function getApartmentNumber() {
-  const entrances = document.getElementById('entrances').value;
-  const apartmentsPerFloor = document.getElementById('apartments-per-floor').value;
-  const floors = document.getElementById('floors').value;
-  const apartmentNumber = document.getElementById('apartment-number').value;
+  const inputsIdList = ['entrances', 'apartments-per-floor', 'floors', 'apartment-number'];
+  const apartmentInfo = inputsIdList.map(item => document.getElementById(item).value);
+  const isCorrectData = isValidApartmentParameters(apartmentInfo, inputsIdList);
   const result = document.getElementById('apartment-result');
 
-  if (!isValidApartmentParameters(entrances, apartmentsPerFloor, floors, apartmentNumber) ||
-      (entrances + apartmentsPerFloor + floors + apartmentNumber).match(/[.e-]/)) {
+  if (!isCorrectData) {
     showErrorMessage(result);
     return;
   }
 
-  const apartmentsPerEntrance = apartmentsPerFloor * floors;
-  const entrance = Math.ceil(apartmentNumber / apartmentsPerEntrance);
-  const floor = Math.ceil((apartmentNumber - apartmentsPerEntrance * (entrance - 1)) / apartmentsPerFloor);
-  result.innerText = `Entrance number: ${entrance}\nFloor number: ${floor}`;
-  result.classList.remove("error-text");
+  if (apartmentInfo[0] * apartmentInfo[1] * apartmentInfo[2] < apartmentInfo[3]) {
+    document.getElementById(inputsIdList[3]).classList.add('error-border');
+    showErrorMessage(result, "Amount apartments less than entered apartment number!");
+    return;
+  }
+
+  const apartmentsPerEntrance = apartmentInfo[1] * apartmentInfo[2];
+  const entrance = Math.ceil(apartmentInfo[3] / apartmentsPerEntrance);
+  const floor = Math.ceil((apartmentInfo[3] - apartmentsPerEntrance * (entrance - 1)) / apartmentInfo[1]);
+  printResultMessage(result, `Entrance number: ${entrance}\nFloor number: ${floor}`);
 }
 
-function isValidApartmentParameters(entrances, apartmentsPerFloor, floors, apartmentNumber) {
-  return entrances > 0 && apartmentsPerFloor > 0 && floors > 0 && apartmentNumber > 0 &&
-         entrances * apartmentsPerFloor * floors >= apartmentNumber;
+function isValidApartmentParameters(apartmentInfo, inputsIdList) {
+  return apartmentInfo.map((item, index) => isCorrectInput(item, index, inputsIdList))
+                      .reduce((result, item) => result & item);
+}
+
+function isCorrectInput(item, index, inputsIdList) {
+  const isCorrectItem = isPositiveIntValue(item) && item > 0;
+  const inputItemClassList = document.getElementById(inputsIdList[index]).classList;
+
+  if (isCorrectItem) {
+    inputItemClassList.remove('error-border');
+  } else {
+    inputItemClassList.add('error-border');
+  }
+
+  return isCorrectItem;
 }
 
 /* Task-10: найти сумму цифр введённого числа */
@@ -331,8 +317,7 @@ function countDigitsSum() {
                  .split('')
                  .reduce((tmpResult, number) => tmpResult + parseInt(number), 0);
 
-  blockResult.innerText = `Result = ${result}`;
-  blockResult.classList.remove("error-text");
+  printResultMessage(blockResult, `Result = ${result}`);
 }
 
 /* Task-11: textarea, в который пользователь вводит ссылки */
@@ -369,7 +354,12 @@ function clearTextArea() {
   }
 }
 
-function showErrorMessage(blockForError) {
-  blockForError.innerText = "Wrong input data";
+function showErrorMessage(blockForError, message) {
+  blockForError.innerText = message ? message : "Wrong input data";
   blockForError.classList.add("error-text");
+}
+
+function printResultMessage(element, str) {
+  element.innerText = str;
+  element.classList.remove("error-text");
 }
