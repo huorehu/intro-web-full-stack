@@ -132,13 +132,9 @@ function countInterval() {
 
 /* Verifies the correct date */
 function isCorrectDate(date, dateStr) {
-  if (isNaN(date.getTime())) {
-    return false;
-  }
-
-  return (/^\d./.test(dateStr) ? dateStr.split('-')[2] :
-                                 dateStr.substring(0, dateStr.indexOf(',')))
-        .replace(/\D/g, "") == date.getDate();
+  return !isNaN(date.getTime()) &&
+          (/^\d./.test(dateStr) ? dateStr.split('-')[2] : dateStr.substring(0, dateStr.indexOf(',')))
+          .replace(/\D/g, "") == date.getDate();
 }
 
 Date.prototype.getDaysCurrentMonth = function() {
