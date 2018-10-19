@@ -5,6 +5,40 @@ const NUMERAL_WORD_FORMS = [["год", "года", "лет"],
                             ["минута", "минуты", "минут"],
                             ["секунда", "секунды", "секунд"]];
 
+function isPositiveIntValue(str) {
+  return str != "" && Number.isInteger(str * 1) && str >= 0;
+}
+
+function choiceFormatedCounterSuffix(number, counterForms) {
+  const numberSuffix = number % 10;
+  const numberSuffixDiv100 = number % 100;
+
+  if (numberSuffixDiv100 > 10 && numberSuffixDiv100 < 15 || numberSuffix > 4 || numberSuffix === 0) {
+    return counterForms[2];
+  } else if (numberSuffix === 1) {
+    return counterForms[0];
+  } else {
+    return counterForms[1];
+  }
+}
+
+/* Verifies the correct date */
+function isCorrectDate(date, dateStr) {
+  return !isNaN(date.getTime()) &&
+          (/^\d./.test(dateStr) ? dateStr.split('-')[2] : dateStr.substring(0, dateStr.indexOf(',')))
+          .replace(/\D/g, "") == date.getDate();
+}
+
+function showErrorMessage(blockForError, message) {
+  blockForError.innerText = message ? message : "Wrong input data";
+  blockForError.classList.add("error-text");
+}
+
+function printResultMessage(element, str) {
+  element.innerText = str;
+  element.classList.remove("error-text");
+}
+
 /* Task-1: посчитать сумму чисел от -1000 до 1000 */
 function countSum() {
   let result = 0;
@@ -40,6 +74,11 @@ function drawStars() {
   const symbol = "*";
   let addedLine = "";
   const blockStars = document.getElementById('block-stars');
+
+  if (blockStars.innerText) {
+    return;
+  }
+
   const ulElem = document.createElement('ul');
   ulElem.classList.add('row-of-list');
 
@@ -74,11 +113,7 @@ function secondsToFormatTime() {
   const mm = Math.floor((seconds - hh * secondsInHour) / secondsInMinute) + "";
   const ss = seconds - hh * secondsInHour - mm * secondsInMinute + "";
 
-  resultBlock.innerText = `${hh.padStart(2, '0')}-${mm.padStart(2, '0')}-${ss.padStart(2, '0')}`;
-}
-
-function isPositiveIntValue(str) {
-  return str != "" && Number.isInteger(str * 1) && str >= 0;
+  resultBlock.innerText = `${hh.padStart(2, '0')}:${mm.padStart(2, '0')}:${ss.padStart(2, '0')}`;
 }
 
 /* Task-5: вывести фразу вида "22 года" */
@@ -91,21 +126,7 @@ function formatAge() {
     return;
   }
 
-  age *= 1;
-  printResultMessage(ageResult, `${age} ${choiceFormatedCounterSuffix(age, NUMERAL_WORD_FORMS[0])}`);
-}
-
-function choiceFormatedCounterSuffix(number, counterForms) {
-  const numberSuffix = number % 10;
-  const numberSuffixDiv100 = number % 100;
-
-  if (numberSuffixDiv100 > 10 && numberSuffixDiv100 < 15 || numberSuffix > 4 || numberSuffix === 0) {
-    return counterForms[2];
-  } else if (numberSuffix === 1) {
-    return counterForms[0];
-  } else {
-    return counterForms[1];
-  }
+  printResultMessage(ageResult, `${age} ${choiceFormatedCounterSuffix(parseInt(age.slice(-3)), NUMERAL_WORD_FORMS[0])}`);
 }
 
 /* Task-6: вычислить промежуток времени */
@@ -128,13 +149,6 @@ function countInterval() {
 
   printResultMessage(dateIntervalResult,
                      `Между датами прошло ${getDateIntervalArray(startDate, endDate).join(", ")}`);
-}
-
-/* Verifies the correct date */
-function isCorrectDate(date, dateStr) {
-  return !isNaN(date.getTime()) &&
-          (/^\d./.test(dateStr) ? dateStr.split('-')[2] : dateStr.substring(0, dateStr.indexOf(',')))
-          .replace(/\D/g, "") == date.getDate();
 }
 
 Date.prototype.getDaysCurrentMonth = function() {
@@ -242,7 +256,6 @@ function clearChessboard() {
 function drawChessboard(boardWidth, boardHeight, resultBlock) {
   const table = document.createElement('table');
   table.classList.add("chessboard");
-  resultBlock.appendChild(table);
 
   for (let i = 0; i < boardHeight; i++) {
     const tr = document.createElement('tr');
@@ -255,6 +268,8 @@ function drawChessboard(boardWidth, boardHeight, resultBlock) {
 
     table.appendChild(tr);
   }
+
+  resultBlock.appendChild(table);
 }
 
 /* Task-9: определить номер подъезда и этаж по номеру квартиры */
@@ -302,9 +317,9 @@ function isCorrectInput(item, index, inputsIdList) {
 /* Task-10: найти сумму цифр введённого числа */
 function countDigitsSum() {
   const blockResult = document.getElementById('digits-sum');
-  const number = document.getElementById('count-digits').value;
+  const number = document.getElementById('count-digits').value.replace(/[.-]/g, "");
 
-  if (number === "") {
+  if (/\D/.test(number)) {
     showErrorMessage(blockResult);
     return;
   }
@@ -350,12 +365,6 @@ function clearTextArea() {
   }
 }
 
-function showErrorMessage(blockForError, message) {
-  blockForError.innerText = message ? message : "Wrong input data";
-  blockForError.classList.add("error-text");
-}
-
-function printResultMessage(element, str) {
-  element.innerText = str;
-  element.classList.remove("error-text");
-}
+Array.from(document.querySelectorAll('form')).map(item => item.onsubmit = function () {
+  return false;
+});

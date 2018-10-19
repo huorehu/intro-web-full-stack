@@ -1,0 +1,68 @@
+* {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+.dropdown-list {
+  width: 230px;
+  margin: auto;
+  background: #abc;
+  border: 2px solid grey;
+  border-radius: 5px;
+  margin-top: 100px;
+}
+
+.dropdown-list__main {
+  display: flex;
+  height: 50px;
+  align-items: center;
+}
+
+.dropdown-list__title {
+  flex-basis: 90%;
+}
+
+img {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  background: #ccc;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.dropdown-list__main > div {
+  margin-left: 10px;
+}
+
+.dropdown-list:hover {
+  cursor: pointer;
+}
+
+.items > li:hover {
+  background: #8fa6bc;
+}
+
+.items {
+  list-style-type: none;
+  display: none;
+}
+
+.friend-name {
+  margin-left: 10px;
+}
+
+.items > li {
+  height: 50px;
+  line-height: 50px;
+}
+
+.fa-caret-down {
+  margin-right: 10px;
+}

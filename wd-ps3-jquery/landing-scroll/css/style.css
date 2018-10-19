@@ -264,7 +264,7 @@ textarea::-moz-placeholder {
   height: 70px;
   border-radius: 50%;
   background: rgb(0, 193, 158, 0.7);
-  display: flex;
+  display: none;
   font-size: 40px;
 }
 

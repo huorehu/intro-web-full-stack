@@ -45,9 +45,9 @@
       <div class="task">
         <h2>Task-4</h2>
         <div id="task4">
-          <h3>Time in seconds to time hh-mm-ss</h3>
+          <h3>Time in seconds to time hh:mm:ss</h3>
           <form>
-            <input id="seconds" type="number" name="task4">
+            <input id="seconds" type="number" name="task4" placeholder="seconds" title="time in seconds" min="0">
             <button type="button" name="task4" onclick="secondsToFormatTime()">Seconds to hh-mm-ss</button>
           </form>
           <p id="time-seconds"><!-- Result --></p>
@@ -59,7 +59,7 @@
         <div id="task5">
           <h3>Format age</h3>
           <form>
-            <input id="age" type="number" name="task5">
+            <input id="age" type="number" name="task5" placeholder="user age" title="user age" min="0">
             <button type="button" name="task5" onclick="formatAge()">Format age</button>
           </form>
           <p id="formated-age"><!-- Result --></p>
@@ -70,8 +70,10 @@
         <h2>Task-6</h2>
         <h3>Date interval</h3>
         <form>
-          <input id="startDate" type="text" name="startDate" placeholder="October 13, 2014 11:13:00">
-          <input id="endDate" type="text" name="endDate" placeholder="October 13, 2014 11:13:00">
+          <input id="startDate" type="text" name="startDate" placeholder="October 13, 2014 11:13:00"
+                 title="start date">
+          <input id="endDate" type="text" name="endDate" placeholder="October 13, 2014 11:13:00"
+                 title="end date">
           <button type="button" name="date-interval" onclick="countInterval()">Count interval</button>
         </form>
         <p id="date-interval"><!-- Result --></p>
@@ -82,7 +84,7 @@
         <div id="task7">
           <h3>Zodiac sign</h3>
           <form>
-            <input id="zodiac" type="text" name="zodiac" placeholder="2014-12-31">
+            <input id="zodiac" type="text" name="zodiac" placeholder="2014-12-31" title="date of birth">
             <button type="button" name="zodiac" onclick="getZodiacSign()">Zodiac sign</button>
           </form>
           <div id="zodiac-result"><!-- Showing zodiac sign --></div>
@@ -94,7 +96,7 @@
         <div id="task8">
           <h3>Chessboard</h3>
           <form>
-            <input id="chessboard-size" type="text" name="chessboard" placeholder="8x8">
+            <input id="chessboard-size" type="text" name="chessboard" placeholder="8x8" title="board size">
             <button type="button" name="chessboard" onclick="drawBoard()">Draw board</button>
             <button type="button" name="chessboard" onclick="clearChessboard()">Clear</button>
           </form>
@@ -115,10 +117,10 @@
                 <label for="apartment-number">Apartment number: </label>
               </div>
               <div class="house-data">
-                <input id="entrances" type="number" name="" placeholder="Entrances">
-                <input id="apartments-per-floor" type="number" name="" placeholder="Apartments per floor">
-                <input id="floors" type="number" name="" placeholder="Amount floors">
-                <input id="apartment-number" type="number" name="" placeholder="Apartment number">
+                <input id="entrances" type="number" name="" placeholder="Entrances" min="1">
+                <input id="apartments-per-floor" type="number" name="" placeholder="Apartments per floor" min="1">
+                <input id="floors" type="number" name="" placeholder="Amount floors" min="1">
+                <input id="apartment-number" type="number" name="" placeholder="Apartment number" min="1">
               </div>
             </div>
             <button type="button" name="" onclick="getApartmentNumber()">Search apartment number</button>
@@ -132,7 +134,7 @@
         <div id="task10">
           <h3>Sum digits of number</h3>
           <form>
-            <input id="count-digits" type="number" name="digits-sum" placeholder="Enter number">
+            <input id="count-digits" type="text" name="digits-sum" placeholder="Enter number" title="number">
             <button type="button" name="digits-sum" onclick="countDigitsSum()">Count digits sum</button>
           </form>
           <p id="digits-sum"><!-- Result of digits sum --></p>
@@ -144,7 +146,8 @@
         <div id="task11">
           <h3>Cleaning and sorting list of URLs</h3>
           <form>
-            <textarea id="links" name="links" rows="10" cols="60" onfocusout="showSortedLinks()"></textarea>
+            <textarea id="links" name="links" rows="10" cols="60" onfocusout="showSortedLinks()"
+                      placeholder="Enter links separated by commas" title="links"></textarea>
             <button type="button" name="links" onclick="clearTextArea()">Clear</button>
           </form>
           <div id="links-result">

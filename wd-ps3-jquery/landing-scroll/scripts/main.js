@@ -1,6 +1,5 @@
 const SCROLL_TIME = 1500;
 const linksId = ["#product", "#about-us", "#contact-us", "#register"];
-const NAVIGATION_LINKS = $(".navigation").children();
 
 function scrollPage(clckElem, scrollTo) {
   clckElem.onclick = function () {
@@ -9,8 +8,12 @@ function scrollPage(clckElem, scrollTo) {
   };
 }
 
-scrollPage($('#scroll-up-btn')[0], $("header"));
+scrollPage($('#scroll-up-btn')[0], $('header'));
 
-for (let i = 0; i < NAVIGATION_LINKS.length; i++) {
-  scrollPage(NAVIGATION_LINKS[i], $(linksId[i]));
-}
+$('.navigation').children().each(function (index) {
+  scrollPage(this, $(linksId[index]));
+});
+
+$(window).on('scroll', function () {
+  $('#scroll-up-btn').css('display', $('html').scrollTop() == 0 ? 'none' : 'flex');
+});
