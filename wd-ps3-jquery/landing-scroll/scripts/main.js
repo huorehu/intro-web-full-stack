@@ -3,8 +3,7 @@ const linksId = ["#product", "#about-us", "#contact-us", "#register"];
 
 function scrollPage(clckElem, scrollTo) {
   clckElem.onclick = function () {
-    const animatedElem = $('html, body');
-    animatedElem.animate({scrollTop: scrollTo.offset().top}, SCROLL_TIME);
+    $('html, body').animate({scrollTop: scrollTo.offset().top}, SCROLL_TIME);
   };
 }
 
