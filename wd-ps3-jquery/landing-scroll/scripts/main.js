@@ -7,12 +7,14 @@ function scrollPage(clckElem, scrollTo) {
   };
 }
 
-scrollPage($('#scroll-up-btn')[0], $('header'));
+$(function() {
+    scrollPage($('#scroll-up-btn')[0], $('header'));
 
-$('.navigation').children().each(function (index) {
-  scrollPage(this, $(linksId[index]));
-});
+    $('.navigation').children().each(function (index) {
+        scrollPage(this, $(linksId[index]));
+    });
 
-$(window).on('scroll', function () {
-  $('#scroll-up-btn').css('display', $('html').scrollTop() == 0 ? 'none' : 'flex');
-});
+    $(window).on('scroll', function () {
+        $('#scroll-up-btn').css('display', $('html').scrollTop() == 0 ? 'none' : 'flex');
+    });}
+);

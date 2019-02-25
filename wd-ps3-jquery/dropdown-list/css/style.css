@@ -66,3 +66,7 @@ img {
 .fa-caret-down {
   margin-right: 10px;
 }
+
+.items_hovered {
+  background: #8fa6bc;
+}

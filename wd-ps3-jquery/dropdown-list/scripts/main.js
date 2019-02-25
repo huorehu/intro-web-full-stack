@@ -1,47 +1,86 @@
 const FRIENDS_LIST = {
-  Antonio: 'img/antonio.png',
-  Laura:   'img/laura.png',
-  Lee:     'img/lee.png',
-  Mark:    'img/mark.png',
-  Michael: 'img/michael.png'
+    Antonio: 'img/antonio.png',
+    Laura: 'img/laura.png',
+    Lee: 'img/lee.png',
+    Mark: 'img/mark.png',
+    Michael: 'img/michael.png'
 };
 
 const TITLE = 'Select friend';
 
-/* Initializes drop-down list */
-(function initDropDownList(title, friends) {
-  $('.dropdown-list__title').text(title);
-  const friendsList = $('<ul />').attr('class', 'items');
+$(function () {
+    /* Initializes drop-down list */
+    (function initDropDownList(title, friends) {
+        $('.dropdown-list__title').text(title);
+        const friendsList = $('<ul />').attr('class', 'items');
 
-  for (let name in friends) {
-    friendsList.append(`<li><img src="${friends[name]}" alt=""><span class="friend-name">${name}</span></li>`);
-  }
+        for (let name in friends) {
+            friendsList.append(`<li><img src="${friends[name]}" alt=""><span class="friend-name">${name}</span></li>`);
+        }
 
-  $('.dropdown-list').append(friendsList);
-})(TITLE, FRIENDS_LIST);
+        $('.dropdown-list').append(friendsList);
+    })(TITLE, FRIENDS_LIST);
 
-/* Listens to click on the part of the drop-down list displaying the selected item */
-$('.dropdown-list__main').click(function () {
-  slideList();
-});
+    /* Listens to click on the part of the drop-down list displaying the selected item */
+    $('.dropdown-list__main').click(function () {
+        $('.items').stop(true, true);
+        slideList();
+        clearHover($('.items')[0].children);
+        paintSelectedItem();
+    });
 
-/* Listens to click on the selected item */
-$('.items li').click(function () {
-  $('.dropdown-list__title').css('margin-left', 0).html(this.innerHTML);
-  slideList();
-})
+    /* Paints selected item */
+    function paintSelectedItem() {
+        const FRIEND_NAME = $('.dropdown-list__title > .friend-name')[0];
 
-/* Listens to click outside drop-down list */
-$('body').click(function(e) {
-    const dropdownList = $('.dropdown-list');
+        if (!FRIEND_NAME) {
+            return;
+        }
 
-    if (dropdownList.has(e.target).length === 0 && $('.items').css('display') === 'block') {
-      slideList();
+        const FRIEND_NAME_TEXT = FRIEND_NAME.innerText;
+
+        for (item of $('.items')[0].children) {
+            if (item.innerText === FRIEND_NAME_TEXT) {
+                item.classList.add('items_hovered');
+            }
+        }
+    }
+
+    /* Listens to click on the selected item */
+    $('.items li').click(function () {
+        $('.dropdown-list__title').css('margin-left', 0).html(this.innerHTML);
+        clearHover($('.items')[0].children);
+        this.classList.add('items_hovered');
+        slideList();
+    });
+
+    $('.items').hover(
+        function (e) {
+            clearHover(e.currentTarget.children);
+        },
+        function (e) {
+            e.target.classList.add('items_hovered');
+        });
+
+    /* Listens to click outside drop-down list */
+    $('body').click(function (e) {
+        const dropdownList = $('.dropdown-list');
+
+        if (dropdownList.has(e.target).length === 0 && $('.items').css('display') === 'block') {
+            slideList();
+        }
+    });
+
+    /* Slides up or down drop-down list */
+    function slideList() {
+        $('.items').slideToggle();
+        $('.fa-caret-down').toggleClass('fa-rotate-180');
+    }
+
+    /* Clears all painted items */
+    function clearHover(itemsList) {
+        for (item of itemsList) {
+            item.classList.remove('items_hovered');
+        }
     }
 });
-
-/* Slides up or down drop-down list */
-function slideList() {
-  $('.items').slideToggle();
-  $('.fa-caret-down').toggleClass('fa-rotate-180');
-}
