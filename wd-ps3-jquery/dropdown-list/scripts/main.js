@@ -9,9 +9,10 @@ const FRIENDS_LIST = {
 const TITLE = 'Select friend';
 
 $(function () {
+    const $DROPDOWN_TITLE = $('.dropdown-list__title');
     /* Initializes drop-down list */
     (function initDropDownList(title, friends) {
-        $('.dropdown-list__title').text(title);
+        $DROPDOWN_TITLE.text(title);
         const friendsList = $('<ul />').attr('class', 'items');
 
         for (let name in friends) {
@@ -20,12 +21,13 @@ $(function () {
 
         $('.dropdown-list').append(friendsList);
     })(TITLE, FRIENDS_LIST);
+    const $ITEMS = $('.items');
 
     /* Listens to click on the part of the drop-down list displaying the selected item */
     $('.dropdown-list__main').click(function () {
-        $('.items').stop(true, true);
+        $ITEMS.stop(true, true);
         slideList();
-        clearHover($('.items')[0].children);
+        clearHover($ITEMS[0].children);
         paintSelectedItem();
     });
 
@@ -39,7 +41,7 @@ $(function () {
 
         const FRIEND_NAME_TEXT = FRIEND_NAME.innerText;
 
-        for (item of $('.items')[0].children) {
+        for (item of $ITEMS[0].children) {
             if (item.innerText === FRIEND_NAME_TEXT) {
                 item.classList.add('items_hovered');
             }
@@ -48,13 +50,13 @@ $(function () {
 
     /* Listens to click on the selected item */
     $('.items li').click(function () {
-        $('.dropdown-list__title').css('margin-left', 0).html(this.innerHTML);
-        clearHover($('.items')[0].children);
+        $DROPDOWN_TITLE.css('margin-left', 0).html(this.innerHTML);
+        clearHover($ITEMS[0].children);
         this.classList.add('items_hovered');
         slideList();
     });
 
-    $('.items').hover(
+    $ITEMS.hover(
         function (e) {
             clearHover(e.currentTarget.children);
         },
@@ -66,14 +68,14 @@ $(function () {
     $('body').click(function (e) {
         const dropdownList = $('.dropdown-list');
 
-        if (dropdownList.has(e.target).length === 0 && $('.items').css('display') === 'block') {
+        if (dropdownList.has(e.target).length === 0 && $ITEMS.css('display') === 'block') {
             slideList();
         }
     });
 
     /* Slides up or down drop-down list */
     function slideList() {
-        $('.items').slideToggle();
+        $ITEMS.slideToggle();
         $('.fa-caret-down').toggleClass('fa-rotate-180');
     }
 
