@@ -41,7 +41,7 @@ function getChessboard($width, $height) {
     return $chessboard;
 }
 
-/* Task-5: finds sum of received number digits */
+/* Task-5: finds the sum of received number digits */
 function getDigitsSum($number) {
     echo array_sum(str_split($number));
 }
