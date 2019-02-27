@@ -7,24 +7,34 @@ const FRIENDS_LIST = {
 };
 
 const TITLE = 'Select friend';
+/* Constants for selectors */
+const dropDownListTitle = '.dropdown-list__title';
+const dropDownListMain = '.dropdown-list__main';
+const dropDownList = '.dropdown-list';
+const items = '.items';
+const items_li = '.items li';
 
 $(function () {
-    const $DROPDOWN_TITLE = $('.dropdown-list__title');
+    const $DROPDOWN_TITLE = $(dropDownListTitle);
     /* Initializes drop-down list */
     (function initDropDownList(title, friends) {
         $DROPDOWN_TITLE.text(title);
         const friendsList = $('<ul />').attr('class', 'items');
 
         for (let name in friends) {
-            friendsList.append(`<li><img src="${friends[name]}" alt=""><span class="friend-name">${name}</span></li>`);
+            friendsList.append(
+                `<li>
+                    <img src="${friends[name]}" alt="friend">
+                    <span class="friend-name">${name}</span>
+                 </li>`);
         }
 
-        $('.dropdown-list').append(friendsList);
+        $(dropDownList).append(friendsList);
     })(TITLE, FRIENDS_LIST);
-    const $ITEMS = $('.items');
+    const $ITEMS = $(items);
 
     /* Listens to click on the part of the drop-down list displaying the selected item */
-    $('.dropdown-list__main').click(function () {
+    $(dropDownListMain).on('click', function () {
         $ITEMS.stop(true, true);
         slideList();
         clearHover($ITEMS[0].children);
@@ -49,11 +59,12 @@ $(function () {
     }
 
     /* Listens to click on the selected item */
-    $('.items li').click(function () {
+    $(items_li).on('click', function () {
         $DROPDOWN_TITLE.css('margin-left', 0).html(this.innerHTML);
         clearHover($ITEMS[0].children);
         this.classList.add('items_hovered');
         slideList();
+        $ITEMS.stop(true, true);
     });
 
     $ITEMS.hover(
@@ -65,8 +76,8 @@ $(function () {
         });
 
     /* Listens to click outside drop-down list */
-    $('body').click(function (e) {
-        const dropdownList = $('.dropdown-list');
+    $('body').on('click', function (e) {
+        const dropdownList = $(dropDownList);
 
         if (dropdownList.has(e.target).length === 0 && $ITEMS.css('display') === 'block') {
             slideList();
