@@ -11,6 +11,10 @@ const $dropdownListMain = $('.dropdown-list__main');
 const $dropdownList = $('.dropdown-list');
 
 const TITLE = 'Select friend';
+const dropdownListInfo = {
+    heightMin: 0,
+    heightMax: 0
+}
 
     $(function () {
     /* Initializes drop-down list */
@@ -27,12 +31,15 @@ const TITLE = 'Select friend';
         }
 
         $($dropdownList).append(friendsList);
+        dropdownListInfo.heightMin = $dropdownList[0].clientHeight;
+        dropdownListInfo.heightMax = dropdownListInfo.heightMin * (Object.keys(FRIENDS_LIST).length + 1);
     })(TITLE, FRIENDS_LIST);
     const $items = $('.items');
 
     /* Listens to click on the part of the drop-down list displaying the selected item */
         $dropdownListMain.on('click', function () {
-        if ($dropdownList[0].clientHeight === 50 || $dropdownList[0].clientHeight === 300) {
+        if ($dropdownList[0].clientHeight === dropdownListInfo.heightMin
+            || $dropdownList[0].clientHeight === dropdownListInfo.heightMax) {
             slideList();
         }
 
@@ -63,7 +70,7 @@ const TITLE = 'Select friend';
         clearHover($items[0].children);
         this.classList.add('items_hovered');
 
-        if ($dropdownList[0].clientHeight === 300) {
+        if ($dropdownList[0].clientHeight === dropdownListInfo.heightMax) {
             slideList();
         }
     });
@@ -79,7 +86,7 @@ const TITLE = 'Select friend';
     /* Listens to click outside drop-down list */
     $('body').on('click', function (e) {
         if ($dropdownList.has(e.target).length === 0 && $items.css('display') === 'block'
-            && $dropdownList[0].clientHeight === 300) {
+            && $dropdownList[0].clientHeight === dropdownListInfo.heightMax) {
             slideList();
         }
     });
