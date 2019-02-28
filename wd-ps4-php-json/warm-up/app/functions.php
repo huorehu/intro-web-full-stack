@@ -1,12 +1,11 @@
 <?php
-
 /* Task-1: calculates the sum of numbers from -1000 to 1000 */
 function getSumNumbers() {
     $result = 0;
 
     for ($i = -1000; $i <= 1000; $i++) {
         $result += $i;
-    };
+    }
 
     return $result;
 }
@@ -27,6 +26,9 @@ function getSumNumbersDiv237() {
 }
 
 /* Task-3 */
+function loadFile() {
+
+}
 
 /* Task-4: returns chessboard as array */
 function getChessboard($width, $height) {
@@ -34,7 +36,7 @@ function getChessboard($width, $height) {
 
     for ($row = 0; $row < $height; $row++) {
         for ($column = 0; $column < $width; $column++) {
-            $chessboard[$row][$column] = $row + $column % 2 == 0 ? 'black' : 'white';
+            $chessboard[$row][$column] = ($row + $column) % 2 === 0 ? 'black' : 'white';
         }
     }
 
@@ -59,10 +61,6 @@ function getRandomNumbers() {
     $result = array_reverse($result);
     $result = array_map(function ($a) {return $a * 2;}, $result);
     return $result;
-}
-
-foreach (getRandomNumbers() as $value) {
-    echo $value . " ***\n";
 }
 
 /* Task-7 */
