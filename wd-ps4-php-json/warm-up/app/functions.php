@@ -45,7 +45,7 @@ function getChessboard($width, $height) {
 
 /* Task-5: finds the sum of received number digits */
 function getDigitsSum($number) {
-    echo array_sum(str_split($number));
+    return array_sum(str_split($number));
 }
 
 /* Task-6: random numbers */
@@ -64,9 +64,18 @@ function getRandomNumbers() {
 }
 
 /* Task-7 */
+function getAmountVisitors() {
+    return 42;
+}
 
 /* Task-8 */
 function getTextInfo($text) {
+    return "text info";
+}
 
+function getRandomResult() {
+    $result = 'array';
+
+    return implode(', ', getRandomNumbers());
 }
 

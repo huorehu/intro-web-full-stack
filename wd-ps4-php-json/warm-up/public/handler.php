@@ -18,6 +18,17 @@ switch ($_SESSION['task']) {
     case 'draw-chessboard':
         $_SESSION['task-4'] = getChessboard($_POST['width'], $_POST['height']);
         break;
+    case 'sum-digits':
+        $_SESSION['task-5'] = getDigitsSum($_POST['number']);
+        break;
+    case 'random-numbers':
+        $_SESSION['task-6'] = getRandomResult();
+        break;
+    case 'count-visitors':
+        $_SESSION['task-7'] = getAmountVisitors();
+        break;
+    case 'analyze-text':
+        $_SESSION['task-8'] = getTextInfo($_POST['text']);
 
 }
 
