@@ -13,7 +13,10 @@ switch ($_SESSION['task']) {
         $_SESSION['task-2'] = getSumNumbersDiv237();
         break;
     case 'load-file':
-        $_SESSION['task-3'] = $_FILES['fil']['name'];
+        $_SESSION['task-3'] = loadFile($_FILES);
+        break;
+    case 'print-files':
+        $_SESSION['files-list'] = getFilesList();
         break;
     case 'draw-chessboard':
         $_SESSION['task-4'] = getChessboard($_POST['width'], $_POST['height']);
@@ -25,11 +28,12 @@ switch ($_SESSION['task']) {
         $_SESSION['task-6'] = getRandomResult();
         break;
     case 'count-visitors':
-        $_SESSION['task-7'] = getAmountVisitors();
+        $_SESSION['task-7'] = getAmountVisitors($_SESSION);
         break;
     case 'analyze-text':
         $_SESSION['task-8'] = getTextInfo($_POST['text']);
 
 }
 
+$_SESSION['files-list'] = getFilesList();
 header('location: index.php');

@@ -1,4 +1,7 @@
 <?php
+
+define('UPLOAD_DIR', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR);
+
 /* Task-1: calculates the sum of numbers from -1000 to 1000 */
 function getSumNumbers() {
     $result = 0;
@@ -26,8 +29,17 @@ function getSumNumbersDiv237() {
 }
 
 /* Task-3 */
-function loadFile() {
+function loadFile($files) {
+    if (move_uploaded_file($files['selected-file']['tmp_name'], UPLOAD_DIR . $files['selected-file']['name'])) {
+        return getFilesList();
+    } else {
+        return false;
+    }
+}
 
+/* Returns list of files */
+function getFilesList() {
+    return scandir(UPLOAD_DIR);
 }
 
 /* Task-4: returns chessboard as array */
@@ -64,8 +76,9 @@ function getRandomNumbers() {
 }
 
 /* Task-7 */
-function getAmountVisitors() {
-    return 42;
+function getAmountVisitors(&$session) {
+    $session['count'] = isset($session) ? $session['count'] + 1 : 1;
+    return $session['count'];
 }
 
 /* Task-8 */

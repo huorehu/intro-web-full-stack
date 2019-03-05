@@ -10,7 +10,7 @@ html, body {
     min-width: 100%;
     display: flex;
     flex-direction: column;
-    background: aqua;
+    background: #3AC272;
 }
 
 .chessboard {
@@ -33,4 +33,16 @@ html, body {
 
 .chessboard__cell_white {
     background: white;
+}
+
+.files-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.task {
+    border: 2px solid #C5EDD5;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
 }
