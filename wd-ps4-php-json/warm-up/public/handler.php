@@ -35,5 +35,4 @@ switch ($_SESSION['task']) {
 
 }
 
-$_SESSION['files-list'] = getFilesList();
 header('location: index.php');

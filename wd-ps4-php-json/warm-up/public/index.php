@@ -10,7 +10,7 @@ session_start();
     <!-- Task-1 -->
     <div class="task">
         <h4>Task-1: calculate the sum of numbers from -1000 to 1000</h4>
-        <form method="POST" action="handler.php">
+        <form method="post" action="handler.php">
             <input type="hidden" name="task" value="sum-numbers">
             <input type="submit" value="Calculate">
         </form>
@@ -24,7 +24,7 @@ session_start();
     <!-- Task-2 -->
     <div class="task">
         <h4>Task-2: calculate the sum of numbers from -1000 to 1000, adding only numbers that end with 2, 3 and 7</h4>
-        <form method="POST" action="handler.php">
+        <form method="post" action="handler.php">
             <input type="hidden" name="task" value="sum-numbers237">
             <input type="submit" value="Calculate">
         </form>
@@ -38,14 +38,14 @@ session_start();
     <!-- Task-3: load files -->
     <div class="task">
         <h4>Task-3: load files</h4>
-        <form enctype="multipart/form-data" method="POST" action="handler.php">
-            <input type="hidden" name="MAX_FILE_SIZE" value="300000">
+        <form enctype="multipart/form-data" method="post" action="handler.php">
+            <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
             <input type="hidden" name="task" value="load-file">
             <h4>Choose file to upload</h4>
             <input type="file" name="selected-file" accept=".png, .jpeg" multiple>
             <input type="submit" value="Load File">
         </form>
-        <form method="POST" action="handler.php">
+        <form method="post" action="handler.php">
             <input type="hidden" name="task" value="print-files">
             <input type="submit" value="Show files list">
         </form>
@@ -54,9 +54,14 @@ session_start();
             if (isset($_SESSION['files-list'])) {
                 $filesList = $_SESSION['files-list'];
                 $arrayLength = count($_SESSION['files-list']);
+                $uploadDir = 'uploads' . DIRECTORY_SEPARATOR;
 
                 for ($i = 2; $i < $arrayLength; $i++): ?>
-                    <a href="<?php echo $filesList[$i] ?>/"><?php echo $filesList[$i] ?></a>
+                    <a href="<?php echo $uploadDir . $filesList[$i] ?>" download="""><?php echo $filesList[$i] ?>
+                     (<?php
+                $byteSize = filesize($uploadDir . $filesList[$i]);
+                $fileSize = round($byteSize / ($byteSize >= 1000000 ? 1000000 : 1000), 1, PHP_ROUND_HALF_UP);
+                echo $fileSize . ' ' . ($byteSize >= 1000000 ? 'MB' : 'kB') ?>)</a>
                 <?php
                 endfor;
             }
@@ -67,7 +72,7 @@ session_start();
     <!-- Task-4: draw chessboard -->
     <div class="task">
         <h4>Task-4: draw chessboard</h4>
-        <form method="POST" action="handler.php">
+        <form method="post" action="handler.php">
             <input type="hidden" name="task" value="draw-chessboard">
             <input type="text" name="width">
             <input type="text" name="height">
@@ -95,7 +100,7 @@ session_start();
     <!-- Task-5: find the sum of received number digits -->
     <div class="task">
         <h4>Task-5: finds the sum of received number digits</h4>
-        <form method="POST" action="handler.php">
+        <form method="post" action="handler.php">
             <input type="hidden" name="task" value="sum-digits">
             <input type="text" name="number">
             <input type="submit" value="Sum Digits">
@@ -110,7 +115,7 @@ session_start();
     <!-- Task-6: random numbers -->
     <div class="task">
         <h4>Task-6: random numbers</h4>
-        <form method="POST" action="handler.php">
+        <form method="post" action="handler.php">
             <input type="hidden" name="task" value="random-numbers">
             <input type="submit" value="Get random">
         </form>
@@ -124,7 +129,7 @@ session_start();
     <!-- Task-7: page visitor counter -->
     <div class="task">
         <h4>Task-7: page visitor counter</h4>
-        <form method="POST" action="handler.php">
+        <form method="post" action="handler.php">
             <input type="hidden" name="task" value="count-visitors">
         </form>
         <div>You have visited this page <?php echo $_SESSION['task-7'] ?? ''; ?> times in this session
@@ -134,7 +139,7 @@ session_start();
     <!-- Task-8: text analyzer -->
     <div class="task">
         <h4>Task-8: text analyzer</h4>
-        <form method="POST" action="handler.php">
+        <form method="post" action="handler.php">
             <input type="hidden" name="task" value="analyze-text">
             <textarea cols="60" rows="10"></textarea>
             <input type="submit" value="Get text info">

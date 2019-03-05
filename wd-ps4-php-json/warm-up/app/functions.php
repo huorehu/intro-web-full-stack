@@ -1,6 +1,14 @@
 <?php
 
-define('UPLOAD_DIR', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR);
+define(
+    'UPLOAD_DIR',
+    dirname(__DIR__) .
+    DIRECTORY_SEPARATOR .
+    'public' .
+    DIRECTORY_SEPARATOR .
+    'uploads'.
+    DIRECTORY_SEPARATOR
+);
 
 /* Task-1: calculates the sum of numbers from -1000 to 1000 */
 function getSumNumbers() {
