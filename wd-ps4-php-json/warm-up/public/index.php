@@ -1,4 +1,8 @@
 <?php
+
+const MB_SIZE = 1000000;
+const KB_SIZE = 1000;
+
 session_start();
 ?>
 
@@ -60,8 +64,8 @@ session_start();
                     <a href="<?php echo $uploadDir . $filesList[$i] ?>" download="""><?php echo $filesList[$i] ?>
                      (<?php
                 $byteSize = filesize($uploadDir . $filesList[$i]);
-                $fileSize = round($byteSize / ($byteSize >= 1000000 ? 1000000 : 1000), 1, PHP_ROUND_HALF_UP);
-                echo $fileSize . ' ' . ($byteSize >= 1000000 ? 'MB' : 'kB') ?>)</a>
+                $fileSize = round($byteSize / ($byteSize >= MB_SIZE ? MB_SIZE : KB_SIZE), 1, PHP_ROUND_HALF_UP);
+                echo $fileSize . ' ' . ($byteSize >= MB_SIZE ? 'MB' : 'kB') ?>)</a>
                 <?php
                 endfor;
             }
