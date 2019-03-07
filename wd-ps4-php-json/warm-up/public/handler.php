@@ -3,36 +3,45 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "
 
 session_start();
 
-$_SESSION['task'] = $_POST['task'];
-
-switch ($_SESSION['task']) {
-    case 'sum-numbers':
-        $_SESSION['task-1'] = getSumNumbers();
+switch ($_POST['task']) {
+    case 'task-1':
+        $result = getSumNumbers();
         break;
-    case 'sum-numbers237':
-        $_SESSION['task-2'] = getSumNumbersDiv237();
+    case 'task-2':
+        $result = getSumNumbersDiv237();
         break;
-    case 'load-file':
-        $_SESSION['task-3'] = loadFile($_FILES);
+    case 'task-3':
+        loadFile($_FILES);
+        $result = getFilesList();
         break;
-    case 'print-files':
-        $_SESSION['files-list'] = getFilesList();
+    case 'task-4':
+        try {
+            $result = getChessboard($_POST['width'], $_POST['height']);
+        } catch (InvalidArgumentException $e) {
+            $error = $e->getMessage();
+        }
         break;
-    case 'draw-chessboard':
-        $_SESSION['task-4'] = getChessboard($_POST['width'], $_POST['height']);
+    case 'task-5':
+        try {
+            $result = getDigitsSum($_POST['number']);
+        } catch (InvalidArgumentException $e) {
+            $error = $e->getMessage();
+        }
         break;
-    case 'sum-digits':
-        $_SESSION['task-5'] = getDigitsSum($_POST['number']);
+    case 'task-6':
+        $result = getRandomResult();
         break;
-    case 'random-numbers':
-        $_SESSION['task-6'] = getRandomResult();
+    case 'task-8':
+        $result = getTextInfo($_POST['text']);
         break;
-    case 'count-visitors':
-        $_SESSION['task-7'] = getAmountVisitors($_SESSION);
-        break;
-    case 'analyze-text':
-        $_SESSION['task-8'] = getTextInfo($_POST['text']);
-
+    case 'destroy-session':
+        session_destroy();
+        session_start();
+        $_SESSION['session-counter'] = 1;
 }
 
+$_SESSION[$_POST['task']] = [
+    'result' => $result,
+    'error' => $error
+];
 header('location: index.php');

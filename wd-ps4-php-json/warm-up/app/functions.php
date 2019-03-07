@@ -36,13 +36,9 @@ function getSumNumbersDiv237() {
     return $result;
 }
 
-/* Task-3 */
+/* Task-3: loads files on the server */
 function loadFile($files) {
-    if (move_uploaded_file($files['selected-file']['tmp_name'], UPLOAD_DIR . $files['selected-file']['name'])) {
-        return getFilesList();
-    } else {
-        return false;
-    }
+    return move_uploaded_file($files['selected-file']['tmp_name'], UPLOAD_DIR . $files['selected-file']['name']);
 }
 
 /* Returns list of files */
@@ -52,6 +48,10 @@ function getFilesList() {
 
 /* Task-4: returns chessboard as array */
 function getChessboard($width, $height) {
+    if (!validatePositiveIntValue($width) || !validatePositiveIntValue($height)) {
+        throw new InvalidArgumentException('Input value must be between 1 to 50');
+    }
+
     $chessboard = [];
 
     for ($row = 0; $row < $height; $row++) {
@@ -65,6 +65,10 @@ function getChessboard($width, $height) {
 
 /* Task-5: finds the sum of received number digits */
 function getDigitsSum($number) {
+    if (!is_numeric($number)) {
+        throw new InvalidArgumentException('Input value must be a number');
+    }
+
     return array_sum(str_split($number));
 }
 
@@ -83,20 +87,34 @@ function getRandomNumbers() {
     return $result;
 }
 
-/* Task-7 */
+/* Task-7 counts visitors */
 function getAmountVisitors(&$session) {
     $session['count'] = isset($session) ? $session['count'] + 1 : 1;
     return $session['count'];
 }
 
-/* Task-8 */
+/* Task-8 analyzes received text line */
 function getTextInfo($text) {
-    return "text info";
+    $textLen = iconv_strlen($text);
+    $lines = count(preg_split("/\n/", $text));
+    $spaces = count(preg_split("/ /", $text)) - 1;
+
+    return [
+        'lines' => $lines,
+        'letters' => $textLen - (($lines - 1) * 2) - $spaces,
+        'spaces' => $spaces
+    ];
 }
 
 function getRandomResult() {
-    $result = 'array';
-
     return implode(', ', getRandomNumbers());
+}
+
+function isPositiveInt($value) {
+    return is_numeric($value) && $value > 0 && $value == round($value);
+}
+
+function validatePositiveIntValue($value) {
+    return isPositiveInt($value) && $value > 0 && $value <= 50;
 }
 
