@@ -41,11 +41,6 @@ function loadFile($files) {
     return move_uploaded_file($files['selected-file']['tmp_name'], UPLOAD_DIR . $files['selected-file']['name']);
 }
 
-/* Returns list of files */
-function getFilesList() {
-    return scandir(UPLOAD_DIR);
-}
-
 /* Task-4: returns chessboard as array */
 function getChessboard($width, $height) {
     if (!validatePositiveIntValue($width) || !validatePositiveIntValue($height)) {
@@ -73,23 +68,14 @@ function getDigitsSum($number) {
 }
 
 /* Task-6: random numbers */
-function getRandomNumbers() {
-    $result = [];
-
-    for ($i = 0; $i < 100; $i++) {
-        $result[$i] = rand(1, 10);
-    }
-
-    $result = array_unique($result);
-    asort($result);
-    $result = array_reverse($result);
-    $result = array_map(function ($a) {return $a * 2;}, $result);
-    return $result;
+function getRandomResult() {
+    return implode(', ', getRandomNumbers());
 }
 
 /* Task-7 counts visitors */
 function getAmountVisitors(&$session) {
     $session['count'] = isset($session) ? $session['count'] + 1 : 1;
+
     return $session['count'];
 }
 
@@ -106,15 +92,34 @@ function getTextInfo($text) {
     ];
 }
 
-function getRandomResult() {
-    return implode(', ', getRandomNumbers());
+/* Returns random numbers */
+function getRandomNumbers() {
+    $result = [];
+
+    for ($i = 0; $i < 100; $i++) {
+        $result[$i] = rand(1, 10);
+    }
+
+    $result = array_unique($result);
+    asort($result);
+    $result = array_reverse($result);
+    $result = array_map(function ($a) {return $a * 2;}, $result);
+
+    return $result;
 }
 
+/* Returns true if $value is positive integer */
 function isPositiveInt($value) {
     return is_numeric($value) && $value > 0 && $value == round($value);
 }
 
+/* Returns true if $value is integer number between 1 to 50 inclusive */
 function validatePositiveIntValue($value) {
     return isPositiveInt($value) && $value > 0 && $value <= 50;
+}
+
+/* Returns list of files */
+function getFilesList() {
+    return scandir(UPLOAD_DIR);
 }
 

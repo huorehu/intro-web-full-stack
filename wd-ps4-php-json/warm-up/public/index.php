@@ -1,5 +1,4 @@
 <?php
-
 const MB_SIZE = 1000000;
 const KB_SIZE = 1000;
 
@@ -8,7 +7,10 @@ session_start();
 
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 <div class="wrapper">
     <!-- Task-1 -->
@@ -55,20 +57,26 @@ session_start();
         </form>
         <div class="files-list">
             <?php
-            if (isset($_SESSION['task-3'])) {
+            if (isset($_SESSION['task-3'])):
                 $filesList = $_SESSION['task-3']['result'];
                 $arrayLength = count($_SESSION['task-3']['result']);
                 $uploadDir = 'uploads' . DIRECTORY_SEPARATOR;
 
                 for ($i = 2; $i < $arrayLength; $i++): ?>
                     <a href="<?php echo $uploadDir . $filesList[$i] ?>" download="""><?php echo $filesList[$i] ?>
-                     (<?php
+                    (<?php
                     $byteSize = filesize($uploadDir . $filesList[$i]);
-                    $fileSize = round($byteSize / ($byteSize >= MB_SIZE ? MB_SIZE : KB_SIZE), 1, PHP_ROUND_HALF_UP);
+                    $fileSize = round(
+                            $byteSize / ($byteSize >= MB_SIZE
+                                                ? MB_SIZE
+                                                : KB_SIZE),
+                            1,
+                            PHP_ROUND_HALF_UP
+                    );
                     echo $fileSize . ' ' . ($byteSize >= MB_SIZE ? 'MB' : 'kB') ?>)</a>
                     <?php
                 endfor;
-            }
+            endif;
             ?>
         </div>
     </div>
@@ -113,10 +121,9 @@ session_start();
         </form>
         <div>
             <?php
-            if (isset($_SESSION['task-5'])) {
+            if (isset($_SESSION['task-5'])):
                 echo $_SESSION['task-5']['result'];
-            }
-
+            endif;
             echo $_SESSION['task-5']['error'] ?? '';
             ?>
         </div>
