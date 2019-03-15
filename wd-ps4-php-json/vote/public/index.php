@@ -15,11 +15,11 @@ session_start();
     <form method="post" action="handler.php">
         <input type="hidden" name="vote">
         <div class="choice-options">
-            <input type="radio" name="option" value="option-1">
-            <input type="radio" name="option" value="option-2">
-            <input type="radio" name="option" value="option-3">
-            <input type="radio" name="option" value="option-4">
-            <input type="radio" name="option" value="option-5">
+            <input type="radio" name="option" value="Option-1">
+            <input type="radio" name="option" value="Option-2">
+            <input type="radio" name="option" value="Option-3">
+            <input type="radio" name="option" value="Option-4">
+            <input type="radio" name="option" value="Option-5">
         </div>
         <input type="submit" value="Submit">
     </form>

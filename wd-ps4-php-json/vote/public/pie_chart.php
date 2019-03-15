@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <html>
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -7,22 +11,25 @@
 
         function drawChart() {
 
-            var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Work', 11],
-                ['Eat', 2],
-                ['Commute', 2],
-                ['Watch TV', 2],
-                ['Sleep', 7]
-            ]);
+            let jsonData = <?php echo $_SESSION['json-data'] ?>;
 
-            var options = {
-                title: 'My Daily Activities'
+            let dataJsonArr = [['head', 'value']];
+
+            for (let key in jsonData) {
+                let item = [key, jsonData[key]];
+                dataJsonArr.push(item);
+            }
+
+            let data = google.visualization.arrayToDataTable(dataJsonArr);
+
+            let options = {
+                title: 'Some options'
             };
 
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            let chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
             chart.draw(data, options);
+            console.log('hello');
         }
     </script>
 </head>
@@ -30,3 +37,4 @@
 <div id="piechart" style="width: 900px; height: 500px;"></div>
 </body>
 </html>
+

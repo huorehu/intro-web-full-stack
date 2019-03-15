@@ -1,24 +1,10 @@
 <?php
-require dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "functions.php";
+require dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "JsonDataController.php";
 
 session_start();
 
-switch ($_POST['option']) {
-    case 'option-1':
-        increaseItem();
-        break;
-    case 'option-2':
-        increaseItem();
-        break;
-    case 'option-3':
-        increaseItem();
-        break;
-    case 'option-4':
-        increaseItem();
-        break;
-    case 'option-5':
-        increaseItem();
-        break;
-}
+$config = require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config.php';
+
+$_SESSION['json-data'] = (new JsonDataController($config['jsonFileName']))->vote($_POST['option']);
 
 header('location: pie_chart.php');
