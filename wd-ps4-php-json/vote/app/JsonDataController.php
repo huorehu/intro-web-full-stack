@@ -10,7 +10,12 @@ class JsonDataController
         $this->dataPath = $dataPath;
     }
 
-    public function vote($itemNumber)
+    /**
+     * Increase vote for particular item.
+     * @param $itemOption - voted for item.
+     * @return false|string
+     */
+    public function vote($itemOption)
     {
         $voteDataJson = json_decode(file_get_contents($this->dataPath), true);
 
@@ -18,25 +23,25 @@ class JsonDataController
             $voteDataJson = $this->initDataJson();
         }
 
-        $voteDataJson[$itemNumber]++;
+        if (!isset($voteDataJson[$itemOption])) {
+            throw new InvalidArgumentException('This item does not exist!');
+        }
+
+        $voteDataJson[$itemOption]++;
         $voteDataJsonStr = json_encode($voteDataJson, JSON_PRETTY_PRINT);
         file_put_contents($this->dataPath, $voteDataJsonStr);
 
         return $voteDataJsonStr;
     }
 
-    public function getData()
+    private function initDataJson()
     {
-        return json_decode(file_get_contents($this->dataPath));
-    }
-
-    private function initDataJson() {
         return [
-            'Option-1' => 0,
-            'Option-2' => 0,
-            'Option-3' => 0,
-            'Option-4' => 0,
-            'Option-5' => 0
+            'Work' => 0,
+            'Eat' => 0,
+            'Commute' => 0,
+            'Watch TV' => 0,
+            'Sleep' => 0
         ];
     }
 

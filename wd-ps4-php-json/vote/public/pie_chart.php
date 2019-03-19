@@ -23,13 +23,12 @@ session_start();
             let data = google.visualization.arrayToDataTable(dataJsonArr);
 
             let options = {
-                title: 'Some options'
+                title: 'Daily Activities'
             };
 
             let chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
             chart.draw(data, options);
-            console.log('hello');
         }
     </script>
 </head>
