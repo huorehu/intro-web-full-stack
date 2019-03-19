@@ -1,5 +1,6 @@
 <?php
-session_start();
+require dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "JsonDataController.php";
+$config = require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config.php';
 ?>
 
 <html>
@@ -11,7 +12,7 @@ session_start();
 
         function drawChart() {
 
-            let jsonData = <?php echo $_SESSION['json-data'] ?>;
+            let jsonData = <?php echo (new JsonDataController($config['jsonFileName']))->getJsonData(); ?>;
 
             let dataJsonArr = [['head', 'value']];
 

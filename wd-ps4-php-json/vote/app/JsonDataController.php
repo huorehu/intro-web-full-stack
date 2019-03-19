@@ -34,6 +34,15 @@ class JsonDataController
         return $voteDataJsonStr;
     }
 
+    /**
+     * Returns json data.
+     * @return mixed
+     */
+    public function getJsonData()
+    {
+         return file_get_contents($this->dataPath);
+    }
+
     private function initDataJson()
     {
         return [
