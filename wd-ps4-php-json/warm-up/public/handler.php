@@ -2,6 +2,7 @@
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "functions.php";
 
 session_start();
+$isCorrectTaskName = true;
 
 switch ($_POST['task']) {
     case 'task-1':
@@ -36,12 +37,17 @@ switch ($_POST['task']) {
         break;
     case 'destroy-session':
         session_destroy();
-        session_start();
-        $_SESSION['session-counter'] = 1;
+        break;
+    default:
+        $isCorrectTaskName = false;
+
 }
 
-$_SESSION[$_POST['task']] = [
-    'result' => $result,
-    'error' => $error
-];
+if ($isCorrectTaskName) {
+    $_SESSION[$_POST['task']] = [
+        'result' => $result,
+        'error' => $error
+    ];
+}
+
 header('location: index.php');

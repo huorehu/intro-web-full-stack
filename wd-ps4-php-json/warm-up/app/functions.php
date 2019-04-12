@@ -28,7 +28,7 @@ function getSumNumbersDiv237() {
     for ($i = -1000; $i <= 1000; $i++) {
         $lastElement = abs($i % 10);
 
-        if ($lastElement == 2 || $lastElement == 3 || $lastElement == 7) {
+        if ($lastElement === 2 || $lastElement === 3 || $lastElement === 7) {
             $result += $i;
         }
     }
@@ -115,7 +115,7 @@ function isPositiveInt($value) {
 
 /* Returns true if $value is integer number between 1 to 50 inclusive */
 function validatePositiveIntValue($value) {
-    return isPositiveInt($value) && $value > 0 && $value <= 50;
+    return isPositiveInt($value) && $value <= 50;
 }
 
 /* Returns list of files */

@@ -23,8 +23,8 @@ html, body {
 }
 
 .chessboard__cell {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 }
 
 .chessboard__cell_black {

@@ -151,7 +151,7 @@ session_start();
             <input type="hidden" name="task" value="task-7">
         </form>
         <div>You have visited this page <?php echo isset($_SESSION['session-counter'])
-                ? $_SESSION['session-counter']++
+                ? ++$_SESSION['session-counter']
                 : $_SESSION['session-counter'] = 1; ?> times in this session
         </div>
     </div>

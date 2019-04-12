@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "JsonDataController.php";
+require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'JsonDataController.php';
 $config = require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config.php';
 
 try {

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "JsonDataController.php";
+require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'JsonDataController.php';
 $config = require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config.php';
 ?>
 
@@ -22,7 +22,7 @@ $config = require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config.php';
             $keys = array_keys($voteDataJson);
 
             foreach ($keys as $item):
-                $idName = str_replace(" ", "", strtolower($item)); ?>
+                $idName = str_replace(' ', '', strtolower($item)); ?>
                 <div class="choice-options_activity">
                     <input type="radio" name="option" id= <?php echo $idName ?> value= "<?php echo $item; ?>" >
                     <label for=<?php echo $idName; ?> > <?php echo $item; ?> </label>
