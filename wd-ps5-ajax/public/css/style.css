@@ -30,7 +30,9 @@ h1 {
 
 label {
     color: #635960;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 #register {
@@ -40,10 +42,13 @@ label {
 
 .field {
     height: 40px;
-    margin: 5px 0 15px 0;
+    width: 285px;
+    margin: 5px 0 20px 0;
     border: none;
     background-color: #fffecd;
     font-size: 15px;
+    padding-left: 15px;
+    color: #6a6c6e;
 }
 
 .button {
@@ -51,10 +56,19 @@ label {
     border: none;
     color: #fffecd;
     height: 40px;
-    /*padding: 15px 32px;*/
+    width: 300px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 1.2rem;
-    margin: 20px 0 200px 0;
+    font-family: 'Montserrat', 'sans-serif';
+    font-weight: bold;
+    margin: 20px 20px 0 0;
+}
+
+.button-shadow {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.06), rgba(0,0,0,0));
+    transform: skewX(15grad);
+    margin-left: 20px;
+    height: 170px;
 }
