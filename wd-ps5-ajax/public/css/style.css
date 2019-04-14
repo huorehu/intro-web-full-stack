@@ -22,6 +22,12 @@ body, html {
     overflow: auto;
 }
 
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;
+}
+
 h1 {
     font-family: 'Pacifico', 'serif';
     font-size: 4rem;
@@ -46,7 +52,7 @@ label {
 .field {
     min-height: 40px;
     width: 285px;
-    margin: 5px 0 20px 0;
+    margin: 5px 0 5px 0;
     border: none;
     background-color: #fffecd;
     font-size: 15px;
@@ -66,7 +72,7 @@ label {
     font-size: 1.2rem;
     font-family: 'Montserrat', 'sans-serif';
     font-weight: bold;
-    margin: 20px 20px 0 0;
+    margin: 0 20px 0 0;
 }
 
 .button:hover {
@@ -124,7 +130,8 @@ header {
     background: #fffecd;
     border: none;
     margin: 0;
-    padding-left: 10px;
+    padding: 0 0 0 10px;
+    font-size: 15px;
 }
 
 #welcome-message {
@@ -134,4 +141,14 @@ header {
     margin-bottom: 5px;
     display: flex;
     justify-content: center;
+}
+
+.error {
+    border: 1px solid darkred;
+}
+
+.error-msg {
+    font-size: 0.75rem;
+    margin: 0;
+    color: darkred;
 }
