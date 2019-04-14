@@ -10,18 +10,18 @@
   <title>Easy Chat</title>
 </head>
 <body>
-  <div class="wrapper">
-    <form id="register" action="handler.php" method="post">
-      <h1>Easy Chat</h1>
-      <label for="name">Enter your name</label>
-      <input class="field" type="text" placeholder="John Doe">
-      <label for="password">Enter your password</label>
-      <input class="field" type="password" placeholder="">
-      <input type="submit" class="button">
-      <div class="button-shadow">
-
-      </div>
-    </form>
-  </div>
+<div class="wrapper">
+  <header class="header">
+    <div class="header-colored"></div>
+    <div class="header-colored"></div>
+  </header>
+  <h1>Easy Chat</h1>
+  <?php
+  require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'auth.php';
+  require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'chat.php';
+  ?>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>
