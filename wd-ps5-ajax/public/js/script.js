@@ -30,14 +30,18 @@ $('#register').on('submit', (e) => {
             url: 'handler.php',
             data: {
                 action: 'auth',
-                user: $username.val(),
+                username: $username.val(),
                 password: $password.val()
             }
         }).done(data => {
-            console.log(data);
+            switch (data) {
+                case 'success':
+                    location.reload();
+                    break;
+                case 'fail':
+                    showError($password, 'Invalid password');
+            }
         });
-    } else {
-
     }
 });
 
