@@ -1,5 +1,5 @@
 /* User greeting */
-$('#welcome-message').append($('<span id="greet-user">Hello, Vasya!</span>'));
+// $('#welcome-message').append($('<span id="greet-user">Hello, Vasya!</span>'));
 $('#greet-user').css('display', 'inline-block');
 setTimeout(() => $('#greet-user').fadeOut(1000), 2000);
 
@@ -39,6 +39,7 @@ $('#register').on('submit', (e) => {
                     location.reload();
                     break;
                 case 'fail':
+                    removeError($password);
                     showError($password, 'Invalid password');
             }
         });
