@@ -108,7 +108,8 @@ header {
     width: 500px;
     min-height: 250px;
     background: #fffecd;
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .chat {
@@ -155,4 +156,14 @@ header {
 
 #greet-user {
     display: none;
+}
+
+.message__user {
+    margin: 0;
+}
+
+#message-block {
+    height: 100%;
+    padding: 5px;
+    overflow: auto;
 }

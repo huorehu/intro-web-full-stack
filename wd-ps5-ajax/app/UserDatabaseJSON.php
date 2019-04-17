@@ -2,8 +2,10 @@
 
 namespace App;
 
-use App\Entities\User;
-use App\Contracts\UserDatabaseInterface;
+use App\{
+    Entities\User,
+    Contracts\UserDatabaseInterface
+};
 
 class UserDatabaseJSON implements UserDatabaseInterface
 {
@@ -24,7 +26,9 @@ class UserDatabaseJSON implements UserDatabaseInterface
                 'password' => $user->getPassword()
             ]
         ];
-        $allUsersData[$user->getName()] = $userData[$user->getName()];
+
+        $userID = key($userData);
+        $allUsersData[$userID] = $userData[$userID];
 
         return file_put_contents($this->filePath, json_encode($allUsersData, JSON_PRETTY_PRINT));
     }

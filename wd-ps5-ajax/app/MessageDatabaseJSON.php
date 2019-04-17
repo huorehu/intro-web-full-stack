@@ -2,7 +2,10 @@
 
 namespace App;
 
-use App\Contracts\MessageDatabaseInterface;
+use App\{
+    Entities\Message,
+    Contracts\MessageDatabaseInterface
+};
 
 class MessageDatabaseJSON implements MessageDatabaseInterface
 {
@@ -14,9 +17,22 @@ class MessageDatabaseJSON implements MessageDatabaseInterface
         $this->filePath = $filePath;
     }
 
-    public function addMessage(Message $message)
+    public function addMessage(?Message $message)
     {
-        // TODO: Implement addMessage() method.
+        if (!isset($message)) {
+            return false;
+        }
+
+        $messageJSON = [
+            $message->getTime() => [
+                'username' => $message->getUsername(),
+                'message' => $message->getMessage()
+            ]
+        ];
+        $messages = json_decode(file_get_contents($this->filePath), true);
+        $messageID = key($messageJSON);
+        $messages[$messageID] = $messageJSON[$messageID];
+        return file_put_contents($this->filePath, json_encode($messages, JSON_PRETTY_PRINT));
     }
 
     public function getAll()

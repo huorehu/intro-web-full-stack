@@ -1,7 +1,11 @@
 /* User greeting */
-// $('#welcome-message').append($('<span id="greet-user">Hello, Vasya!</span>'));
-$('#greet-user').css('display', 'inline-block');
-setTimeout(() => $('#greet-user').fadeOut(1000), 2000);
+let greetingShown = false;
+
+if (!greetingShown) {
+    $userGreeter = $('#greet-user');
+    $userGreeter.css('display', 'inline-block');
+    setTimeout(() => $userGreeter.fadeOut(1000), 2000);
+}
 
 const $username = $('#username');
 const $password = $('#password');
@@ -37,6 +41,8 @@ $('#register').on('submit', (e) => {
             switch (data) {
                 case 'success':
                     location.reload();
+
+                    greetingShown = true;
                     break;
                 case 'fail':
                     removeError($password);
@@ -95,6 +101,34 @@ $password.on('focusout', e => {
    }
 
    passwordFirstFocusOutDone = true;
+});
+
+$('#chat').on('submit', (e) => {
+    e.preventDefault();
+    let message = $('.chat__input').val();
+
+    $.ajax({
+        method: 'POST',
+        url: 'handler.php',
+        data: {
+            action: 'message',
+            message: message
+        }
+    }).done(data => {
+        switch (data) {
+            case 'success':
+                const $messageBlock = $('#message-block');
+
+                $messageBlock.append(`<p class="message__user">${message}</p>`);
+                $messageBlock.scrollTop(document.getElementById('message-block').scrollHeight);
+                break;
+            case 'fail':
+                console.log('fail');
+                console.log(e);
+                // removeError($message);
+                // showError($message, 'Invalid message');
+        }
+    });
 });
 
 function isCorrectLength(str) {

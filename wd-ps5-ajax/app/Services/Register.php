@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
-use App\Entities\User;
-use App\Contracts\UserDatabaseInterface;
+use App\{
+    Entities\User,
+    Contracts\UserDatabaseInterface
+};
 
 class Register
 {
