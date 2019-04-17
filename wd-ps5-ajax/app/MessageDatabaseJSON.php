@@ -35,8 +35,8 @@ class MessageDatabaseJSON implements MessageDatabaseInterface
         return file_put_contents($this->filePath, json_encode($messages, JSON_PRETTY_PRINT));
     }
 
-    public function getAll()
+    public function getAll(): array
     {
-        // TODO: Implement getAll() method.
+        return json_decode(file_get_contents($this->filePath), true);
     }
 }

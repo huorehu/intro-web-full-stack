@@ -117,10 +117,7 @@ $('#chat').on('submit', (e) => {
     }).done(data => {
         switch (data) {
             case 'success':
-                const $messageBlock = $('#message-block');
-
-                $messageBlock.append(`<p class="message__user">${message}</p>`);
-                $messageBlock.scrollTop(document.getElementById('message-block').scrollHeight);
+                getNewMessages();
                 break;
             case 'fail':
                 console.log('fail');
@@ -130,6 +127,40 @@ $('#chat').on('submit', (e) => {
         }
     });
 });
+
+/* Requests every second new messages */
+setInterval(() => {
+    getNewMessages();
+}, 1000);
+
+const $messageBlock = $('#message-block');
+
+function getNewMessages() {
+    $.ajax({
+        method: 'POST',
+        url: 'handler.php',
+        data: {
+            action: 'get-new',
+            shown: $messageBlock.children().length
+        }
+    }).done(data => {
+        if (data !== 'fail') {
+            showNewMessages(JSON.parse(data));
+        }
+    });
+}
+
+function showNewMessages(messageArr) {
+    let message;
+
+    for (let messageID in messageArr) {
+        let currentMsg = messageArr[messageID];
+        message = `[${messageID}] ${currentMsg['username']}: ${currentMsg['message']}`;
+        $messageBlock.append(`<p class="message__user">${message}</p>`);
+    }
+
+    $messageBlock.scrollTop(document.getElementById('message-block').scrollHeight);
+}
 
 function isCorrectLength(str) {
     return str.length >= 3 && str.length <= 50;

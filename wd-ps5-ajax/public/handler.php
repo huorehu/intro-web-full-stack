@@ -49,6 +49,9 @@ switch ($_POST['action']) {
 
         echo $isSentMsg;
         break;
+    case 'get-new':
+        echo $messenger->getNewMessages($_POST['shown']);
+        break;
     default:
         echo 'error';
 }
