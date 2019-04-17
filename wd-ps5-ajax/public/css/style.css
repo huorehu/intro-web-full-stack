@@ -167,3 +167,7 @@ header {
     padding: 5px;
     overflow: auto;
 }
+
+.chat-username {
+    font-weight: bold;
+}

@@ -41,7 +41,6 @@ $('#register').on('submit', (e) => {
             switch (data) {
                 case 'success':
                     location.reload();
-
                     greetingShown = true;
                     break;
                 case 'fail':
@@ -105,23 +104,23 @@ $password.on('focusout', e => {
 
 $('#chat').on('submit', (e) => {
     e.preventDefault();
-    let message = $('.chat__input').val();
+    const $inputField = $('.chat__input');
 
     $.ajax({
         method: 'POST',
         url: 'handler.php',
         data: {
             action: 'message',
-            message: message
+            message: $inputField.val()
         }
     }).done(data => {
         switch (data) {
             case 'success':
                 getNewMessages();
+                $inputField.val('');
                 break;
             case 'fail':
                 console.log('fail');
-                console.log(e);
                 // removeError($message);
                 // showError($message, 'Invalid message');
         }
@@ -129,9 +128,11 @@ $('#chat').on('submit', (e) => {
 });
 
 /* Requests every second new messages */
-setInterval(() => {
-    getNewMessages();
-}, 1000);
+if (greetingShown) {
+    setInterval(() => {
+        getNewMessages();
+    }, 1000);
+}
 
 const $messageBlock = $('#message-block');
 
@@ -155,7 +156,7 @@ function showNewMessages(messageArr) {
 
     for (let messageID in messageArr) {
         let currentMsg = messageArr[messageID];
-        message = `[${messageID}] ${currentMsg['username']}: ${currentMsg['message']}`;
+        message = `[${messageID}] <span class="chat-username">${currentMsg['username']}</span>: ${currentMsg['message']}`;
         $messageBlock.append(`<p class="message__user">${message}</p>`);
     }
 
