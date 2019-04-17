@@ -163,11 +163,15 @@ header {
 }
 
 #message-block {
-    height: 100%;
+    max-height: 225px;
     padding: 5px;
     overflow: auto;
 }
 
 .chat-username {
     font-weight: bold;
+}
+
+.time-font {
+    font-family: 'Courier New', monospace;
 }

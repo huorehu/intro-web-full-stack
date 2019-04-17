@@ -106,6 +106,18 @@ $('#chat').on('submit', (e) => {
     e.preventDefault();
     const $inputField = $('.chat__input');
 
+    if ($inputField.val() === '') {
+        showInputMessageError($inputField, 'Enter your message');
+
+        return;
+    }
+
+    if ($inputField.val().length > 255) {
+        showInputMessageError($inputField, 'Your message must contain no more than 255 characters');
+
+        return;
+    }
+
     $.ajax({
         method: 'POST',
         url: 'handler.php',
@@ -156,11 +168,31 @@ function showNewMessages(messageArr) {
 
     for (let messageID in messageArr) {
         let currentMsg = messageArr[messageID];
-        message = `[${messageID}] <span class="chat-username">${currentMsg['username']}</span>: ${currentMsg['message']}`;
+        message = `[<span class="time-font">${formatTimeForMessage(messageID)}</span>]` +
+            ` <span class="chat-username">${currentMsg['username']}</span>: ${currentMsg['message']}`;
         $messageBlock.append(`<p class="message__user">${message}</p>`);
     }
 
     $messageBlock.scrollTop(document.getElementById('message-block').scrollHeight);
+}
+
+function showInputMessageError(block, errorMsg) {
+    block.val(errorMsg);
+    block.addClass('error-msg error');
+    setTimeout(() => {
+        block.val('');
+        block.removeClass('error-msg error');
+    }, 2000);
+}
+
+function formatTimeForMessage(timestamp) {
+    const date = new Date(timestamp * 1000);
+
+    return `${fillTimeValue(date.getHours())}:${fillTimeValue(date.getMinutes())}:${fillTimeValue(date.getSeconds())}`;
+}
+
+function fillTimeValue(time) {
+    return (time + '').padStart(2, '0');
 }
 
 function isCorrectLength(str) {
