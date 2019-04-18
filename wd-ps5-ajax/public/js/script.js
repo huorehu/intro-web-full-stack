@@ -27,7 +27,7 @@ function loadMainBlock() {
                     $userGreeter.css('display', 'inline-block');
                     setTimeout(() => $userGreeter.fadeOut(1000), 2000);
                     /* Requests every second new messages */
-                    setInterval(() => {
+                    window.setIntervalRequestID = setInterval(() => {
                         updateMessagesBlock();
                     }, 1000);
                 }
@@ -161,6 +161,21 @@ function addListeners() {
             }
         });
     });
+
+    $('#logout').on('submit', (e) => {
+        e.preventDefault();
+
+        $.ajax({
+            method: 'POST',
+            url: 'handler.php',
+            data: {
+                action: 'logout'
+            }
+        }).done(() => {
+            clearInterval(window.setIntervalRequestID);
+            loadMainBlock();
+        });
+    })
 }
 
 function updateMessagesBlock() {

@@ -180,3 +180,10 @@ header {
     width: 20px;
     height: 20px;
 }
+
+.logout__button {
+    width: 95px;
+    position: absolute;
+    top: 30px;
+    right: 10px;
+}

@@ -63,6 +63,12 @@ switch ($_POST['action']) {
     case 'is-auth':
         echo isset($_SESSION['auth']) ? 'auth' : 'fail';
         break;
+    case 'logout':
+        if (isset($_SESSION['auth'])) {
+            session_destroy();
+        }
+
+        break;
     default:
         echo 'error';
 }

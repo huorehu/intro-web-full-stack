@@ -6,3 +6,6 @@
   <input class="chat__input" type="text">
   <input class="button chat__button" id="send-msg" type="submit" value="Send">
 </form>
+<form id="logout">
+  <input class="logout__button button" type="submit" value="Logout">
+</form>
