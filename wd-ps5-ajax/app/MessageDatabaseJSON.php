@@ -32,6 +32,7 @@ class MessageDatabaseJSON implements MessageDatabaseInterface
         $messages = json_decode(file_get_contents($this->filePath), true);
         $messageID = key($messageJSON);
         $messages[$messageID] = $messageJSON[$messageID];
+
         return file_put_contents($this->filePath, json_encode($messages, JSON_PRETTY_PRINT));
     }
 

@@ -7,8 +7,12 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATO
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR . 'Messenger.php';
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Contracts' . DIRECTORY_SEPARATOR . 'UserDatabaseInterface.php';
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Contracts' . DIRECTORY_SEPARATOR . 'MessageDatabaseInterface.php';
+
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'UserDatabaseJSON.php';
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'MessageDatabaseJSON.php';
+
+/* In seconds */
+define('LAST_HOUR', (60 * 60));
 
 use App\Services\{
     Register,
@@ -29,11 +33,16 @@ $register = new Register($userDatabase);
 $messenger = new Messenger($messageDatabase);
 
 switch ($_POST['action']) {
+    case 'refresh':
+        echo isset($_SESSION['auth']) ?
+            require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'chat.php' :
+            require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'auth.php';
+        break;
     case 'auth':
         $auth = 'fail';
 
         if ($register->authUser($_POST['username'], $_POST['password'])) {
-            $auth = 'success';
+            $auth = require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'chat.php';
             $_SESSION['auth'] = $_POST['username'];
         }
 
@@ -44,13 +53,15 @@ switch ($_POST['action']) {
 
         if ($messenger->send($_SESSION['auth'], $_POST['message'])) {
             $isSentMsg = 'success';
-            $_SESSION['message-err'] = true;
         }
 
         echo $isSentMsg;
         break;
-    case 'get-new':
-        echo $messenger->getNewMessages($_POST['shown']);
+    case 'update':
+        echo $messenger->getMessages(LAST_HOUR);
+        break;
+    case 'is-auth':
+        echo isset($_SESSION['auth']) ? 'auth' : 'fail';
         break;
     default:
         echo 'error';

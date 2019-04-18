@@ -22,15 +22,18 @@ class Messenger
         return $this->messageDatabase->addMessage(new Message($username, $message));
     }
 
-    public function getNewMessages($alreadyShown) {
+    public function getMessages($timeForShowMessages) {
+        $timeForShowMessages = time() - $timeForShowMessages;
         $allMessages = $this->messageDatabase->getAll();
         $messageIDs = array_keys($allMessages);
-        $newMessages = [];
+        $messages = [];
 
-        for ($i = $alreadyShown; $i < count($messageIDs); $i++) {
-            $newMessages[$messageIDs[$i]] = $allMessages[$messageIDs[$i]];
+        for ($i = 0; $i < count($messageIDs); $i++) {
+            if ($messageIDs[$i] >= $timeForShowMessages) {
+                $messages[$messageIDs[$i]] = $allMessages[$messageIDs[$i]];
+            }
         }
 
-        return json_encode($newMessages, JSON_PRETTY_PRINT);
+        return json_encode($messages, JSON_PRETTY_PRINT);
     }
 }
