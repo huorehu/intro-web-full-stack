@@ -34,19 +34,18 @@ $messenger = new Messenger($messageDatabase);
 
 switch ($_POST['action']) {
     case 'refresh':
-        echo isset($_SESSION['auth']) ?
+        isset($_SESSION['auth']) ?
             require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'chat.php' :
             require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'auth.php';
         break;
     case 'auth':
-        $auth = 'fail';
-
         if ($register->authUser($_POST['username'], $_POST['password'])) {
-            $auth = require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'chat.php';
+            require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'chat.php';
             $_SESSION['auth'] = $_POST['username'];
+        } else {
+            echo 'fail';
         }
 
-        echo $auth;
         break;
     case 'message':
         $isSentMsg = 'fail';
