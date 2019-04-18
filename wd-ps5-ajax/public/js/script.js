@@ -182,6 +182,7 @@ function showMessages(messageArr) {
     const $messageBlock = $('#message-block');
 
     $messageBlock.empty();
+    messageArr = replaceEmoji(messageArr);
 
     for (let messageID in messageArr) {
         let currentMsg = messageArr[messageID];
@@ -191,6 +192,18 @@ function showMessages(messageArr) {
     }
 
     $messageBlock.scrollTop(document.getElementById('message-block').scrollHeight);
+}
+
+function replaceEmoji(messageArr) {
+    const smile = '<img class="emoji" align="top" src="../img/smile.png">';
+    const sad = '<img class="emoji" align="top" src="../img/sad.png">';
+
+    for (let messageID in messageArr) {
+        messageArr[messageID]['message'] = messageArr[messageID]['message'].replace(/:\)/g, smile);
+        messageArr[messageID]['message'] = messageArr[messageID]['message'] .replace(/:\(/g, sad);
+    }
+
+    return messageArr;
 }
 
 function showInputMessageError(block, errorMsg) {
