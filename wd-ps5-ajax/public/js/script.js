@@ -73,6 +73,19 @@ function addListeners() {
                         removeError($password);
                         showError($password, 'Invalid password');
                         break;
+                    case 'wrong-pass':
+                        removeError($password);
+                        showError($password, 'Password must be more than 2 characters');
+                        break;
+                    case 'wrong-name':
+                        removeError($username);
+                        showError($username, 'Username length must be from 3 to 50 characters');
+                        break;
+                    case 'wrong-all':
+                        removeError($password);
+                        showError($password, 'Password must be more than 2 characters');
+                        showError($username, 'Username length must be from 3 to 50 characters');
+                        break;
                     default:
                         loadMainBlock();
                 }
@@ -156,8 +169,8 @@ function addListeners() {
                     updateMessagesBlock();
                     $inputField.val('');
                     break;
-                case 'fail':
-                    showInputMessageError($inputField, 'Something went wrong!');
+                default:
+                    showInputMessageError($inputField, data);
             }
         });
     });
