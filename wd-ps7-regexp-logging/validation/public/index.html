@@ -9,44 +9,59 @@
 <div class="wrapper">
   <div class="wrapper__validation">
     <header>Validation form</header>
-    <form id="validation">
-      <div class="validation__item">
-        <label for="ip">IP</label>
-        <div class="validation__input">
+
+    <form id="ip-validate" class="validation__item">
+      <label for="ip">IP</label>
+      <div class="validation__input">
+        <div class="validation__input-inner">
           <input id="ip" type="text">
-          <button id="ip-validate" class="button">Validate</button>
+          <input type="submit" class="button" value="Validate">
         </div>
       </div>
-      <div class="validation__item">
-        <label for="url">URL</label>
-        <div class="validation__input">
+    </form>
+
+    <form id="url-validate" class="validation__item">
+      <label for="url">URL</label>
+      <div class="validation__input">
+        <div class="validation__input-inner">
           <input id="url" type="text">
-          <button id="url-validate" class="button">Validate</button>
+          <input type="submit" class="button" value="Validate">
         </div>
       </div>
-      <div class="validation__item">
-        <label for="email">EMAIL</label>
-        <div class="validation__input">
+    </form>
+
+    <form id="email-validate" class="validation__item">
+      <label for="email">EMAIL</label>
+      <div class="validation__input">
+        <div class="validation__input-inner">
           <input id="email" type="text">
-          <button id="email-validate" class="button">Validate</button>
+          <input type="submit" class="button" value="Validate">
         </div>
       </div>
-      <div class="validation__item">
-        <label for="date">DATE</label>
-        <div class="validation__input">
+    </form>
+
+    <form id="date-validate" class="validation__item">
+      <label for="date">DATE</label>
+      <div class="validation__input">
+        <div class="validation__input-inner">
           <input id="date" type="text">
-          <button id="date-validate" class="button">Validate</button>
+          <input type="submit" class="button" value="Validate">
         </div>
       </div>
-      <div class="validation__item">
-        <label for="time">TIME</label>
-        <div class="validation__input">
+    </form>
+
+    <form id="time-validate" class="validation__item">
+      <label for="time">TIME</label>
+      <div class="validation__input">
+        <div class="validation__input-inner">
           <input id="time" type="text">
-          <button id="time-validate" class="button">Validate</button>
+          <input type="submit" class="button" value="Validate">
         </div>
       </div>
     </form>
   </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

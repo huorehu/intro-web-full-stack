@@ -20,11 +20,6 @@ html, body {
     min-height: 400px;
 }
 
-.validation {
-    padding: 0;
-    margin: 0;
-}
-
 .validation__item {
     display: flex;
     margin: 10px;
@@ -32,11 +27,16 @@ html, body {
 }
 
 .validation__input {
-    padding: 0;
     height: 60px;
 }
 
-.validation__input > input {
+.validation__input-inner {
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.validation__input-inner > input[type=text] {
     width: 200px;
     height: 30px;
     margin: 0;
