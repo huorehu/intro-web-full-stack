@@ -17,12 +17,17 @@ class MessageDatabaseSQL implements MessageDatabaseInterface
 
     public function addMessage(Message $message)
     {
-        $sqlMessage = 'INSERT INTO messages (messageid, message, userid) VALUES (:messageid, :message, :userid)';
+        $username = $message->getUsername();
+        $sqlMessage = 'INSERT INTO messages (messageid, message, userid)
+                       SELECT :messageid, :message, id
+                       FROM users
+                       WHERE name=:username';
         $stmt = $this->dbConnection->prepare($sqlMessage);
+
         return $stmt->execute([
                     'messageid' => $message->getTime(),
                     'message' => $message->getMessage(),
-                    'userid' => $message->getUsername()
+                    'username' => $username
                ]);
     }
 
