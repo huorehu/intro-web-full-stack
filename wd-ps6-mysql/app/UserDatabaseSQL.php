@@ -38,7 +38,7 @@ class UserDatabaseSQL implements UserDatabaseInterface
 
         if ($result) {
             return count($responseDB = $stmt->fetchAll()) !== 0 ?
-                new User($responseDB[0]['name'], $responseDB[0]['password']) :
+                new User($responseDB[0]['name'], $responseDB[0]['password'], false) :
                 null;
         }
 

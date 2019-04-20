@@ -28,12 +28,18 @@ class MessageDatabaseSQL implements MessageDatabaseInterface
 
     public function getAll()
     {
-        $sqlMessage = 'SELECT messageid, message, userid FROM messages';
+        $sqlMessage = 'SELECT messageid, message, name FROM messages INNER JOIN users ON users.id=messages.userid;';
         $stmt = $this->dbConnection->prepare($sqlMessage);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $responseDB = $stmt->fetchAll();
+        $messages = [];
 
-        return $responseDB;
+        for ($i = 0; $i < count($responseDB); $i++) {
+            $currentMsg = $responseDB[$i];
+            $messages[$currentMsg['messageid']] = ['message' => $currentMsg['message'], 'username' => $currentMsg['name']];
+        }
+
+        return $messages;
     }
 }
