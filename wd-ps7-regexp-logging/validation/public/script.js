@@ -57,9 +57,10 @@ function showSuccess(block, fieldName) {
 }
 
 function showError(block, fieldName) {
-    //TODO
+    $(`#${fieldName}-input`).after(`<p class="error">Incorrect ${fieldName}</p>`);
+    block.addClass('error-border');
 }
 
-function removeHighlighting(block) {
+function removeHighlighting(block, fieldName) {
     //TODO
 }

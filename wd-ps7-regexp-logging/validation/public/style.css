@@ -78,6 +78,10 @@ header {
 }
 
 .error {
-    border: 1px solid darkred;
     color: darkred;
+    margin: 5px 0 0 5px;
+}
+
+.error-border {
+    border: 1px solid darkred;
 }
