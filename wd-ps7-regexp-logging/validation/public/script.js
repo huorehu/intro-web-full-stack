@@ -14,6 +14,14 @@ const validateFields = [
     'time'
 ];
 
+const firstFocusOutDone = {
+    'ip': false,
+    'email': false,
+    'url': false,
+    'date': false,
+    'time': false
+};
+
 for (let i = 0; i < validateFields.length; i++) {
     const currentInput = $(`#${validateFields[i]}`);
     const form = $(`#${validateFields[i]}-validate`);
@@ -21,13 +29,20 @@ for (let i = 0; i < validateFields.length; i++) {
     /* Front-end validation */
     currentInput.on('input', (e) => {
         e.preventDefault();
-        removeHighlighting(currentInput);
+        removeHighlighting(currentInput, validateFields[i]);
 
-        if (!regExp[validateFields[i]].test(e.currentTarget.value)) {
+        if (!regExp[validateFields[i]].test(e.currentTarget.value)
+            && firstFocusOutDone[$(e.currentTarget).attr('id')]) {
             showError(currentInput, validateFields[i]);
-        } else {
-            showSuccess(currentInput, validateFields);
+        } else if (regExp[validateFields[i]].test(e.currentTarget.value)) {
+            showSuccess(currentInput, validateFields[i]);
         }
+    });
+
+    currentInput.on('focusout', (e) => {
+        removeHighlighting(currentInput, validateFields[i]);
+        showError(currentInput, validateFields[i]);
+        firstFocusOutDone[$(e.currentTarget).attr('id')] = true;
     });
 
     /* Back-end validation */
@@ -53,14 +68,19 @@ for (let i = 0; i < validateFields.length; i++) {
 }
 
 function showSuccess(block, fieldName) {
-    //TODO
+    $(`#${fieldName}-input`).after(`<span class="input-text-valid highlight">JS valid ${fieldName}</span>`);
+    block.addClass('input-success');
 }
 
 function showError(block, fieldName) {
-    $(`#${fieldName}-input`).after(`<p class="error">Incorrect ${fieldName}</p>`);
+    $(`#${fieldName}-input`).after(`<span class="error highlight">Incorrect ${fieldName}</span>`);
     block.addClass('error-border');
 }
 
 function removeHighlighting(block, fieldName) {
-    //TODO
+    const removedElement = $(`#${fieldName}-input`).siblings('span');
+
+    if (undefined !==removedElement) {
+        removedElement.remove();
+    }
 }

@@ -41,6 +41,7 @@ html, body {
     height: 30px;
     margin: 0;
     padding: 0 0 0 10px;
+    outline: none;
     border: 0;
 }
 
@@ -83,5 +84,14 @@ header {
 }
 
 .error-border {
-    border: 1px solid darkred;
+    border: 1px solid darkred !important;
+}
+
+.input-success {
+    border: 1px solid green;
+}
+
+.input-text-valid {
+    color: green;
+    margin: 5px 0 0 5px;
 }
