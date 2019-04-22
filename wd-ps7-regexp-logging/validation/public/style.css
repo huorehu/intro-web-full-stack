@@ -42,6 +42,9 @@ html, body {
     margin: 0;
     padding: 0 0 0 10px;
     outline: none;
+}
+
+.validation__input-borderless {
     border: 0;
 }
 
@@ -84,7 +87,7 @@ header {
 }
 
 .error-border {
-    border: 1px solid darkred !important;
+    border: 1px solid darkred;
 }
 
 .input-success {
