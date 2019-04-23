@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <title>Text highlighter</title>
+</head>
+<body>
+<div class="wrapper">
+  <div class="highlighter-block">
+    <form class="highlighter" id="highlighter">
+      <textarea name="text" id="text" cols="40" rows="10"></textarea>
+      <div class="highlighter__regexp">
+        <span>/</span><input type="text" class="highlighter__input" id="regexp"><span>/</span>
+        <input type="text" class="highlighter__input" id="flags">
+      </div>
+      <input type="submit" class="button" value="Highlight text">
+    </form>
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
