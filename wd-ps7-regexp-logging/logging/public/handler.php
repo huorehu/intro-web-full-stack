@@ -50,7 +50,7 @@ switch ($action) {
 
         $validator->validateAuth($username, $password);
 
-        if (!$validator->isAllCorrect()) {
+        if ($validator->isAllIncorrect()) {
             echo 'wrong-all';
         } else if (!$validator->isCorrectUsername()) {
             echo 'wrong-name';
@@ -59,9 +59,12 @@ switch ($action) {
         } else if ($register->authUser($username, $password)) {
             require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'chat.php';
             $_SESSION['auth'] = $username;
+            $_SESSION['userID'] = $userDatabase->getUserID($username);
         } else {
             echo 'fail';
         }
+
+        $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
 
         break;
     case 'message':
@@ -88,6 +91,13 @@ switch ($action) {
             session_destroy();
         }
 
+        break;
+    case 'user-data':
+        echo json_encode([
+            'userID' => $_SESSION['userID'],
+            'ip' => $_SESSION['ip']
+        ], JSON_PRETTY_PRINT);
+        header("Content-type:application/json");
         break;
     default:
         echo 'error';

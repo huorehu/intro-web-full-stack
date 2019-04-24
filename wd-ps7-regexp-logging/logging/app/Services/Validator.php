@@ -26,9 +26,9 @@ class Validator
         return empty($this->errorMessage);
     }
 
-    public function isAllCorrect()
+    public function isAllIncorrect()
     {
-        return $this->isCorrectUsername && $this->isCorrectPassword;
+        return !$this->isCorrectUsername && !$this->isCorrectPassword;
     }
 
     public function isCorrectUsername()

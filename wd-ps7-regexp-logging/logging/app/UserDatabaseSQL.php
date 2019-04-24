@@ -44,4 +44,14 @@ class UserDatabaseSQL implements UserDatabaseInterface
 
         return null;
     }
+
+    public function getUserID($username): int
+    {
+        $sqlUser = 'SELECT id FROM users WHERE name=:username';
+        $stmt = $this->dbConnection->prepare($sqlUser);
+        $stmt->execute(['username' => $username]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+        return count($responseDB = $stmt->fetch()) !== 0 ? $responseDB['id'] : -1;
+    }
 }

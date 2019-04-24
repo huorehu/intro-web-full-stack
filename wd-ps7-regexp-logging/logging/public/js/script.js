@@ -4,6 +4,8 @@ let usernameFirstFocusOutDone = false;
 let passwordFirstFocusOutDone = false;
 let isUsernameCorrect = false;
 let isPasswordCorrect = false;
+let userID = '-';
+let ip = '-';
 
 function loadMainBlock() {
     $main.load(
@@ -57,6 +59,9 @@ function addListeners() {
             passwordFirstFocusOutDone = true;
             showError($password, 'Password must be more than 2 characters');
         }
+        /* Type of result of user action */
+        let level = 'error';
+        let message = '-';
 
         if (isUsernameCorrect && isPasswordCorrect) {
             $.ajax({
@@ -66,31 +71,53 @@ function addListeners() {
                     action: 'auth',
                     username: $username.val(),
                     password: $password.val()
-                }
+                },
+                async: false
             }).done(data => {
+                $.ajax({
+                    method: 'POST',
+                    url: 'handler.php',
+                    data: {
+                        action: 'user-data'
+                    },
+                    async: false
+                }).done(userData => {
+                    userID = null == userData['userID'] ? '-' : userData['userID'];
+                    ip = userData['ip'];
+                });
+
+                level = data;
+
                 switch (data) {
                     case 'fail':
+                        message = 'Invalid password';
                         removeError($password);
-                        showError($password, 'Invalid password');
+                        showError($password, message);
                         break;
                     case 'wrong-pass':
+                        message = 'Password must be more than 2 characters';
                         removeError($password);
-                        showError($password, 'Password must be more than 2 characters');
+                        showError($password, message);
                         break;
                     case 'wrong-name':
+                        message = 'Username length must be from 3 to 50 characters';
                         removeError($username);
-                        showError($username, 'Username length must be from 3 to 50 characters');
+                        showError($username, message);
                         break;
                     case 'wrong-all':
+                        message = 'Username and password incorrect';
+                        removeError(($username));
                         removeError($password);
                         showError($password, 'Password must be more than 2 characters');
                         showError($username, 'Username length must be from 3 to 50 characters');
                         break;
                     default:
                         loadMainBlock();
+                        level = 'success';
                 }
             });
         }
+        logging('authorization', level, message);
     });
 
     /* Username correctness listener */
@@ -267,4 +294,17 @@ function showError(block, message) {
 function removeError(block) {
     block.removeClass('error');
     block.next().remove();
+}
+
+function logging(service, level, message) {
+    const log = {
+        time: new Date().toLocaleString('en-GB'),
+        service: service,
+        level: level,
+        message: message,
+        userID: userID,
+        ip: ip
+    };
+
+    console.log(log);
 }
