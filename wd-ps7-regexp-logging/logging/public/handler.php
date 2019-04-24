@@ -7,6 +7,7 @@ require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATO
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR . 'Register.php';
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR . 'Messenger.php';
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR . 'Validator.php';
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR . 'Logger.php';
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Contracts' . DIRECTORY_SEPARATOR . 'UserDatabaseInterface.php';
 require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Contracts' . DIRECTORY_SEPARATOR . 'MessageDatabaseInterface.php';
 
@@ -19,15 +20,15 @@ define('LAST_HOUR', (60 * 60));
 use App\Services\{
     Register,
     Messenger,
-    Validator
+    Validator,
+    Logger
 };
 use App\{
     UserDatabaseSQL,
     MessageDatabaseSQL
 };
 
-define('USER_DATA_BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'users.json');
-define('MESSAGE_DATA_BASE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'messages.json');
+define('LOG_FILE_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'log.txt');
 
 $userDatabase = new UserDatabaseSQL();
 $messageDatabase = new MessageDatabaseSQL();
@@ -35,6 +36,7 @@ $messageDatabase = new MessageDatabaseSQL();
 $register = new Register($userDatabase);
 $messenger = new Messenger($messageDatabase);
 $validator = new Validator();
+$logger = new Logger(LOG_FILE_PATH);
 
 $action = isset($_POST['action']) ? htmlspecialchars($_POST['action']) : null;
 
@@ -49,22 +51,27 @@ switch ($action) {
         $password = htmlspecialchars($_POST['password']);
 
         $validator->validateAuth($username, $password);
+        $actionResult = '';
 
         if ($validator->isAllIncorrect()) {
-            echo 'wrong-all';
+            $actionResult = 'wrong-all';
         } else if (!$validator->isCorrectUsername()) {
-            echo 'wrong-name';
+            $actionResult = 'wrong-name';
         } else if (!$validator->isCorrectPassword()) {
-            echo 'wrong-pass';
+            $actionResult = 'wrong-pass';
         } else if ($register->authUser($username, $password)) {
             require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'chat.php';
             $_SESSION['auth'] = $username;
             $_SESSION['userID'] = $userDatabase->getUserID($username);
+            $actionResult = 'success';
         } else {
-            echo 'fail';
+            $actionResult = 'fail';
         }
 
         $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
+        $userID = isset($_SESSION['userID']) ? $_SESSION['userID'] : '-';
+
+        $logger->logging('authorization', $actionResult, '-', $_SESSION['ip'], $userID);
 
         break;
     case 'message':
@@ -79,6 +86,7 @@ switch ($action) {
         }
 
         echo $isSentMsg;
+        $logger->logging('sending message', 'sent', '-', $_SESSION['ip'], $_SESSION['userID']);
         break;
     case 'update':
         echo $messenger->getMessages(LAST_HOUR);
@@ -88,6 +96,7 @@ switch ($action) {
         break;
     case 'logout':
         if (isset($_SESSION['auth'])) {
+            $logger->logging('logout', 'success', 'user left chat', $_SESSION['ip'], $_SESSION['userID']);
             session_destroy();
         }
 
