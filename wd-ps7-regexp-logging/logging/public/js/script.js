@@ -173,12 +173,14 @@ function addListeners() {
 
         if ($inputField.val() === '') {
             showInputMessageError($inputField, 'Enter your message');
+            logging('sending message', 'error', 'empty message');
 
             return;
         }
 
         if ($inputField.val().length > 255) {
             showInputMessageError($inputField, 'Your message must contain no more than 255 characters');
+            logging('sending message', 'error', 'message length more than 255 characters');
 
             return;
         }
@@ -191,19 +193,19 @@ function addListeners() {
                 message: $inputField.val()
             }
         }).done(data => {
-            switch (data) {
-                case 'success':
-                    updateMessagesBlock();
-                    $inputField.val('');
-                    break;
-                default:
-                    showInputMessageError($inputField, data);
+            if (data === 'success') {
+                updateMessagesBlock();
+                $inputField.val('');
+                logging('sending message', 'success', '-');
+            } else {
+                showInputMessageError($inputField, data);
             }
         });
     });
 
     $('#logout').on('submit', (e) => {
         e.preventDefault();
+        logging('logout', 'success', '-');
 
         $.ajax({
             method: 'POST',
