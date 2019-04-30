@@ -58,13 +58,13 @@ session_start();
         </form>
         <div class="files-list">
             <?php
-            if (isset($_SESSION['task-3'])):
+            if (isset($_SESSION['task-3']['result'])):
                 $filesList = $_SESSION['task-3']['result'];
                 $arrayLength = count($_SESSION['task-3']['result']);
                 $uploadDir = 'uploads' . DIRECTORY_SEPARATOR;
 
-                for ($i = 2; $i < $arrayLength; $i++): ?>
-                    <a href="<?php echo $uploadDir . $filesList[$i] ?>" download="""><?php echo $filesList[$i] ?>
+                for ($i = 0; $i < $arrayLength; $i++): ?>
+                    <a href="<?php echo $uploadDir . $filesList[$i] ?>" download=""><?php echo $filesList[$i] ?>
                     (<?php
                     $byteSize = filesize($uploadDir . $filesList[$i]);
                     $fileSize = round(
@@ -93,7 +93,7 @@ session_start();
         </form>
         <div class="chessboard">
             <?php
-            if (isset($_SESSION['task-4'])):
+            if (isset($_SESSION['task-4']['result'])):
                 $chessboard = $_SESSION['task-4']['result'];
 
                 for ($row = 0; $row < count($chessboard); $row++): ?>

@@ -120,6 +120,11 @@ function validatePositiveIntValue($value) {
 
 /* Returns list of files */
 function getFilesList() {
-    return scandir(UPLOAD_DIR);
-}
+    if (file_exists(UPLOAD_DIR)) {
+        return array_values(array_diff(array_reverse(scandir(UPLOAD_DIR)), ['.', '..']));
+    }
 
+    mkdir(UPLOAD_DIR);
+
+    return [];
+}
