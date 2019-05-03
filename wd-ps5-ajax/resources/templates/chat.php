@@ -1,5 +1,10 @@
 <div class="message">
-  <div id="welcome-message"><span id="greet-user">Hello, <?php echo $_SESSION['auth'] ?>!</span></div>
+  <?php if (isset($_SESSION['greet'])): ?>
+    <div id="welcome-message"><span id="greet-user">Hello, <?php echo $_SESSION['auth'] ?>!</span></div>
+  <?php
+    endif;
+    unset($_SESSION['greet']);
+  ?>
   <div id="message-block"></div>
 </div>
 <form class="chat" id="chat">

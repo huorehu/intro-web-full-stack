@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,6 +20,15 @@
     <div class="header-colored"></div>
   </header>
   <h1 id="header">Easy Chat</h1>
+    <?php
+    $templatesPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
+
+    if (isset($_SESSION['auth'])):
+        require $templatesPath . 'chat.php';
+    else:
+        require $templatesPath . 'auth.php';
+    endif;
+    ?>
   <div id="main"></div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

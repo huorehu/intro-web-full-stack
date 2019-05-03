@@ -35,7 +35,9 @@ class UserDatabaseJSON implements UserDatabaseInterface
 
     public function getUser($username): ?User
     {
-        $user = json_decode(file_get_contents($this->filePath), true)[$username];
+        $user = isset(json_decode(file_get_contents($this->filePath), true)[$username]) ?
+            json_decode(file_get_contents($this->filePath), true)[$username] :
+            null;
 
         return isset($user) ? new User($user['name'], $user['password'], false) : null;
     }
