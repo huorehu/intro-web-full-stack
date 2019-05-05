@@ -1,4 +1,3 @@
-const $main = $('#main').addClass();
 const $username = $('#username');
 const $password = $('#password');
 const ERROR_MSG = {
