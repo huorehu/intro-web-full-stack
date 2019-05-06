@@ -1,276 +1,224 @@
-const $main = $('#main');
+const $username = $('#username');
+const $password = $('#password');
+const ERROR_MSG = {
+    username: {
+        length: 'Username length must be from 3 to 50 characters',
+        chars: 'Username must contains only A-Z, a-z, digits, _',
+    },
+    password: {
+        length: 'Password must be more than 2 characters',
+        chars: 'Password must contains only A-Z, a-z, digits, _'
+    }
+};
 
 let usernameFirstFocusOutDone = false;
 let passwordFirstFocusOutDone = false;
 let isUsernameCorrect = false;
 let isPasswordCorrect = false;
-let userID = '-';
-let ip = '-';
+let messageSent = false;
 
-function loadMainBlock() {
-    $main.load(
-        'handler.php',
-        {
-            action: 'refresh'
-        },
-        () => {
-            addListeners();
-            $.ajax({
-                method: 'POST',
-                url: 'handler.php',
-                data: {
-                    action: 'is-auth'
-                }
-            }).done(data => {
-                if (data === 'auth') {
-                    /* User greeting */
-                    let $userGreeter = $('#greet-user');
+updateMessagesBlock();
+/* User greeting */
+let $userGreeter = $('#greet-user');
 
-                    $userGreeter.css('display', 'inline-block');
-                    setTimeout(() => $userGreeter.fadeOut(1000), 2000);
-                    /* Requests every second new messages */
-                    window.setIntervalRequestID = setInterval(() => {
-                        updateMessagesBlock();
-                    }, 1000);
-                }
-            });
-        });
+if ($userGreeter) {
+    $userGreeter.css('display', 'inline-block');
+    setTimeout(() => $userGreeter.fadeOut(1000), 2000);
 }
 
-/* Loads authorization form or chat-block */
-loadMainBlock();
+/* Authorization */
+$('#register').on('submit', (e) => {
+    e.preventDefault();
+    removeError($username);
+    removeError($password);
 
-function addListeners() {
-    const $username = $('#username');
-    const $password = $('#password');
-
-    /* Authorization */
-    $('#register').on('submit', (e) => {
-        e.preventDefault();
-        removeError($username);
-        removeError($password);
-
-        if (!isUsernameCorrect) {
-            usernameFirstFocusOutDone = true;
-            showError($username, 'Username length must be from 3 to 50 characters');
-        }
-
-        if (!isPasswordCorrect) {
-            passwordFirstFocusOutDone = true;
-            showError($password, 'Password must be more than 2 characters');
-        }
-        /* Type of result of user action */
-        let level = 'error';
-        let message = '-';
-
-        if (isUsernameCorrect && isPasswordCorrect) {
-            $.ajax({
-                method: 'POST',
-                url: 'handler.php',
-                data: {
-                    action: 'auth',
-                    username: $username.val(),
-                    password: $password.val()
-                },
-                async: false
-            }).done(data => {
-                $.ajax({
-                    method: 'POST',
-                    url: 'handler.php',
-                    data: {
-                        action: 'user-data'
-                    },
-                    async: false
-                }).done(userData => {
-                    userID = null == userData['userID'] ? '-' : userData['userID'];
-                    ip = userData['ip'];
-                });
-
-                level = data;
-
-                switch (data) {
-                    case 'fail':
-                        message = 'Invalid password';
-                        removeError($password);
-                        showError($password, message);
-                        break;
-                    case 'wrong-pass':
-                        message = 'Password must be more than 2 characters';
-                        removeError($password);
-                        showError($password, message);
-                        break;
-                    case 'wrong-name':
-                        message = 'Username length must be from 3 to 50 characters';
-                        removeError($username);
-                        showError($username, message);
-                        break;
-                    case 'wrong-all':
-                        message = 'Username and password incorrect';
-                        removeError(($username));
-                        removeError($password);
-                        showError($password, 'Password must be more than 2 characters');
-                        showError($username, 'Username length must be from 3 to 50 characters');
-                        break;
-                    default:
-                        loadMainBlock();
-                        level = 'success';
-                }
-            });
-        }
-        logging('authorization', level, message);
-    });
-
-    /* Username correctness listener */
-    $username.on('input', e => {
-        e.preventDefault();
-        removeError($username);
-
-        if (!isCorrectLength($username.val()) && usernameFirstFocusOutDone) {
-            showError($username, 'Username length must be from 3 to 50 characters');
-            isUsernameCorrect = false;
-        } else if (isCorrectLength($username.val())) {
-            isUsernameCorrect = true;
-        }
-    });
-
-    $username.on('focusout', e => {
-        e.preventDefault();
-        removeError($username);
+    if (!isUsernameCorrect) {
         usernameFirstFocusOutDone = true;
+        showError($username, ERROR_MSG['username']['length']);
+    }
 
-        if (!isUsernameCorrect) {
-            showError($username, 'Username length must be from 3 to 50 characters');
-        }
-    });
-
-    /* Password correctness listener */
-    $password.on('input', e => {
-        e.preventDefault();
-        removeError($password);
-
-        if ($password.val().length < 3 && passwordFirstFocusOutDone) {
-            showError($password, 'Password must be more than 2 characters');
-            isPasswordCorrect = false;
-        } else if ($password.val().length >= 3) {
-            isPasswordCorrect = true;
-        }
-    });
-
-    $password.on('focusout', e => {
-        e.preventDefault();
-        removeError($password);
-
-        if (!isPasswordCorrect) {
-            showError($password, 'Password must be more than 2 characters');
-        }
-
+    if (!isPasswordCorrect) {
         passwordFirstFocusOutDone = true;
-    });
+        showError($password, ERROR_MSG['password']['length']);
+    }
 
-    $('#chat').on('submit', (e) => {
-        e.preventDefault();
-        const $inputField = $('.chat__input');
-
-        if ($inputField.val() === '') {
-            showInputMessageError($inputField, 'Enter your message');
-            logging('sending message', 'error', 'empty message');
-
-            return;
-        }
-
-        if ($inputField.val().length > 255) {
-            showInputMessageError($inputField, 'Your message must contain no more than 255 characters');
-            logging('sending message', 'error', 'message length more than 255 characters');
-
-            return;
-        }
-
+    if (isUsernameCorrect && isPasswordCorrect) {
         $.ajax({
             method: 'POST',
             url: 'handler.php',
             data: {
-                action: 'message',
-                message: $inputField.val()
+                route: 'auth',
+                username: $username.val(),
+                password: $password.val()
             }
         }).done(data => {
-            if (data === 'success') {
-                updateMessagesBlock();
-                $inputField.val('');
-                logging('sending message', 'success', '-');
+            if (data['success']) {
+                location.reload();
             } else {
-                showInputMessageError($inputField, data);
+                showAuthErrors(
+                    data['username']['length'], data['username']['chars'],
+                    data['password']['length'], data['password']['chars']
+                );
             }
+
+            logging('authorization', data['success'] ? 'success' : 'fail', '-', data['userID'], data['ip']);
         });
-    });
+    }
+});
 
-    $('#logout').on('submit', (e) => {
-        e.preventDefault();
-        logging('logout', 'success', '-');
+/* Username correctness listener */
+$username.on('input', e => {
+    e.preventDefault();
+    removeError($username);
 
-        $.ajax({
-            method: 'POST',
-            url: 'handler.php',
-            data: {
-                action: 'logout'
-            }
-        }).done(() => {
-            clearInterval(window.setIntervalRequestID);
-            loadMainBlock();
-        });
-    })
-}
+    if (!isCorrectLength($username.val()) && usernameFirstFocusOutDone) {
+        showError($username, 'Username length must be from 3 to 50 characters');
+        isUsernameCorrect = false;
+    } else if (isCorrectLength($username.val())) {
+        isUsernameCorrect = true;
+    }
+});
 
-function updateMessagesBlock() {
+$username.on('focusout', e => {
+    e.preventDefault();
+    removeError($username);
+    usernameFirstFocusOutDone = true;
+
+    if (!isUsernameCorrect) {
+        showError($username, 'Username length must be from 3 to 50 characters');
+    }
+});
+
+/* Password correctness listener */
+$password.on('input', e => {
+    e.preventDefault();
+    removeError($password);
+
+    if ($password.val().length < 3 && passwordFirstFocusOutDone) {
+        showError($password, 'Password must be more than 2 characters');
+        isPasswordCorrect = false;
+    } else if ($password.val().length >= 3) {
+        isPasswordCorrect = true;
+    }
+});
+
+$password.on('focusout', e => {
+    e.preventDefault();
+    removeError($password);
+
+    if (!isPasswordCorrect) {
+        showError($password, 'Password must be more than 2 characters');
+    }
+
+    passwordFirstFocusOutDone = true;
+});
+
+$('#chat').on('submit', (e) => {
+    e.preventDefault();
+    const $inputField = $('.chat__input');
+
+    if ($inputField.val() === '') {
+        showInputMessageError($inputField, 'Enter your message');
+        logging('sending message', 'error', 'empty message', '-', '-');
+
+        return;
+    }
+
+    if ($inputField.val().length > 255) {
+        showInputMessageError($inputField, 'Your message must contain no more than 255 characters');
+        logging('sending message', 'error', 'message length more than 255 characters', '-', '-');
+
+        return;
+    }
+
     $.ajax({
         method: 'POST',
         url: 'handler.php',
         data: {
-            action: 'update',
-        }
+            route: 'message',
+            action: 'send-message',
+            message: $inputField.val()
+        },
     }).done(data => {
-        if (data !== 'fail') {
-            showMessages(JSON.parse(data));
+        if (data['success']) {
+            $inputField.val('');
+            messageSent = true;
+            updateMessagesBlock();
+            logging('sending message', 'success', '-', data['userID'], data['ip']);
+        } else {
+            showInputMessageError($inputField, data['error']);
         }
     });
-}
+});
 
-function showMessages(messageArr) {
-    let message;
-    const $messageBlock = $('#message-block');
+$('#logout').on('submit', (e) => {
+    e.preventDefault();
 
-    $messageBlock.empty();
-    messageArr = replaceEmoji(messageArr);
+    $.ajax({
+        method: 'POST',
+        url: 'handler.php',
+        data: {
+            route: 'logout'
+        }
+    }).done(data => {
+        logging('logout', 'success', 'user left chat', data['userID'], data['ip']);
+        location.reload();
+    });
+});
 
-    for (let messageID in messageArr) {
-        let currentMsg = messageArr[messageID];
-        message = `[<span class="time-font">${formatTimeForMessage(messageID)}</span>]` +
-            ` <span class="chat-username">${currentMsg['username']}</span>: ${currentMsg['message']}`;
-        $messageBlock.append(`<p class="message__user">${message}</p>`);
+/* Requests every second new messages */
+setInterval(() => {
+    updateMessagesBlock();
+}, 1000);
+
+function showAuthErrors(usernameLength, usernameChars, passwordLength, passwordChars) {
+    removeError($username);
+    removeError($password);
+
+    if (usernameChars && passwordChars) {
+        showError($password, 'Wrong password');
     }
 
-    $messageBlock.scrollTop(document.getElementById('message-block').scrollHeight);
-}
-
-function replaceEmoji(messageArr) {
-    const smile = '<img class="emoji" align="top" src="../img/smile.png">';
-    const sad = '<img class="emoji" align="top" src="../img/sad.png">';
-
-    for (let messageID in messageArr) {
-        messageArr[messageID]['message'] = messageArr[messageID]['message'].replace(/:\)/g, smile);
-        messageArr[messageID]['message'] = messageArr[messageID]['message'] .replace(/:\(/g, sad);
+    if (!usernameChars) {
+        showError($username, ERROR_MSG['username']['chars']);
+    } else if (!usernameLength) {
+        showError($username, ERROR_MSG['username']['length']);
     }
 
-    return messageArr;
+    if (!passwordChars) {
+        showError($password, ERROR_MSG['password']['chars']);
+    } else if (!passwordLength) {
+        showError($password, ERROR_MSG['password']['length']);
+    }
+}
+
+function showError(block, message) {
+    block.addClass('error');
+    block.after(`<div class='error-msg'>${message}</div>`);
+}
+
+function removeError(block) {
+    block.removeClass('error');
+    block.next().remove();
+}
+
+function isCorrectLength(str) {
+    return str.length >= 3 && str.length <= 50;
 }
 
 function showInputMessageError(block, errorMsg) {
     const $currentMessage = block.val();
+    const $sendBtn = $('#send-msg');
 
     block.val(errorMsg);
+    block.attr('disabled', true);
+    $sendBtn.attr('disabled', true);
     block.addClass('error-msg error');
     setTimeout(() => {
         block.val($currentMessage);
         block.removeClass('error-msg error');
+        block.attr('disabled', false);
+        $sendBtn.attr('disabled', false);
     }, 2000);
 }
 
@@ -284,21 +232,56 @@ function fillTimeValue(time) {
     return (time + '').padStart(2, '0');
 }
 
-function isCorrectLength(str) {
-    return str.length >= 3 && str.length <= 50;
+function updateMessagesBlock() {
+    $.ajax({
+        method: 'POST',
+        url: 'handler.php',
+        data: {
+            route: 'message',
+            action: 'update'
+        }
+    }).done(data => {
+        if (data['messages']) {
+            showMessages(JSON.parse(data['messages']));
+        }
+    });
 }
 
-function showError(block, message) {
-    block.addClass('error');
-    block.after(`<div class='error-msg'>${message}</div>`);
+function showMessages(messageArr) {
+    let message;
+    const $messageBlock = $('#message-block');
+
+    $messageBlock.empty();
+    messageArr = replaceEmoji(messageArr);
+    message = '';
+
+    for (let messageID in messageArr) {
+        let currentMsg = messageArr[messageID];
+        message += `<p class="message__user">[<span class="time-font">${formatTimeForMessage(messageID)}</span>]` +
+            ` <span class="chat-username">${currentMsg['username']}</span>: ${currentMsg['message']}</p>`;
+    }
+
+    $messageBlock.append(message);
+
+    if (messageSent) {
+        $('#message-block').scrollTop(document.getElementById('message-block').scrollHeight);
+        messageSent = false;
+    }
 }
 
-function removeError(block) {
-    block.removeClass('error');
-    block.next().remove();
+function replaceEmoji(messageArr) {
+    const smile = '<img class="emoji" align="top" src="/img/smile.png">';
+    const sad = '<img class="emoji" align="top" src="/img/sad.png">';
+
+    for (let messageID in messageArr) {
+        messageArr[messageID]['message'] = messageArr[messageID]['message'].replace(/:\)/g, smile);
+        messageArr[messageID]['message'] = messageArr[messageID]['message'] .replace(/:\(/g, sad);
+    }
+
+    return messageArr;
 }
 
-function logging(service, level, message) {
+function logging(service, level, message, userID, ip) {
     const log = {
         time: new Date().toLocaleString('en-GB'),
         service: service,

@@ -8,12 +8,12 @@ class Logger
 {
     private $logPathFile;
 
-    public function __construct($logPathFile)
+    public function __construct($logFilePath)
     {
-        $this->logPathFile = $logPathFile;
+        $this->logPathFile = $logFilePath;
     }
 
-    public function logging($service, $level, $message, $ip, $userID)
+    public function logging($service, $level, $message, $userID, $ip)
     {
         $log = json_encode([
             'time' => (new DateTime())->format('d-m-y h:i:s'),
