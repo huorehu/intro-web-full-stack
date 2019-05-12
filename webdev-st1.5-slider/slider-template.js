@@ -54,7 +54,7 @@ function showSelectedPicture(e) {
 function showCurrentImgEvn(e) {
     const oldImgNumber = currentImgNumber;
 
-    currentImgNumber = $(e.currentTarget).children().attr('alt');
+    currentImgNumber = $(e.currentTarget).children().attr('alt') * 1;
     showCurrentImg(currentImgNumber, oldImgNumber);
 
 }
