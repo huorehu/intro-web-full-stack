@@ -11,6 +11,10 @@ const IMAGES = [
     '?image=1039'
 ];
 
+const RIGHT = 39;
+const LEFT = 37;
+const CURRENT_IMAGE_CLASS = 'current';
+
 let currentImgNumber = 0;
 const $sliderCurrent = $('.slider-current');
 const $sliderPreviews = $('.slider-previews');
@@ -23,13 +27,11 @@ $($sliderPreviews.children()).on('click', showCurrentImgEvn);
 
 /* Initializes slider */
 function initSlider() {
-    let result = '';
-
     $sliderPreviews.addClass('slider-indicators');
 
-    for (let i = 0; i < IMAGES.length; i++) {
-        result += `<li class="${i === 0 ? 'current' : ''}"><img alt=${i} src=${API_URL}${SMALL_SIZE}${IMAGES[i]}>`;
-    }
+    const result = IMAGES.reduce((result, current, index) =>
+        result + `<li class="${index === 0 ? CURRENT_IMAGE_CLASS : ''}"><img alt=${index} src=${API_URL}${SMALL_SIZE}${current}>`,
+        '');
 
     $sliderPreviews.append(result);
 }
@@ -37,14 +39,15 @@ function initSlider() {
 /* Shows next/previous picture depending which arrow-key was pressed */
 function showSelectedPicture(e) {
     const oldImgNumber = currentImgNumber;
+    const amountImages = IMAGES.length;
 
     /* change current image number */
-    switch (e.key) {
-        case 'ArrowRight':
-            currentImgNumber = ++currentImgNumber % IMAGES.length;
+    switch (e.keyCode) {
+        case RIGHT:
+            currentImgNumber = ++currentImgNumber % amountImages;
             break;
-        case 'ArrowLeft':
-            currentImgNumber = (currentImgNumber + IMAGES.length - 1) % IMAGES.length;
+        case LEFT:
+            currentImgNumber = (currentImgNumber + amountImages - 1) % amountImages;
     }
 
     showCurrentImg(currentImgNumber, oldImgNumber);
@@ -62,9 +65,10 @@ function showCurrentImgEvn(e) {
 /* Removes old image and adds selected */
 function showCurrentImg(currentImgNumber, oldImgNumber) {
     const $listPreviews = $sliderPreviews.children();
+    const $img = $sliderCurrent.children();
 
-    $sliderCurrent.empty();
-    $sliderCurrent.append(`<img src=${API_URL}${BIG_SIZE}/${IMAGES[currentImgNumber]} alt=${currentImgNumber}>`);
-    $($listPreviews[oldImgNumber]).removeClass('current');
-    $($listPreviews[currentImgNumber]).addClass('current');
+    $img.attr('src', `${API_URL}${BIG_SIZE}/${IMAGES[currentImgNumber]}`);
+    $img.attr('alt', `${currentImgNumber}`);
+    $($listPreviews[oldImgNumber]).removeClass(CURRENT_IMAGE_CLASS);
+    $($listPreviews[currentImgNumber]).addClass(CURRENT_IMAGE_CLASS);
 }
