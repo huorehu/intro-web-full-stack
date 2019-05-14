@@ -20,18 +20,18 @@ const $sliderCurrent = $('.slider-current');
 const $sliderPreviews = $('.slider-previews');
 
 initSlider();
-addEventListener('keydown', function (e) {
-    showSelectedPicture(e);
-});
+$('html').on('keydown', showSelectedPicture);
 $($sliderPreviews.children()).on('click', showCurrentImgEvn);
 
 /* Initializes slider */
 function initSlider() {
     $sliderPreviews.addClass('slider-indicators');
 
-    const result = IMAGES.reduce((result, current, index) =>
-        result + `<li class="${index === 0 ? CURRENT_IMAGE_CLASS : ''}"><img alt=${index} src=${API_URL}${SMALL_SIZE}${current}>`,
-        '');
+    const result = IMAGES.reduce((result, current, index) => result +
+        `<li class="${index === 0 ? CURRENT_IMAGE_CLASS : ''}">
+            <img alt=${index} src=${API_URL}${SMALL_SIZE}${current}>
+        </li>`,
+    '');
 
     $sliderPreviews.append(result);
 }
@@ -57,7 +57,7 @@ function showSelectedPicture(e) {
 function showCurrentImgEvn(e) {
     const oldImgNumber = currentImgNumber;
 
-    currentImgNumber = $(e.currentTarget).children().attr('alt') * 1;
+    currentImgNumber = +$(e.currentTarget).children().attr('alt');
     showCurrentImg(currentImgNumber, oldImgNumber);
 
 }
